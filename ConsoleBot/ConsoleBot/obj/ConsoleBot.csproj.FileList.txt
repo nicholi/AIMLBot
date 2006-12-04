@@ -1,0 +1,14 @@
+obj\Debug\ResolveAssemblyReference.cache
+bin\Debug\ConsoleBot.exe
+bin\Debug\ConsoleBot.pdb
+bin\Debug\AIMLbot.dll
+bin\Debug\AIMLbot.pdb
+obj\Debug\ConsoleBot.exe
+obj\Debug\ConsoleBot.pdb
+bin\Release\ConsoleBot.exe
+bin\Release\ConsoleBot.pdb
+bin\Release\AIMLbot.dll
+bin\Release\AIMLbot.pdb
+obj\Release\ResolveAssemblyReference.cache
+obj\Release\ConsoleBot.exe
+obj\Release\ConsoleBot.pdb
