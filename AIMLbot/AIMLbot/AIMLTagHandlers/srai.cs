@@ -20,16 +20,19 @@ namespace AIMLbot.AIMLTagHandlers
         /// </summary>
         /// <param name="bot">The bot involved in this request</param>
         /// <param name="user">The user making the request</param>
+        /// <param name="query">The query that originated this node</param>
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public srai(AIMLbot.Bot bot, 
-                        AIMLbot.User user, 
-                        AIMLbot.Request request, 
-                        AIMLbot.Result result, 
+        public srai(AIMLbot.Bot bot,
+                        AIMLbot.User user,
+                        AIMLbot.Utils.SubQuery query,
+                        AIMLbot.Request request,
+                        AIMLbot.Result result,
                         XmlNode templateNode)
-        : base (bot,user,request,result,templateNode)
-        {}
+            : base(bot, user, query, request, result, templateNode)
+        {
+        }
 
         protected override string ProcessChange()
         {
@@ -38,10 +41,7 @@ namespace AIMLbot.AIMLTagHandlers
                 if (this.templateNode.InnerText.Length > 0)
                 {
                     Request subRequest = new Request(this.templateNode.InnerText, this.user, this.bot);
-                    // include star collections?
-                    subRequest.InputStar = request.InputStar;
-                    subRequest.ThatStar = request.ThatStar;
-                    subRequest.TopicStar = request.TopicStar;
+                    subRequest.StartedOn = this.request.StartedOn; // make sure we don't keep adding time to the request
                     Result subQuery = this.bot.Chat(subRequest);
                     return subQuery.Output;
                 }

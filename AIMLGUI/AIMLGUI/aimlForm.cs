@@ -155,23 +155,6 @@ namespace AIMLGUI
                 result.Append("Raw Input: " + this.lastRequest.rawInput.Replace(Environment.NewLine,"") + Environment.NewLine);
                 result.Append("Started On: " + this.lastRequest.StartedOn + Environment.NewLine);
                 result.Append("Has Timed Out: " + Convert.ToString(this.lastRequest.hasTimedOut) + Environment.NewLine + Environment.NewLine);
-                result.Append("Input Stars:" + Environment.NewLine);
-                foreach (string star in this.lastRequest.InputStar)
-                {
-                    result.Append(star + Environment.NewLine);
-                }
-                result.Append(Environment.NewLine);
-                result.Append("That Stars:" + Environment.NewLine);
-                foreach (string that in this.lastRequest.ThatStar)
-                {
-                    result.Append(that + Environment.NewLine);
-                }
-                result.Append(Environment.NewLine);
-                result.Append("Topic Stars:" + Environment.NewLine);
-                foreach (string topic in this.lastRequest.TopicStar)
-                {
-                    result.Append(topic + Environment.NewLine);
-                }
                 this.showInformation(result);
             }
         }
@@ -194,16 +177,33 @@ namespace AIMLGUI
                     result.Append(sentence + Environment.NewLine);
                 }
                 result.Append(Environment.NewLine);
-                result.Append("Paths: " + Environment.NewLine);
-                foreach (string path in this.lastResult.NormalizedPaths)
-                {
-                    result.Append(path + Environment.NewLine);
-                }
+                
                 result.Append(Environment.NewLine);
-                result.Append("Templates: " + Environment.NewLine);
-                foreach (string template in this.lastResult.Templates)
+                result.Append("Sub Queries: " + Environment.NewLine);
+                result.Append(Environment.NewLine);
+                foreach (AIMLbot.Utils.SubQuery query in this.lastResult.SubQueries)
                 {
-                    result.Append(template + Environment.NewLine);
+                    result.Append("Path: " + query.FullPath + Environment.NewLine);
+                    result.Append("Template: " + Environment.NewLine + query.Template + Environment.NewLine);
+                    result.Append(Environment.NewLine);
+                    result.Append("Input Stars:" + Environment.NewLine);
+                    foreach (string star in query.InputStar)
+                    {
+                        result.Append(star + Environment.NewLine);
+                    }
+                    result.Append(Environment.NewLine);
+                    result.Append("That Stars:" + Environment.NewLine);
+                    foreach (string that in query.ThatStar)
+                    {
+                        result.Append(that + Environment.NewLine);
+                    }
+                    result.Append(Environment.NewLine);
+                    result.Append("Topic Stars:" + Environment.NewLine);
+                    foreach (string topic in query.TopicStar)
+                    {
+                        result.Append(topic + Environment.NewLine);
+                    }
+                    result.Append(Environment.NewLine);
                 }
                 result.Append(Environment.NewLine);
                 result.Append("Output Sentences: " + Environment.NewLine);
@@ -273,7 +273,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
             Result myResult = this.myBot.Chat(myRequest);
             this.lastRequest = myRequest;
             this.lastResult = myResult;
-            this.richTextBoxOutput.AppendText("Bot: " + myResult.RawOutput.ToUpper() + Environment.NewLine + Environment.NewLine);
+            this.richTextBoxOutput.AppendText("Bot: " + myResult.RawOutput+ Environment.NewLine + Environment.NewLine);
         }
 
         private void singleFileToolStripMenuItem_Click(object sender, EventArgs e)

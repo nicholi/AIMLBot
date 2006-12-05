@@ -12,6 +12,7 @@ namespace Tests.AIMLTagHandlers
         private AIMLbot.User mockUser;
         private AIMLbot.Request mockRequest;
         private AIMLbot.Result mockResult;
+        private AIMLbot.Utils.SubQuery mockQuery;
         private AIMLbot.AIMLTagHandlers.bot mockBotTagHandler;
 
         [TestFixtureSetUp]
@@ -20,6 +21,7 @@ namespace Tests.AIMLTagHandlers
             this.mockBot = new Bot();
             this.mockUser = new User("1", this.mockBot);
             this.mockRequest = new Request("This is a test", this.mockUser, this.mockBot);
+            this.mockQuery = new AIMLbot.Utils.SubQuery("This is a test <that> * <topic> *");
             this.mockResult = new Result(this.mockUser, this.mockBot, this.mockRequest);
         }
 
@@ -27,7 +29,7 @@ namespace Tests.AIMLTagHandlers
         public void testExpectedInput()
         {
             XmlNode testNode = StaticHelpers.getNode("<bot name= \"name\"/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.bot(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.bot(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("Unknown", this.mockBotTagHandler.Transform());
         }
 
@@ -35,7 +37,7 @@ namespace Tests.AIMLTagHandlers
         public void testNonExistentPredicate()
         {
             XmlNode testNode = StaticHelpers.getNode("<bot name=\"nonexistent\"/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.bot(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.bot(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("", this.mockBotTagHandler.Transform());
         }
 
@@ -43,7 +45,7 @@ namespace Tests.AIMLTagHandlers
         public void testBadAttribute()
         {
             XmlNode testNode = StaticHelpers.getNode("<bot value=\"name\"/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.bot(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.bot(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("", this.mockBotTagHandler.Transform());
         }
 
@@ -51,7 +53,7 @@ namespace Tests.AIMLTagHandlers
         public void testBadNodeName()
         {
             XmlNode testNode = StaticHelpers.getNode("<bad value=\"name\"/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.bot(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.bot(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("", this.mockBotTagHandler.Transform());
         }
 
@@ -59,7 +61,7 @@ namespace Tests.AIMLTagHandlers
         public void testTooManyAttributes()
         {
             XmlNode testNode = StaticHelpers.getNode("<bot name=\"name\" value=\"bad\"/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.bot(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.bot(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("", this.mockBotTagHandler.Transform());
         }
 
@@ -70,7 +72,7 @@ namespace Tests.AIMLTagHandlers
             foreach(string predicate in predicates)
             {
                 XmlNode testNode = StaticHelpers.getNode("<bot name=\""+predicate+"\"/>");
-                this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.bot(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+                this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.bot(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
                 Assert.AreNotEqual(string.Empty, this.mockBotTagHandler.Transform());
             }
         }

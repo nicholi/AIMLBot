@@ -20,15 +20,33 @@ namespace AIMLbot.Normalize
 
         protected override string ProcessChange()
         {
-            string result = MakeCaseInsensitive.TransformInput(this.inputString);
+            string result = this.inputString;//MakeCaseInsensitive.TransformInput(this.inputString);
             foreach (string pattern in this.bot.Substitutions.SettingNames)
             {
                 string p2 = ApplySubstitutions.makeRegexSafe(pattern);
                 //string match = "\\b" + p2.Trim() + "\\b";
                 string match = @p2;
-                result = Regex.Replace(result, match, this.bot.Substitutions.grabSetting(pattern));
+                string replacement = this.bot.Substitutions.grabSetting(pattern);
+                if (replacement.StartsWith(" "))
+                {
+                    replacement = " ||" + replacement.TrimStart();
+                }
+                else
+                {
+                    replacement = "||" + replacement;
+                }
+                if (replacement.EndsWith(" "))
+                {
+                    replacement = replacement.TrimEnd() + "|| ";
+                }
+                else
+                {
+                    replacement = replacement + "||";
+                }
+                result = Regex.Replace(result, match, replacement, RegexOptions.IgnoreCase);
             }
-            return MakeCaseInsensitive.TransformInput(result);
+
+            return result.Replace("||", "");
         }
 
         /// <summary>
@@ -41,16 +59,35 @@ namespace AIMLbot.Normalize
         /// <returns>The processed string</returns>
         public static string Substitute(AIMLbot.Bot bot, AIMLbot.Utils.SettingsDictionary dictionary, string target)
         {
-            string result = MakeCaseInsensitive.TransformInput(target);
+            string result = target;//MakeCaseInsensitive.TransformInput(target);
             foreach (string pattern in dictionary.SettingNames)
             {
                 string p2 = ApplySubstitutions.makeRegexSafe(pattern);
                 //string match = "\\b" + @p2.Trim() + "\\b";
                 string match = @p2;
-                result = Regex.Replace(result, match, dictionary.grabSetting(pattern));
+                string replacement = dictionary.grabSetting(pattern);
+                if (replacement.StartsWith(" "))
+                {
+                    replacement = " ||" + replacement.TrimStart();
+                }
+                else
+                {
+                    replacement = "||" + replacement;
+                }
+                if (replacement.EndsWith(" "))
+                {
+                    replacement = replacement.TrimEnd() + "|| ";
+                }
+                else
+                {
+                    replacement = replacement + "||";
+                }
+                result = Regex.Replace(result, match, replacement, RegexOptions.IgnoreCase);
             }
-            return result;
+
+            return result.Replace("||", "");
         }
+
 
         /// <summary>
         /// Given an input, escapes certain characters so they can be used as part of a regex

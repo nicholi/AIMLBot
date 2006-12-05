@@ -9,4 +9,10 @@
       </template>
     </category>
   </topic>
+  <category>
+    <pattern>My name is *</pattern>
+    <template>
+      Hello <star/>!
+    </template>
+  </category>
 </aiml>

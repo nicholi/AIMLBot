@@ -119,7 +119,7 @@ namespace ExampleCustomAIMLTags
                         result.Append(tail+" ");                        
                     }
                     XmlNode dummySentence = getNode("<sentence>" + result.ToString().Trim() + "</sentence>");
-                    AIMLbot.AIMLTagHandlers.sentence sentenceMaker = new AIMLbot.AIMLTagHandlers.sentence(this.bot, this.user, this.request, this.result, dummySentence);
+                    AIMLbot.AIMLTagHandlers.sentence sentenceMaker = new AIMLbot.AIMLTagHandlers.sentence(this.bot, this.user, this.query, this.request, this.result, dummySentence);
 
                     return sentenceMaker.Transform();
                 }

@@ -252,7 +252,7 @@ namespace Tests
         {
             this.mockBot = new AIMLbot.Bot();
             this.mockBot.loadAIMLFromFiles();
-            Assert.AreEqual(25, this.mockBot.Size);
+            Assert.AreEqual(26, this.mockBot.Size);
         }
 
         [Test]
@@ -380,7 +380,16 @@ namespace Tests
             Assert.AreEqual(true, fi.Exists);
             this.mockBot.loadCustomTagHandlers(this.pathToCustomTagDll);
             Result output = this.mockBot.Chat("Test pig latin", "1");
-            Assert.AreEqual("(Allway ethay orldway isway away agestay!).",output.RawOutput);
+            Assert.AreEqual("(Allway ethay orldway isway away agestay!).",output.Output);
+        }
+
+        [Test]
+        public void testWildCardsDontMixBetweenSentences()
+        {
+            this.mockBot = new Bot();
+            this.mockBot.loadAIMLFromFiles();
+            Result output = this.mockBot.Chat("My name is FIRST. My name is SECOND.","1");
+            Assert.AreEqual("Hello FIRST! Hello SECOND!", output.Output);
         }
     }
 }

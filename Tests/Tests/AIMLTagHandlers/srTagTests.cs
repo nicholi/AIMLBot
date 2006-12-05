@@ -12,6 +12,7 @@ namespace Tests.AIMLTagHandlers
         private AIMLbot.User mockUser;
         private AIMLbot.Request mockRequest;
         private AIMLbot.Result mockResult;
+        private AIMLbot.Utils.SubQuery mockQuery;
         private AIMLbot.AIMLTagHandlers.sr mockBotTagHandler;
 
         [TestFixtureSetUp]
@@ -21,8 +22,9 @@ namespace Tests.AIMLTagHandlers
             this.mockBot.loadAIMLFromFiles();
             this.mockUser = new User("1", this.mockBot);
             this.mockRequest = new Request("This is a test", this.mockUser, this.mockBot);
-            this.mockRequest.InputStar.Insert(0, "first star");
-            this.mockRequest.InputStar.Insert(0, "second star");
+            this.mockQuery = new AIMLbot.Utils.SubQuery("This is a test <that> * <topic> *");
+            this.mockQuery.InputStar.Insert(0, "first star");
+            this.mockQuery.InputStar.Insert(0, "second star");
             this.mockResult = new Result(this.mockUser, this.mockBot, this.mockRequest);
         }
 
@@ -30,8 +32,8 @@ namespace Tests.AIMLTagHandlers
         public void testSRAIWithValidInput()
         {
             XmlNode testNode = StaticHelpers.getNode("<sr/>");
-            this.mockRequest.InputStar.Insert(0,"sraisucceeded");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.sr(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockQuery.InputStar.Insert(0,"sraisucceeded");
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.sr(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("Test passed.", this.mockBotTagHandler.Transform());
         }
 
@@ -39,8 +41,8 @@ namespace Tests.AIMLTagHandlers
         public void testSRAIRecursion()
         {
             XmlNode testNode = StaticHelpers.getNode("<sr/>");
-            this.mockRequest.InputStar.Insert(0,"srainested");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.sr(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockQuery.InputStar.Insert(0,"srainested");
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.sr(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("Test passed.", this.mockBotTagHandler.Transform());
         }
 
@@ -48,7 +50,7 @@ namespace Tests.AIMLTagHandlers
         public void testSRAIEmpty()
         {
             XmlNode testNode = StaticHelpers.getNode("<sr/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.sr(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.sr(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("", this.mockBotTagHandler.Transform());
         }
 
@@ -56,7 +58,7 @@ namespace Tests.AIMLTagHandlers
         public void testSRAIBad()
         {
             XmlNode testNode = StaticHelpers.getNode("<se/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.sr(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.sr(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("", this.mockBotTagHandler.Transform());
         }
     }

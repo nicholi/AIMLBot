@@ -79,7 +79,7 @@ namespace AIMLbot
                 StringBuilder result = new StringBuilder();
                 foreach (string sentence in OutputSentences)
                 {
-                    string sentenceForOutput = sentence;
+                    string sentenceForOutput = sentence.Trim();
                     if (!this.checkEndsAsSentence(sentenceForOutput))
                     {
                         sentenceForOutput += ".";
@@ -91,10 +91,10 @@ namespace AIMLbot
         }
 
         /// <summary>
-        /// The templates retrieved from the bot's graphmaster that are to be converted into
-        /// the collection of Sentences
+        /// The subQueries processed by the bot's graphmaster that contain the templates that 
+        /// are to be converted into the collection of Sentences
         /// </summary>
-        public ArrayList Templates = new ArrayList();
+        public ArrayList SubQueries = new ArrayList();
 
         /// <summary>
         /// The individual sentences produced by the bot that form the complete response

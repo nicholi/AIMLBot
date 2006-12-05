@@ -12,6 +12,7 @@ namespace Tests.AIMLTagHandlers
         private AIMLbot.User mockUser;
         private AIMLbot.Request mockRequest;
         private AIMLbot.Result mockResult;
+        private AIMLbot.Utils.SubQuery mockQuery;
         private AIMLbot.AIMLTagHandlers.star mockBotTagHandler;
 
         [TestFixtureSetUp]
@@ -20,8 +21,9 @@ namespace Tests.AIMLTagHandlers
             this.mockBot = new Bot();
             this.mockUser = new User("1", this.mockBot);
             this.mockRequest = new Request("This is a test", this.mockUser, this.mockBot);
-            this.mockRequest.InputStar.Insert(0,"first star");
-            this.mockRequest.InputStar.Insert(0,"second star");
+            this.mockQuery = new AIMLbot.Utils.SubQuery("This is a test <that> * <topic> *");
+            this.mockQuery.InputStar.Insert(0, "first star");
+            this.mockQuery.InputStar.Insert(0, "second star");
             this.mockResult = new Result(this.mockUser, this.mockBot, this.mockRequest);
         }
 
@@ -29,7 +31,7 @@ namespace Tests.AIMLTagHandlers
         public void testExpectedInput()
         {
             XmlNode testNode = StaticHelpers.getNode("<star/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.star(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.star(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("second star", this.mockBotTagHandler.Transform());
         }
 
@@ -37,7 +39,7 @@ namespace Tests.AIMLTagHandlers
         public void testExpectedInputIndex()
         {
             XmlNode testNode = StaticHelpers.getNode("<star index=\"1\"/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.star(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.star(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("second star", this.mockBotTagHandler.Transform());
         }
 
@@ -45,7 +47,7 @@ namespace Tests.AIMLTagHandlers
         public void testExpectedInputIndexSecond()
         {
             XmlNode testNode = StaticHelpers.getNode("<star index=\"2\"/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.star(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.star(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("first star", this.mockBotTagHandler.Transform());
         }
 
@@ -53,7 +55,7 @@ namespace Tests.AIMLTagHandlers
         public void testExpectedInputIndexOutOfBounds()
         {
             XmlNode testNode = StaticHelpers.getNode("<star index=\"3\"/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.star(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.star(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("", this.mockBotTagHandler.Transform());
         }
 
@@ -61,7 +63,7 @@ namespace Tests.AIMLTagHandlers
         public void testBadInputAttributeName()
         {
             XmlNode testNode = StaticHelpers.getNode("<star indox=\"3\"/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.star(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.star(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("", this.mockBotTagHandler.Transform());
         }
 
@@ -69,7 +71,7 @@ namespace Tests.AIMLTagHandlers
         public void testBadInputAttributeValue()
         {
             XmlNode testNode = StaticHelpers.getNode("<star index=\"one\"/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.star(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.star(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("", this.mockBotTagHandler.Transform());
         }
 
@@ -77,7 +79,7 @@ namespace Tests.AIMLTagHandlers
         public void testBadInputTagName()
         {
             XmlNode testNode = StaticHelpers.getNode("<stor index=\"1\"/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.star(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.star(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("", this.mockBotTagHandler.Transform());
         }
     }

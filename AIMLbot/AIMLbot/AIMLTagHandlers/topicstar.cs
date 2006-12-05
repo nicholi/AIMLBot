@@ -21,16 +21,19 @@ namespace AIMLbot.AIMLTagHandlers
         /// </summary>
         /// <param name="bot">The bot involved in this request</param>
         /// <param name="user">The user making the request</param>
+        /// <param name="query">The query that originated this node</param>
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public topicstar(AIMLbot.Bot bot, 
-                        AIMLbot.User user, 
-                        AIMLbot.Request request, 
-                        AIMLbot.Result result, 
+        public topicstar(AIMLbot.Bot bot,
+                        AIMLbot.User user,
+                        AIMLbot.Utils.SubQuery query,
+                        AIMLbot.Request request,
+                        AIMLbot.Result result,
                         XmlNode templateNode)
-        : base (bot,user,request,result,templateNode)
-        {}
+            : base(bot, user, query, request, result, templateNode)
+        {
+        }
 
         protected override string ProcessChange()
         {
@@ -38,9 +41,9 @@ namespace AIMLbot.AIMLTagHandlers
             {
                 if (this.templateNode.Attributes.Count == 0)
                 {
-                    if (this.request.TopicStar.Count > 0)
+                    if (this.query.TopicStar.Count > 0)
                     {
-                        return (string)this.request.TopicStar[0];
+                        return (string)this.query.TopicStar[0];
                     }
                     else
                     {
@@ -56,11 +59,11 @@ namespace AIMLbot.AIMLTagHandlers
                             try
                             {
                                 int result = Convert.ToInt32(this.templateNode.Attributes[0].Value.Trim());
-                                if (this.request.TopicStar.Count > 0)
+                                if (this.query.TopicStar.Count > 0)
                                 {
                                     if (result > 0)
                                     {
-                                        return (string)this.request.TopicStar[result - 1];
+                                        return (string)this.query.TopicStar[result - 1];
                                     }
                                     else
                                     {

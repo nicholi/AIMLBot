@@ -15,16 +15,19 @@ namespace AIMLbot.Utils
         /// </summary>
         /// <param name="bot">The bot involved in this request</param>
         /// <param name="user">The user making the request</param>
+        /// <param name="query">The query that originated this node</param>
         /// <param name="request">The request itself</param>
         /// <param name="result">The result to be passed back to the user</param>
         /// <param name="templateNode">The node to be processed</param>
         public AIMLTagHandler   (   AIMLbot.Bot bot, 
                                     AIMLbot.User user, 
+                                    AIMLbot.Utils.SubQuery query,
                                     AIMLbot.Request request, 
                                     AIMLbot.Result result, 
                                     XmlNode templateNode) :base(bot,templateNode.OuterXml)
         {
             this.user = user;
+            this.query = query;
             this.request = request;
             this.result = result;
             this.templateNode = templateNode;
@@ -41,6 +44,11 @@ namespace AIMLbot.Utils
         /// A representation of the user who made the request
         /// </summary>
         public AIMLbot.User user;
+
+        /// <summary>
+        /// The query that produced this node containing the wildcard matches
+        /// </summary>
+        public AIMLbot.Utils.SubQuery query;
 
         /// <summary>
         /// A representation of the input into the bot made by the user

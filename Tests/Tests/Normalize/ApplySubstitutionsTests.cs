@@ -19,7 +19,7 @@ namespace Tests.Normalize
         {
             this.mockBot = new AIMLbot.Bot();
 
-            string subs = "<?xml version=\"1.0\" encoding=\"utf-8\" ?><root><item name=\"this\" value=\"the\" /><item name=\"is\" value=\"test\" /><item name=\"a\" value=\"works\" /><item name=\"test\" value=\"great\" /></root>";
+            string subs = "<?xml version=\"1.0\" encoding=\"utf-8\" ?><root><item name=\" this \" value=\" the \" /><item name=\" is \" value=\" test \" /><item name=\" a \" value=\" works \" /><item name=\" test \" value=\" great \" /></root>";
             this.substitutions = new XmlDocument();
             this.substitutions.LoadXml(subs);
         }
@@ -27,18 +27,17 @@ namespace Tests.Normalize
         [Test]
         public void testWithGoodData()
         {
-            this.mockSubstitutor = new ApplySubstitutions(this.mockBot, "this is a test");
+            this.mockSubstitutor = new ApplySubstitutions(this.mockBot, " this is a test ");
             this.mockBot.Substitutions.loadSettings(this.substitutions);
-            Assert.AreEqual("THE TEST WORKS GREAT", this.mockSubstitutor.Transform());
+            Assert.AreEqual(" the test works great ", this.mockSubstitutor.Transform());
         }
 
         [Test]
         public void testNoMatchData()
         {
-            this.mockSubstitutor = new ApplySubstitutions(this.mockBot, "no substitutions here");
+            this.mockSubstitutor = new ApplySubstitutions(this.mockBot, "No substitutions here");
             this.mockBot.Substitutions.loadSettings(this.substitutions);
-            Assert.AreEqual("NO SUBSTITUTIONS HERE", this.mockSubstitutor.Transform());
+            Assert.AreEqual("No substitutions here", this.mockSubstitutor.Transform());
         }
-
     }
 }

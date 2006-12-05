@@ -39,7 +39,7 @@ namespace Tests.Utils
             this.mockBot = new Bot();
             this.mockLoader = new AIMLbot.Utils.AIMLLoader(this.mockBot);
             this.mockLoader.loadAIML();
-            Assert.AreEqual(25, this.mockBot.Size);
+            Assert.AreEqual(26, this.mockBot.Size);
         }
 
         [Test]
@@ -119,8 +119,8 @@ namespace Tests.Utils
             testDoc.Load(Path.Combine(this.mockBot.PathToAIML, "testNoThat.aiml"));
             XmlNode testNode = testDoc.LastChild.FirstChild;
             this.mockLoader = new AIMLbot.Utils.AIMLLoader(this.mockBot);
-            string result = this.mockLoader.generatePath("this * is _ a pattern", "this * is _ a that", "this * is _ a topic", true);
-            string expected = "THIS IS A PATTERN <that> THIS IS A THAT <topic> THIS IS A TOPIC";
+            string result = this.mockLoader.generatePath("This * is _ a pattern", "This * is _ a that", "This * is _ a topic", true);
+            string expected = "This is a pattern <that> This is a that <topic> This is a topic";
             Assert.AreEqual(expected, result);
         }
     }

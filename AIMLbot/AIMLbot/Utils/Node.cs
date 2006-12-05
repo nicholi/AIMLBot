@@ -111,11 +111,12 @@ namespace AIMLbot.Utils
         /// whilst processing the referenced request
         /// </summary>
         /// <param name="path">The normalized path derived from the user's input</param>
+        /// <param name="query">The query that this search is for</param>
         /// <param name="request">An encapsulation of the request from the user</param>
         /// <param name="matchstate">The part of the input path the node represents</param>
         /// <param name="wildcard">The contents of the user input absorbed by the AIML wildcards "_" and "*"</param>
         /// <returns>The template to process to generate the output</returns>
-        public string evaluate(string path, Request request, MatchState matchstate, StringBuilder wildcard)
+        public string evaluate(string path, SubQuery query, Request request, MatchState matchstate, StringBuilder wildcard)
         {
             // check for timeout
             if (request.StartedOn.AddMilliseconds(request.bot.TimeOut) < DateTime.Now)
@@ -168,7 +169,7 @@ namespace AIMLbot.Utils
                 this.storeWildCard(splitPath[0],newWildcard);
                 
                 // move down into the identified branch of the GraphMaster structure
-                string result = childNode.evaluate(newPath, request, matchstate, newWildcard);
+                string result = childNode.evaluate(newPath, query, request, matchstate, newWildcard);
 
                 // and if we get a result from the branch process the wildcard matches and return 
                 // the result
@@ -180,13 +181,13 @@ namespace AIMLbot.Utils
                         switch (matchstate)
                         {
                             case MatchState.UserInput:
-                                request.InputStar.Add(newWildcard.ToString());
+                                query.InputStar.Add(newWildcard.ToString());
                                 break;
                             case MatchState.That:
-                                request.ThatStar.Add(newWildcard.ToString());
+                                query.ThatStar.Add(newWildcard.ToString());
                                 break;
                             case MatchState.Topic:
-                                request.TopicStar.Add(newWildcard.ToString());
+                                query.TopicStar.Add(newWildcard.ToString());
                                 // added due to this match being the end of the line
                                 newWildcard.Remove(0, newWildcard.Length);
                                 break;
@@ -216,7 +217,7 @@ namespace AIMLbot.Utils
                 // move down into the identified branch of the GraphMaster structure using the new
                 // matchstate
                 StringBuilder newWildcard = new StringBuilder();
-                string result = childNode.evaluate(newPath, request, newMatchstate,newWildcard);
+                string result = childNode.evaluate(newPath, query, request, newMatchstate,newWildcard);
                 // and if we get a result from the child return it
                 if (result.Length > 0)
                 {
@@ -227,16 +228,15 @@ namespace AIMLbot.Utils
                         switch (matchstate)
                         {
                             case MatchState.UserInput:
-                                request.InputStar.Add(newWildcard.ToString());
+                                query.InputStar.Add(newWildcard.ToString());
                                 newWildcard.Remove(0, newWildcard.Length);
-
                                 break;
                             case MatchState.That:
-                                request.ThatStar.Add(newWildcard.ToString());
+                                query.ThatStar.Add(newWildcard.ToString());
                                 newWildcard.Remove(0, newWildcard.Length);
                                 break;
                             case MatchState.Topic:
-                                request.TopicStar.Add(newWildcard.ToString());
+                                query.TopicStar.Add(newWildcard.ToString());
                                 newWildcard.Remove(0, newWildcard.Length);
                                 break;
                         }
@@ -257,7 +257,7 @@ namespace AIMLbot.Utils
                 StringBuilder newWildcard = new StringBuilder();
                 this.storeWildCard(splitPath[0], newWildcard);
 
-                string result = childNode.evaluate(newPath, request, matchstate, newWildcard);
+                string result = childNode.evaluate(newPath, query, request, matchstate, newWildcard);
                 // and if we get a result from the branch process and return it
                 if (result.Length > 0)
                 {
@@ -267,14 +267,14 @@ namespace AIMLbot.Utils
                         switch (matchstate)
                         {
                             case MatchState.UserInput:
-                                request.InputStar.Add(newWildcard.ToString());
+                                query.InputStar.Add(newWildcard.ToString());
                                 break;
                             case MatchState.That:
-                                request.ThatStar.Add(newWildcard.ToString());
+                                query.ThatStar.Add(newWildcard.ToString());
                                 break;
                             case MatchState.Topic:
-                                request.TopicStar.Add(newWildcard.ToString());
-                                    // added due to this match being the end of the line
+                                query.TopicStar.Add(newWildcard.ToString());
+                                // added due to this match being the end of the line
                                 newWildcard.Remove(0, newWildcard.Length);
                                 break;
                         }
@@ -289,8 +289,8 @@ namespace AIMLbot.Utils
             // valid if we proceed with the tail.
             if ((this.word == "_") || (this.word == "*"))
             {
-                this.storeWildCard(firstWord, wildcard);
-                return this.evaluate(newPath,request,matchstate, wildcard);
+                this.storeWildCard(splitPath[0], wildcard);
+                return this.evaluate(newPath, query, request, matchstate, wildcard);
             }
 
             // If we get here then we're at a dead end so return an empty string. Hopefully, if the

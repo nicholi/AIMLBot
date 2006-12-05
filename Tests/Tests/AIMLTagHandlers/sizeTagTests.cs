@@ -12,6 +12,7 @@ namespace Tests.AIMLTagHandlers
         private AIMLbot.User mockUser;
         private AIMLbot.Request mockRequest;
         private AIMLbot.Result mockResult;
+        private AIMLbot.Utils.SubQuery mockQuery;
         private AIMLbot.AIMLTagHandlers.size mockBotTagHandler;
 
         [TestFixtureSetUp]
@@ -20,6 +21,7 @@ namespace Tests.AIMLTagHandlers
             this.mockBot = new Bot();
             this.mockUser = new User("1", this.mockBot);
             this.mockRequest = new Request("This is a test", this.mockUser, this.mockBot);
+            this.mockQuery = new AIMLbot.Utils.SubQuery("This is a test <that> * <topic> *");
             this.mockResult = new Result(this.mockUser, this.mockBot, this.mockRequest);
         }
 
@@ -27,18 +29,18 @@ namespace Tests.AIMLTagHandlers
         public void testWithValidData()
         {
             XmlNode testNode = StaticHelpers.getNode("<size/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.size(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.size(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("0", this.mockBotTagHandler.Transform());
             AIMLbot.Utils.AIMLLoader loader = new AIMLbot.Utils.AIMLLoader(this.mockBot);
             loader.loadAIML();
-            Assert.AreEqual("25", this.mockBotTagHandler.Transform());
+            Assert.AreEqual("26", this.mockBotTagHandler.Transform());
         }
 
         [Test]
         public void testWithBadXml()
         {
             XmlNode testNode = StaticHelpers.getNode("<soze/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.size(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.size(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("", this.mockBotTagHandler.Transform());
         }
     }

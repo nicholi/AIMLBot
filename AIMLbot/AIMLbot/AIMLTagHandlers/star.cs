@@ -26,27 +26,30 @@ namespace AIMLbot.AIMLTagHandlers
         /// </summary>
         /// <param name="bot">The bot involved in this request</param>
         /// <param name="user">The user making the request</param>
+        /// <param name="query">The query that originated this node</param>
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public star (   AIMLbot.Bot bot, 
-                        AIMLbot.User user, 
-                        AIMLbot.Request request, 
-                        AIMLbot.Result result, 
+        public star(AIMLbot.Bot bot,
+                        AIMLbot.User user,
+                        AIMLbot.Utils.SubQuery query,
+                        AIMLbot.Request request,
+                        AIMLbot.Result result,
                         XmlNode templateNode)
-        : base (bot,user,request,result,templateNode)
-        {}
+            : base(bot, user, query, request, result, templateNode)
+        {
+        }
 
         protected override string ProcessChange()
         {
             if (this.templateNode.Name.ToLower() == "star")
             {
-                if (this.request.InputStar.Count > 0)
+                if (this.query.InputStar.Count > 0)
                 {
                     if (this.templateNode.Attributes.Count == 0)
                     {
                         // return the first (latest) star in the arraylist
-                        return (string)this.request.InputStar[0];
+                        return (string)this.query.InputStar[0];
                     }
                     else if (this.templateNode.Attributes.Count == 1)
                     {
@@ -56,9 +59,9 @@ namespace AIMLbot.AIMLTagHandlers
                             {
                                 int index = Convert.ToInt32(this.templateNode.Attributes[0].Value);
                                 index--;
-                                if ((index >= 0) & (index < this.request.InputStar.Count))
+                                if ((index >= 0) & (index < this.query.InputStar.Count))
                                 {
-                                    return (string)this.request.InputStar[index];
+                                    return (string)this.query.InputStar[index];
                                 }
                                 else
                                 {

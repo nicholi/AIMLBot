@@ -16,6 +16,8 @@ namespace Tests.Utils
 
         private AIMLbot.Request mockRequest;
 
+        private AIMLbot.Utils.SubQuery mockQuery;
+
         [TestFixtureSetUp]
         public void setupMockObjects()
         {
@@ -23,21 +25,22 @@ namespace Tests.Utils
             this.mockBot.GlobalSettings.addSetting("timeout", "9999999999");
             this.mockNode = new AIMLbot.Utils.Node();
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
+            this.mockQuery = new AIMLbot.Utils.SubQuery("Test 1 <that> * <topic> *");
         }
 
         [Test]
         [ExpectedException(typeof(XmlException))]
         public void testAddCategoryWithEmptyTemplate()
         {
-            string path = "TEST 1 <that> * <topic> *";
+            string path = "Test 1 <that> * <topic> *";
             this.mockNode.addCategory(path, string.Empty, "filename");
         }
 
         [Test]
         public void testAddCategoryWithGoodData()
         {
-            string path = "TEST 1 <that> * <topic> *";
-            string template = "<srai>TEST</srai>";
+            string path = "Test 1 <that> * <topic> *";
+            string template = "<srai>Test</srai>";
             this.mockNode = new AIMLbot.Utils.Node();
             this.mockNode.addCategory(path, template, "filename");
 
@@ -64,18 +67,19 @@ namespace Tests.Utils
         [Test]
         public void testEvaluateWithNoWildCards()
         {
-            string path = "TEST 1 <that> THAT <topic> TOPIC";
+            string path = "Test 1 <that> that <topic> topic";
             string template = "<srai>TEST</srai>";
             this.mockNode = new AIMLbot.Utils.Node();
             this.mockNode.addCategory(path, template, "filename");
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
-            Assert.AreEqual("<srai>TEST</srai>",this.mockNode.evaluate("TEST 1 <that> THAT <topic> TOPIC",this.mockRequest,AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
+            this.mockQuery = new AIMLbot.Utils.SubQuery(path);
+            Assert.AreEqual("<srai>TEST</srai>",this.mockNode.evaluate("Test 1 <that> that <topic> topic", this.mockQuery, this.mockRequest,AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
         }
 
         [Test]
         public void testEvaluateWith_WildCardUserInput()
         {
-            string path = "_ TEST 1 <that> THAT <topic> TOPIC";
+            string path = "_ Test 1 <that> that <topic> topic";
             string template = "<srai>TEST</srai>";
 
             this.mockNode = new AIMLbot.Utils.Node();
@@ -87,9 +91,10 @@ namespace Tests.Utils
             this.mockNode.addCategory(pathAlt, templateAlt, "filename");
 
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
+            this.mockQuery = new AIMLbot.Utils.SubQuery(path);
 
-            Assert.AreEqual("<srai>TEST</srai>", this.mockNode.evaluate("WILDCARD WORDS TEST 1 <that> THAT <topic> TOPIC", this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
-            Assert.AreEqual("WILDCARD WORDS", (string)this.mockRequest.InputStar[0]);
+            Assert.AreEqual("<srai>TEST</srai>", this.mockNode.evaluate("WILDCARD WORDS Test 1 <that> that <topic> topic", this.mockQuery, this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
+            Assert.AreEqual("WILDCARD WORDS", (string)this.mockQuery.InputStar[0]);
         }
 
         [Test]
@@ -105,13 +110,14 @@ namespace Tests.Utils
 
             this.mockNode.addCategory(pathAlt, templateAlt, "filename");
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
-            Assert.AreEqual("<srai>TEST ALT</srai>", this.mockNode.evaluate("ALT TEST <that> THAT <topic> TOPIC", this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
+            this.mockQuery = new AIMLbot.Utils.SubQuery(path);
+            Assert.AreEqual("<srai>TEST ALT</srai>", this.mockNode.evaluate("ALT TEST <that> THAT <topic> TOPIC", this.mockQuery, this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
         }
 
         [Test]
         public void testEvaluateWith_WildCardThat()
         {
-            string path = "TEST 1 <that> _ <topic> TOPIC";
+            string path = "Test 1 <that> _ <topic> topic";
             string template = "<srai>TEST</srai>";
             this.mockNode = new AIMLbot.Utils.Node();
             this.mockNode.addCategory(path, template, "filename");
@@ -121,8 +127,9 @@ namespace Tests.Utils
 
             this.mockNode.addCategory(pathAlt, templateAlt, "filename");
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
-            Assert.AreEqual("<srai>TEST</srai>", this.mockNode.evaluate("TEST 1 <that> WILDCARD WORDS <topic> TOPIC", this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
-            Assert.AreEqual("WILDCARD WORDS", (string)this.mockRequest.ThatStar[0]);
+            this.mockQuery = new AIMLbot.Utils.SubQuery(path);
+            Assert.AreEqual("<srai>TEST</srai>", this.mockNode.evaluate("Test 1 <that> WILDCARD WORDS <topic> topic", this.mockQuery, this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
+            Assert.AreEqual("WILDCARD WORDS", (string)this.mockQuery.ThatStar[0]);
         }
 
         [Test]
@@ -138,13 +145,14 @@ namespace Tests.Utils
 
             this.mockNode.addCategory(pathAlt, templateAlt, "filename");
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
-            Assert.AreEqual("<srai>TEST ALT</srai>", this.mockNode.evaluate("ALT TEST <that> THAT <topic> TOPIC", this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
+            this.mockQuery = new AIMLbot.Utils.SubQuery(path);
+            Assert.AreEqual("<srai>TEST ALT</srai>", this.mockNode.evaluate("ALT TEST <that> THAT <topic> TOPIC", this.mockQuery, this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
         }
 
         [Test]
         public void testEvaluateWith_WildCardTopic()
         {
-            string path = "TEST 1 <that> THAT <topic> _";
+            string path = "Test 1 <that> that <topic> _";
             string template = "<srai>TEST</srai>";
 
             this.mockNode = new AIMLbot.Utils.Node();
@@ -156,9 +164,10 @@ namespace Tests.Utils
             this.mockNode.addCategory(pathAlt, templateAlt, "filename");
 
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
+            this.mockQuery = new AIMLbot.Utils.SubQuery(path);
 
-            Assert.AreEqual("<srai>TEST</srai>", this.mockNode.evaluate("TEST 1 <that> THAT <topic> WILDCARD WORDS", this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
-            Assert.AreEqual("WILDCARD WORDS", (string)this.mockRequest.TopicStar[0]);
+            Assert.AreEqual("<srai>TEST</srai>", this.mockNode.evaluate("Test 1 <that> that <topic> WILDCARD WORDS", this.mockQuery, this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
+            Assert.AreEqual("WILDCARD WORDS", (string)this.mockQuery.TopicStar[0]);
         }
 
         [Test]
@@ -174,13 +183,14 @@ namespace Tests.Utils
 
             this.mockNode.addCategory(pathAlt, templateAlt, "filename");
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
-            Assert.AreEqual("<srai>TEST ALT</srai>", this.mockNode.evaluate("ALT TEST <that> THAT <topic> TOPIC", this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
+            this.mockQuery = new AIMLbot.Utils.SubQuery(path);
+            Assert.AreEqual("<srai>TEST ALT</srai>", this.mockNode.evaluate("ALT TEST <that> THAT <topic> TOPIC", this.mockQuery, this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
         }
 
         [Test]
         public void testEvaluateWithStarWildCardUserInput()
         {
-            string path = "TEST * 1 <that> THAT <topic> TOPIC";
+            string path = "Test * 1 <that> that <topic> topic";
             string template = "<srai>TEST</srai>";
 
             this.mockNode = new AIMLbot.Utils.Node();
@@ -193,8 +203,9 @@ namespace Tests.Utils
 
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
 
-            Assert.AreEqual("<srai>TEST</srai>", this.mockNode.evaluate("TEST WILDCARD WORDS 1 <that> THAT <topic> TOPIC", this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
-            Assert.AreEqual("WILDCARD WORDS", (string)this.mockRequest.InputStar[0]);
+            this.mockQuery = new AIMLbot.Utils.SubQuery(path);
+            Assert.AreEqual("<srai>TEST</srai>", this.mockNode.evaluate("Test WILDCARD WORDS 1 <that> that <topic> topic", this.mockQuery, this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
+            Assert.AreEqual("WILDCARD WORDS", (string)this.mockQuery.InputStar[0]);
         }
 
         [Test]
@@ -210,13 +221,14 @@ namespace Tests.Utils
 
             this.mockNode.addCategory(pathAlt, templateAlt, "filename");
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
-            Assert.AreEqual("<srai>TEST ALT</srai>", this.mockNode.evaluate("ALT TEST <that> THAT <topic> TOPIC", this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
+            this.mockQuery = new AIMLbot.Utils.SubQuery(path);
+            Assert.AreEqual("<srai>TEST ALT</srai>", this.mockNode.evaluate("ALT TEST <that> THAT <topic> TOPIC", this.mockQuery, this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
         }
 
         [Test]
         public void testEvaluateWithStarWildCardThat()
         {
-            string path = "TEST 1 <that> TEST * 1 <topic> TOPIC";
+            string path = "Test 1 <that> Test * 1 <topic> topic";
             string template = "<srai>TEST</srai>";
             this.mockNode = new AIMLbot.Utils.Node();
             this.mockNode.addCategory(path, template, "filename");
@@ -226,8 +238,9 @@ namespace Tests.Utils
 
             this.mockNode.addCategory(pathAlt, templateAlt, "filename");
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
-            Assert.AreEqual("<srai>TEST</srai>", this.mockNode.evaluate("TEST 1 <that> TEST WILDCARD WORDS 1 <topic> TOPIC", this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
-            Assert.AreEqual("WILDCARD WORDS", (string)this.mockRequest.ThatStar[0]);
+            this.mockQuery = new AIMLbot.Utils.SubQuery(path);
+            Assert.AreEqual("<srai>TEST</srai>", this.mockNode.evaluate("Test 1 <that> Test WILDCARD WORDS 1 <topic> TOPIC", this.mockQuery, this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
+            Assert.AreEqual("WILDCARD WORDS", (string)this.mockQuery.ThatStar[0]);
         }
 
         [Test]
@@ -243,13 +256,14 @@ namespace Tests.Utils
 
             this.mockNode.addCategory(pathAlt, templateAlt, "filename");
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
-            Assert.AreEqual("<srai>TEST ALT</srai>", this.mockNode.evaluate("ALT TEST <that> THAT <topic> TOPIC", this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
+            this.mockQuery = new AIMLbot.Utils.SubQuery(path);
+            Assert.AreEqual("<srai>TEST ALT</srai>", this.mockNode.evaluate("ALT TEST <that> THAT <topic> TOPIC", this.mockQuery, this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
         }
 
         [Test]
         public void testEvaluateWithStarWildCardTopic()
         {
-            string path = "TEST 1 <that> THAT <topic> TEST * 1";
+            string path = "Test 1 <that> that <topic> Test * 1";
             string template = "<srai>TEST</srai>";
 
             this.mockNode = new AIMLbot.Utils.Node();
@@ -261,9 +275,10 @@ namespace Tests.Utils
             this.mockNode.addCategory(pathAlt, templateAlt, "filename");
 
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
+            this.mockQuery = new AIMLbot.Utils.SubQuery(path);
 
-            Assert.AreEqual("<srai>TEST</srai>", this.mockNode.evaluate("TEST 1 <that> THAT <topic> TEST WILDCARD WORDS 1", this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
-            Assert.AreEqual("WILDCARD WORDS", (string)this.mockRequest.TopicStar[0]);
+            Assert.AreEqual("<srai>TEST</srai>", this.mockNode.evaluate("Test 1 <that> that <topic> Test WILDCARD WORDS 1", this.mockQuery, this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
+            Assert.AreEqual("WILDCARD WORDS", (string)this.mockQuery.TopicStar[0]);
         }
 
         [Test]
@@ -279,7 +294,8 @@ namespace Tests.Utils
 
             this.mockNode.addCategory(pathAlt, templateAlt, "filename");
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
-            Assert.AreEqual("<srai>TEST ALT</srai>", this.mockNode.evaluate("ALT TEST <that> THAT <topic> TOPIC", this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
+            this.mockQuery = new AIMLbot.Utils.SubQuery(path);
+            Assert.AreEqual("<srai>TEST ALT</srai>", this.mockNode.evaluate("ALT TEST <that> THAT <topic> TOPIC", this.mockQuery, this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
         }
 
         [Test]
@@ -300,10 +316,11 @@ namespace Tests.Utils
             string templateAlt = "<srai>TEST ALT</srai>";
 
             this.mockNode.addCategory(pathAlt, templateAlt, "filename");
+            this.mockQuery = new AIMLbot.Utils.SubQuery(path);
 
             System.Threading.Thread.Sleep(20);
 
-            string result = this.mockNode.evaluate("TEST 1 <that> THAT <topic> TOPIC", this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder());
+            string result = this.mockNode.evaluate("TEST 1 <that> THAT <topic> TOPIC", this.mockQuery, this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder());
             Assert.AreEqual(string.Empty, result);
             Assert.AreEqual(true, this.mockRequest.hasTimedOut);
         }
@@ -315,14 +332,15 @@ namespace Tests.Utils
             this.mockBot.GlobalSettings.addSetting("timeout", "10");
             this.mockNode = new AIMLbot.Utils.Node();
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
+            this.mockQuery = new AIMLbot.Utils.SubQuery("Test 1 <that> that <topic> topic");
 
-            Assert.AreEqual(string.Empty, this.mockNode.evaluate("TEST 1 <that> THAT <topic> TOPIC", this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
+            Assert.AreEqual(string.Empty, this.mockNode.evaluate("TEST 1 <that> THAT <topic> TOPIC", this.mockQuery, this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
         }
 
         [Test]
         public void testEvaluateWithWildcardsInDifferentPartsOfPath()
         {
-            string path = "TEST * 1 <that> TEST * 1 <topic> TEST * 1";
+            string path = "Test * 1 <that> Test * 1 <topic> Test * 1";
             string template = "<srai>TEST</srai>";
 
             this.mockNode = new AIMLbot.Utils.Node();
@@ -334,17 +352,18 @@ namespace Tests.Utils
             this.mockNode.addCategory(pathAlt, templateAlt, "filename");
 
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
+            this.mockQuery = new AIMLbot.Utils.SubQuery(path);
 
-            Assert.AreEqual("<srai>TEST</srai>", this.mockNode.evaluate("TEST WILDCARD USER WORDS 1 <that> TEST WILDCARD THAT WORDS 1 <topic> TEST WILDCARD TOPIC WORDS 1", this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
-            Assert.AreEqual("WILDCARD USER WORDS", (string)this.mockRequest.InputStar[0]);
-            Assert.AreEqual("WILDCARD THAT WORDS", (string)this.mockRequest.ThatStar[0]);
-            Assert.AreEqual("WILDCARD TOPIC WORDS", (string)this.mockRequest.TopicStar[0]);
+            Assert.AreEqual("<srai>TEST</srai>", this.mockNode.evaluate("Test WILDCARD USER WORDS 1 <that> Test WILDCARD THAT WORDS 1 <topic> Test WILDCARD TOPIC WORDS 1", this.mockQuery, this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
+            Assert.AreEqual("WILDCARD USER WORDS", (string)this.mockQuery.InputStar[0]);
+            Assert.AreEqual("WILDCARD THAT WORDS", (string)this.mockQuery.ThatStar[0]);
+            Assert.AreEqual("WILDCARD TOPIC WORDS", (string)this.mockQuery.TopicStar[0]);
         }
 
         [Test]
         public void testEvaluateWithMultipleWildcards()
         {
-            string path = "TEST _ 1 * <that> TEST _ 1 * <topic> TEST * 1 _";
+            string path = "Test _ 1 * <that> Test _ 1 * <topic> Test * 1 _";
             string template = "<srai>TEST</srai>";
 
             this.mockNode = new AIMLbot.Utils.Node();
@@ -357,22 +376,24 @@ namespace Tests.Utils
 
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
 
-            Assert.AreEqual("<srai>TEST</srai>", this.mockNode.evaluate("TEST FIRST USER 1 SECOND USER <that> TEST FIRST THAT 1 SECOND THAT <topic> TEST FIRST TOPIC 1 SECOND TOPIC", this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
-            Assert.AreEqual(2, this.mockRequest.InputStar.Count);
-            Assert.AreEqual("SECOND USER", (string)this.mockRequest.InputStar[0]);
-            Assert.AreEqual("FIRST USER", (string)this.mockRequest.InputStar[1]);
-            Assert.AreEqual(2, this.mockRequest.ThatStar.Count);
-            Assert.AreEqual("SECOND THAT", (string)this.mockRequest.ThatStar[0]);
-            Assert.AreEqual("FIRST THAT", (string)this.mockRequest.ThatStar[1]);
-            Assert.AreEqual(2, this.mockRequest.TopicStar.Count);
-            Assert.AreEqual("SECOND TOPIC", (string)this.mockRequest.TopicStar[0]);
-            Assert.AreEqual("FIRST TOPIC", (string)this.mockRequest.TopicStar[1]);
+            this.mockQuery = new AIMLbot.Utils.SubQuery(path);
+
+            Assert.AreEqual("<srai>TEST</srai>", this.mockNode.evaluate("Test FIRST USER 1 SECOND USER <that> Test FIRST THAT 1 SECOND THAT <topic> Test FIRST TOPIC 1 SECOND TOPIC", this.mockQuery, this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
+            Assert.AreEqual(2, this.mockQuery.InputStar.Count);
+            Assert.AreEqual("SECOND USER", (string)this.mockQuery.InputStar[0]);
+            Assert.AreEqual("FIRST USER", (string)this.mockQuery.InputStar[1]);
+            Assert.AreEqual(2, this.mockQuery.ThatStar.Count);
+            Assert.AreEqual("SECOND THAT", (string)this.mockQuery.ThatStar[0]);
+            Assert.AreEqual("FIRST THAT", (string)this.mockQuery.ThatStar[1]);
+            Assert.AreEqual(2, this.mockQuery.TopicStar.Count);
+            Assert.AreEqual("SECOND TOPIC", (string)this.mockQuery.TopicStar[0]);
+            Assert.AreEqual("FIRST TOPIC", (string)this.mockQuery.TopicStar[1]);
         }
 
         [Test]
         public void testEvaluateWithMultipleWildcardsSwitched()
         {
-            string path = "TEST * 1 _ <that> TEST * 1 _ <topic> TEST _ 1 *";
+            string path = "Test * 1 _ <that> Test * 1 _ <topic> Test _ 1 *";
             string template = "<srai>TEST</srai>";
 
             this.mockNode = new AIMLbot.Utils.Node();
@@ -384,17 +405,18 @@ namespace Tests.Utils
             this.mockNode.addCategory(pathAlt, templateAlt, "filename");
 
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
+            this.mockQuery = new AIMLbot.Utils.SubQuery(path);
 
-            Assert.AreEqual("<srai>TEST</srai>", this.mockNode.evaluate("TEST FIRST USER 1 SECOND USER <that> TEST FIRST THAT 1 SECOND THAT <topic> TEST FIRST TOPIC 1 SECOND TOPIC", this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
-            Assert.AreEqual(2, this.mockRequest.InputStar.Count);
-            Assert.AreEqual("SECOND USER", (string)this.mockRequest.InputStar[0]);
-            Assert.AreEqual("FIRST USER", (string)this.mockRequest.InputStar[1]);
-            Assert.AreEqual(2, this.mockRequest.ThatStar.Count);
-            Assert.AreEqual("SECOND THAT", (string)this.mockRequest.ThatStar[0]);
-            Assert.AreEqual("FIRST THAT", (string)this.mockRequest.ThatStar[1]);
-            Assert.AreEqual(2, this.mockRequest.TopicStar.Count);
-            Assert.AreEqual("SECOND TOPIC", (string)this.mockRequest.TopicStar[0]);
-            Assert.AreEqual("FIRST TOPIC", (string)this.mockRequest.TopicStar[1]);
+            Assert.AreEqual("<srai>TEST</srai>", this.mockNode.evaluate("Test FIRST USER 1 SECOND USER <that> Test FIRST THAT 1 SECOND THAT <topic> Test FIRST TOPIC 1 SECOND TOPIC", this.mockQuery, this.mockRequest, AIMLbot.Utils.MatchState.UserInput, new StringBuilder()));
+            Assert.AreEqual(2, this.mockQuery.InputStar.Count);
+            Assert.AreEqual("SECOND USER", (string)this.mockQuery.InputStar[0]);
+            Assert.AreEqual("FIRST USER", (string)this.mockQuery.InputStar[1]);
+            Assert.AreEqual(2, this.mockQuery.ThatStar.Count);
+            Assert.AreEqual("SECOND THAT", (string)this.mockQuery.ThatStar[0]);
+            Assert.AreEqual("FIRST THAT", (string)this.mockQuery.ThatStar[1]);
+            Assert.AreEqual(2, this.mockQuery.TopicStar.Count);
+            Assert.AreEqual("SECOND TOPIC", (string)this.mockQuery.TopicStar[0]);
+            Assert.AreEqual("FIRST TOPIC", (string)this.mockQuery.TopicStar[1]);
         }
     }
 }

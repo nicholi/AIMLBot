@@ -12,6 +12,7 @@ namespace Tests.AIMLTagHandlers
         private AIMLbot.User mockUser;
         private AIMLbot.Request mockRequest;
         private AIMLbot.Result mockResult;
+        private AIMLbot.Utils.SubQuery mockQuery;
         private AIMLbot.AIMLTagHandlers.date mockBotTagHandler;
 
         [TestFixtureSetUp]
@@ -20,6 +21,7 @@ namespace Tests.AIMLTagHandlers
             this.mockBot = new Bot();
             this.mockUser = new User("1", this.mockBot);
             this.mockRequest = new Request("This is a test", this.mockUser, this.mockBot);
+            this.mockQuery = new AIMLbot.Utils.SubQuery("This is a test <that> * <topic> *");
             this.mockResult = new Result(this.mockUser, this.mockBot, this.mockRequest);
         }
 
@@ -27,7 +29,7 @@ namespace Tests.AIMLTagHandlers
         public void testExpectedInput()
         {
             XmlNode testNode = StaticHelpers.getNode("<date/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.date(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.date(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             DateTime now = DateTime.Now;
             DateTime expected = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second);
             Assert.AreEqual(expected.ToString(this.mockBot.Locale), this.mockBotTagHandler.Transform());
@@ -37,7 +39,7 @@ namespace Tests.AIMLTagHandlers
         public void testBadInput()
         {
             XmlNode testNode = StaticHelpers.getNode("<dote/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.date(this.mockBot, this.mockUser, this.mockRequest, this.mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.date(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("", this.mockBotTagHandler.Transform());
         }
     }

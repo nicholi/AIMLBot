@@ -79,6 +79,7 @@
     <Compile Include="Utils\MatchState.cs" />
     <Compile Include="Utils\Node.cs" />
     <Compile Include="Utils\SettingsDictionary.cs" />
+    <Compile Include="Utils\SubQuery.cs" />
     <Compile Include="Utils\TextTransformer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

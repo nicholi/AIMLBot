@@ -27,6 +27,8 @@ namespace ExampleCustomAIMLTags
     /// this.templateNode - An XmlNode object that represents the tag you're processing
     /// this.bot - An instance of AIMLbot.Bot that represents the bot that is currently processing the input
     /// this.user - An instance of AIMLbot.User that represents the user who originated the current input
+    /// this.query - An instance of AIMLbot.Utils.SubQuery that represents an individual query against the
+    /// graphmaster. Contains the various wildcard match collections
     /// this.request - An instance of AIMLbot.Request that encapsulates all sorts of useful information about
     /// the input from the user
     /// this.result - An instance of AIMLbot.Result that encapsulates all sorts of useful information about 

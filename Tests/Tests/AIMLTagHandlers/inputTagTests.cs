@@ -11,6 +11,7 @@ namespace Tests.AIMLTagHandlers
         private AIMLbot.Bot mockBot;
         private AIMLbot.User mockUser;
         private AIMLbot.Request mockRequest;
+        private AIMLbot.Utils.SubQuery mockQuery;
         private AIMLbot.AIMLTagHandlers.input mockBotTagHandler;
 
         [TestFixtureSetUp]
@@ -19,8 +20,9 @@ namespace Tests.AIMLTagHandlers
             this.mockBot = new Bot();
             this.mockUser = new User("1", this.mockBot);
             this.mockRequest = new Request("This is a test", this.mockUser, this.mockBot);
-            this.mockRequest.InputStar.Insert(0, "first star");
-            this.mockRequest.InputStar.Insert(0, "second star");
+            this.mockQuery = new AIMLbot.Utils.SubQuery("This is a test <that> * <topic> *");
+            this.mockQuery.InputStar.Insert(0, "first star");
+            this.mockQuery.InputStar.Insert(0, "second star");
             //this.mockResult = new Result(this.mockUser, this.mockBot, this.mockRequest);
         }
 
@@ -29,7 +31,7 @@ namespace Tests.AIMLTagHandlers
         {
             XmlNode testNode = StaticHelpers.getNode("<input/>");
             Result mockResult = new Result(this.mockUser, this.mockBot, this.mockRequest);
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.input(this.mockBot, this.mockUser, this.mockRequest, mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.input(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, mockResult, testNode);
             Assert.AreEqual("", this.mockBotTagHandler.Transform());
             this.mockRequest = new Request("Sentence 1. Sentence 2", this.mockUser, this.mockBot);
             mockResult.InputSentences.Add("Result 1");
@@ -43,27 +45,27 @@ namespace Tests.AIMLTagHandlers
             Assert.AreEqual("Result 3", this.mockBotTagHandler.Transform());
 
             testNode = StaticHelpers.getNode("<input index=\"1\"/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.input(this.mockBot, this.mockUser, this.mockRequest, mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.input(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, mockResult, testNode);
             Assert.AreEqual("Result 3", this.mockBotTagHandler.Transform());
 
             testNode = StaticHelpers.getNode("<input index=\"2,1\"/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.input(this.mockBot, this.mockUser, this.mockRequest, mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.input(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, mockResult, testNode);
             Assert.AreEqual("Result 1", this.mockBotTagHandler.Transform());
 
             testNode = StaticHelpers.getNode("<input index=\"1,2\"/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.input(this.mockBot, this.mockUser, this.mockRequest, mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.input(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, mockResult, testNode);
             Assert.AreEqual("Result 4", this.mockBotTagHandler.Transform());
 
             testNode = StaticHelpers.getNode("<input index=\"2,2\"/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.input(this.mockBot, this.mockUser, this.mockRequest, mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.input(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, mockResult, testNode);
             Assert.AreEqual("Result 2", this.mockBotTagHandler.Transform());
 
             testNode = StaticHelpers.getNode("<input index=\"1,3\"/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.input(this.mockBot, this.mockUser, this.mockRequest, mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.input(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, mockResult, testNode);
             Assert.AreEqual("", this.mockBotTagHandler.Transform());
 
             testNode = StaticHelpers.getNode("<input index=\"3\"/>");
-            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.input(this.mockBot, this.mockUser, this.mockRequest, mockResult, testNode);
+            this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.input(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, mockResult, testNode);
             Assert.AreEqual("", this.mockBotTagHandler.Transform());
         }
     }
