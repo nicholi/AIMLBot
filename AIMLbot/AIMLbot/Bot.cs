@@ -81,6 +81,11 @@ namespace AIMLbot
         }
 
         /// <summary>
+        /// Flag to show if the bot is willing to accept user input
+        /// </summary>
+        public bool isAcceptingUserInput = true;
+
+        /// <summary>
         /// The maximum amount of time a request should take (in milliseconds)
         /// </summary>
         public double TimeOut
@@ -633,7 +638,7 @@ namespace AIMLbot
             foreach (string path in result.NormalizedPaths)
             {
                 Utils.SubQuery query = new SubQuery(path);
-                query.Template = this.Graphmaster.evaluate(path, query, request, MatchState.UserInput, new StringBuilder());
+                query.Template = this.Graphmaster.evaluate(path, query, request, MatchState.Topic, new StringBuilder());
                 result.SubQueries.Add(query);
             }
 

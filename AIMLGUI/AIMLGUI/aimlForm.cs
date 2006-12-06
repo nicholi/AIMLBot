@@ -57,7 +57,9 @@ namespace AIMLGUI
                 {
                     if (this.myBot.Size > 0)
                     {
+                        this.myBot.isAcceptingUserInput = false;
                         this.myBot.saveToBinaryFile(saveFileDialogDump.FileName);
+                        this.myBot.isAcceptingUserInput = true;
                     }
                 }
             }
@@ -77,6 +79,7 @@ namespace AIMLGUI
                 if (dr == DialogResult.OK)
                 {
                     AIMLbot.Utils.AIMLLoader loader = new AIMLbot.Utils.AIMLLoader(this.myBot);
+                    this.myBot.isAcceptingUserInput = false;
                     if (folderBrowserDialogAIML.SelectedPath.Length > 0)
                     {
                         loader.loadAIML(folderBrowserDialogAIML.SelectedPath);
@@ -85,6 +88,7 @@ namespace AIMLGUI
                     {
                         loader.loadAIML(this.myBot.PathToAIML);
                     }
+                    this.myBot.isAcceptingUserInput = true;
                 }
             }
             catch (Exception ex)
@@ -105,7 +109,9 @@ namespace AIMLGUI
                 DialogResult dr = openFileDialogDump.ShowDialog(this);
                 if (dr == DialogResult.OK)
                 {
+                    this.myBot.isAcceptingUserInput = false;
                     this.myBot.loadFromBinaryFile(openFileDialogDump.FileName);
+                    this.myBot.isAcceptingUserInput = true;
                 }
             }
             catch (Exception ex)
@@ -266,14 +272,22 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
         private void processInputFromUser()
         {
-            string rawInput = this.richTextBoxInput.Text;
-            this.richTextBoxInput.Text = string.Empty;
-            this.richTextBoxOutput.AppendText("You: " + rawInput + Environment.NewLine);
-            Request myRequest = new Request(rawInput, this.myUser, this.myBot);
-            Result myResult = this.myBot.Chat(myRequest);
-            this.lastRequest = myRequest;
-            this.lastResult = myResult;
-            this.richTextBoxOutput.AppendText("Bot: " + myResult.RawOutput+ Environment.NewLine + Environment.NewLine);
+            if (this.myBot.isAcceptingUserInput)
+            {
+                string rawInput = this.richTextBoxInput.Text;
+                this.richTextBoxInput.Text = string.Empty;
+                this.richTextBoxOutput.AppendText("You: " + rawInput + Environment.NewLine);
+                Request myRequest = new Request(rawInput, this.myUser, this.myBot);
+                Result myResult = this.myBot.Chat(myRequest);
+                this.lastRequest = myRequest;
+                this.lastResult = myResult;
+                this.richTextBoxOutput.AppendText("Bot: " + myResult.RawOutput + Environment.NewLine + Environment.NewLine);
+            }
+            else
+            {
+                this.richTextBoxInput.Text = string.Empty;
+                this.richTextBoxOutput.AppendText("Bot not accepting user input." + Environment.NewLine);
+            }
         }
 
         private void singleFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -289,7 +303,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
                 if (dr == DialogResult.OK)
                 {
                     AIMLbot.Utils.AIMLLoader loader = new AIMLbot.Utils.AIMLLoader(this.myBot);
+                    this.myBot.isAcceptingUserInput = false;
                     loader.loadAIMLFile(openFileDialogDump.FileName);
+                    this.myBot.isAcceptingUserInput = true;
                 }
             }
             catch (Exception ex)
@@ -324,7 +340,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
                 {
                     if (openFileDialogDump.FileName.Length > 0)
                     {
+                        this.myBot.isAcceptingUserInput = false;
                         this.myBot.loadCustomTagHandlers(openFileDialogDump.FileName);
+                        this.myBot.isAcceptingUserInput = true;
                     }
                 }
             }

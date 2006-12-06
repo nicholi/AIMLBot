@@ -30,7 +30,7 @@
   <ItemGroup>
     <Reference Include="AIMLbot, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\AIMLbot\AIMLbot\bin\Release\AIMLbot.dll</HintPath>
+      <HintPath>..\..\AIMLbot\AIMLbot\bin\Debug\AIMLbot.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

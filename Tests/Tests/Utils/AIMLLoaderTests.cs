@@ -81,7 +81,7 @@ namespace Tests.Utils
             XmlNode testNode = testDoc.LastChild.FirstChild.FirstChild;
             this.mockLoader = new AIMLbot.Utils.AIMLLoader(this.mockBot);
             string result = this.mockLoader.generatePath(testNode, "testing topic 123", false);
-            string expected = "test 1 <that> testing that 123 <topic> testing topic 123";
+            string expected = "testing topic 123 <topic> testing that 123 <that> test 1";
             Assert.AreEqual(expected, result);
         }
 
@@ -94,7 +94,7 @@ namespace Tests.Utils
             XmlNode testNode = testDoc.LastChild.FirstChild.FirstChild;
             this.mockLoader = new AIMLbot.Utils.AIMLLoader(this.mockBot);
             string result = this.mockLoader.generatePath(testNode, "testing _ 123 *", false);
-            string expected = "test * 1 _ <that> testing * that _ 123 <topic> testing _ 123 *";
+            string expected = "testing _ 123 * <topic> testing * that _ 123 <that> test * 1 _";
             Assert.AreEqual(expected, result);
         }
 
@@ -107,7 +107,7 @@ namespace Tests.Utils
             XmlNode testNode = testDoc.LastChild.FirstChild;
             this.mockLoader = new AIMLbot.Utils.AIMLLoader(this.mockBot);
             string result = this.mockLoader.generatePath(testNode, "*", false);
-            string expected = "test 1 <that> * <topic> *";
+            string expected = "* <topic> * <that> test 1";
             Assert.AreEqual(expected, result);
         }
 
@@ -120,7 +120,7 @@ namespace Tests.Utils
             XmlNode testNode = testDoc.LastChild.FirstChild;
             this.mockLoader = new AIMLbot.Utils.AIMLLoader(this.mockBot);
             string result = this.mockLoader.generatePath("This * is _ a pattern", "This * is _ a that", "This * is _ a topic", true);
-            string expected = "This is a pattern <that> This is a that <topic> This is a topic";
+            string expected = "This is a topic <topic> This is a that <that> This is a pattern";
             Assert.AreEqual(expected, result);
         }
     }

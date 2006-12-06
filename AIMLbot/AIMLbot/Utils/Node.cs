@@ -135,7 +135,7 @@ namespace AIMLbot.Utils
             {
                 if (path.Length > 0)
                 {
-                    // if we get here it means that there is a wildcard in the topic part of the
+                    // if we get here it means that there is a wildcard in the user input part of the
                     // path.
                     this.storeWildCard(path, wildcard);
                 }
@@ -182,14 +182,14 @@ namespace AIMLbot.Utils
                         {
                             case MatchState.UserInput:
                                 query.InputStar.Add(newWildcard.ToString());
+                                // added due to this match being the end of the line
+                                newWildcard.Remove(0, newWildcard.Length);
                                 break;
                             case MatchState.That:
                                 query.ThatStar.Add(newWildcard.ToString());
                                 break;
                             case MatchState.Topic:
                                 query.TopicStar.Add(newWildcard.ToString());
-                                // added due to this match being the end of the line
-                                newWildcard.Remove(0, newWildcard.Length);
                                 break;
                         }
                     }
@@ -202,15 +202,18 @@ namespace AIMLbot.Utils
             // nodemapper that matches the first word of the input sentence.
             if (this.children.ContainsKey(firstWord))
             {
-                // process the matchstate
+                // process the matchstate - this might not make sense but the matchstate is working
+                // with a "backwards" path: "topic <topic> that <that> user input"
+                // the "classic" path looks like this: "user input <that> that <topic> topic"
+                // but having it backwards is more efficient for searching purposes
                 MatchState newMatchstate = matchstate;
                 if (firstWord == "<THAT>")
                 {
-                    newMatchstate = MatchState.That;
+                    newMatchstate = MatchState.UserInput;
                 }
                 else if (firstWord == "<TOPIC>")
                 {
-                    newMatchstate = MatchState.Topic;
+                    newMatchstate = MatchState.That;
                 }
 
                 Node childNode = (Node)this.children[firstWord];
@@ -268,14 +271,14 @@ namespace AIMLbot.Utils
                         {
                             case MatchState.UserInput:
                                 query.InputStar.Add(newWildcard.ToString());
+                                // added due to this match being the end of the line
+                                newWildcard.Remove(0, newWildcard.Length);
                                 break;
                             case MatchState.That:
                                 query.ThatStar.Add(newWildcard.ToString());
                                 break;
                             case MatchState.Topic:
                                 query.TopicStar.Add(newWildcard.ToString());
-                                // added due to this match being the end of the line
-                                newWildcard.Remove(0, newWildcard.Length);
                                 break;
                         }
                     }

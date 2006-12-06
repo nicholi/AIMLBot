@@ -38,6 +38,10 @@ namespace AIMLbot.Utils
             this.loadAIML(this.bot.PathToAIML);
         }
 
+        /// <summary>
+        /// Loads the AIML from files found in the path
+        /// </summary>
+        /// <param name="path"></param>
         public void loadAIML(string path)
         {
             if (Directory.Exists(path))
@@ -266,11 +270,11 @@ namespace AIMLbot.Utils
                 }
 
                 // o.k. build the path
-                normalizedPath.Append(normalizedPattern);
-                normalizedPath.Append(" <that> ");
-                normalizedPath.Append(normalizedThat);
-                normalizedPath.Append(" <topic> ");
                 normalizedPath.Append(normalizedTopic);
+                normalizedPath.Append(" <topic> ");
+                normalizedPath.Append(normalizedThat);
+                normalizedPath.Append(" <that> ");
+                normalizedPath.Append(normalizedPattern);
 
                 return normalizedPath.ToString();
             }
