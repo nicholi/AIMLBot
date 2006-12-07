@@ -58,13 +58,20 @@ namespace AIMLbot
                 }
                 else
                 {
-                    StringBuilder paths = new StringBuilder();
-                    foreach (string pattern in this.NormalizedPaths)
+                    if (this.request.hasTimedOut)
                     {
-                        paths.Append(pattern + Environment.NewLine);
+                        return this.bot.TimeOutMessage;
                     }
-                    this.bot.writeToLog("The bot could not find any response for the input: " + this.RawInput+ " with the path(s): "+Environment.NewLine+paths.ToString() + " from the user with an id: "+this.user.UserID);
-                    return string.Empty;
+                    else
+                    {
+                        StringBuilder paths = new StringBuilder();
+                        foreach (string pattern in this.NormalizedPaths)
+                        {
+                            paths.Append(pattern + Environment.NewLine);
+                        }
+                        this.bot.writeToLog("The bot could not find any response for the input: " + this.RawInput + " with the path(s): " + Environment.NewLine + paths.ToString() + " from the user with an id: " + this.user.UserID);
+                        return string.Empty;
+                    }
                 }
             }
         }

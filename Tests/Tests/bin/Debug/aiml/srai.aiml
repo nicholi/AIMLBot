@@ -1,31 +1,43 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <aiml>
-    <category>
-        <pattern>TESTSRAI</pattern>
-        <template>
-            <srai>sraisucceeded</srai>
-        </template>
-    </category>
-    <category>
-        <pattern>SRAISUCCEEDED</pattern>
-        <template>Test passed.</template>
-    </category>
-    <category>
-        <pattern>TESTSR *</pattern>
-        <template>
-            <sr/>
-        </template>
-    </category>
-    <category>
-        <pattern>TESTNESTEDSRAI</pattern>
-        <template>
-            <srai>srainested</srai>
-        </template>
-    </category>
-    <category>
-        <pattern>SRAINESTED</pattern>
-        <template>
-            <srai>sraisucceeded</srai>
-        </template>
-    </category>
+  <category>
+    <pattern>TESTSRAI</pattern>
+    <template>
+      <srai>sraisucceeded</srai>
+    </template>
+  </category>
+  <category>
+    <pattern>SRAISUCCEEDED</pattern>
+    <template>Test passed.</template>
+  </category>
+  <category>
+    <pattern>TESTSR *</pattern>
+    <template>
+      <sr/>
+    </template>
+  </category>
+  <category>
+    <pattern>TESTNESTEDSRAI</pattern>
+    <template>
+      <srai>srainested</srai>
+    </template>
+  </category>
+  <category>
+    <pattern>SRAINESTED</pattern>
+    <template>
+      <srai>sraisucceeded</srai>
+    </template>
+  </category>
+  <category>
+    <pattern>INFINITELOOP1</pattern>
+    <template>
+      <srai>infiniteloop2</srai>
+    </template>
+  </category>
+  <category>
+    <pattern>INFINITELOOP2</pattern>
+    <template>
+      <srai>infiniteloop1</srai>
+    </template>
+  </category>
 </aiml>

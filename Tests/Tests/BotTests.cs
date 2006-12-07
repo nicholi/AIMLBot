@@ -252,7 +252,7 @@ namespace Tests
         {
             this.mockBot = new AIMLbot.Bot();
             this.mockBot.loadAIMLFromFiles();
-            Assert.AreEqual(26, this.mockBot.Size);
+            Assert.AreEqual(28, this.mockBot.Size);
         }
 
         [Test]
@@ -262,6 +262,26 @@ namespace Tests
             this.mockBot.loadAIMLFromFiles();
             Result output = this.mockBot.Chat("bye", "1");
             Assert.AreEqual("Cheerio.", output.RawOutput);
+        }
+
+        [Test]
+        public void testTimeOutChatWorks()
+        {
+            this.mockBot = new Bot();
+            this.mockBot.loadAIMLFromFiles();
+            Result output = this.mockBot.Chat("infiniteloop1", "1");
+            Assert.AreEqual(true, output.request.hasTimedOut);
+            Assert.AreEqual("ERROR: The request has timed out.", output.Output);
+        }
+
+        [Test]
+        public void testChatRepsonseWhenNotAcceptingInput()
+        {
+            this.mockBot = new AIMLbot.Bot();
+            this.mockBot.loadAIMLFromFiles();
+            this.mockBot.isAcceptingUserInput = false;
+            Result output = this.mockBot.Chat("Hi", "1");
+            Assert.AreEqual("This bot is currently set to not accept user input.", output.Output);
         }
 
         [Test]

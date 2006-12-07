@@ -10,6 +10,7 @@
   <item name="defaultpredicates" value="DefaultPredicates.xml"/>
   <item name="substitutionsfile" value="Substitutions.xml"/>
   <item name="maxlogbuffersize" value="64"/>
+  <item name="notacceptinguserinputmessage" value="This bot is currently set to not accept user input."/>
   <item name="stripperregex" value="[^0-9a-zA-Z]"/>
   <item name="version" value="Unknown"/>
   <item name="name" value="Unknown"/>

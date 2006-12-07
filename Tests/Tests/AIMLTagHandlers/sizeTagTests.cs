@@ -33,7 +33,7 @@ namespace Tests.AIMLTagHandlers
             Assert.AreEqual("0", this.mockBotTagHandler.Transform());
             AIMLbot.Utils.AIMLLoader loader = new AIMLbot.Utils.AIMLLoader(this.mockBot);
             loader.loadAIML();
-            Assert.AreEqual("26", this.mockBotTagHandler.Transform());
+            Assert.AreEqual("28", this.mockBotTagHandler.Transform());
         }
 
         [Test]

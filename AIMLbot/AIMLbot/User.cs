@@ -50,6 +50,24 @@ namespace AIMLbot
 		/// </summary>
         public AIMLbot.Utils.SettingsDictionary Predicates;
 
+        /// <summary>
+        /// The most recent result to be returned by the bot
+        /// </summary>
+        public Result LastResult
+        {
+            get
+            {
+                if (this.Results.Count > 0)
+                {
+                    return (Result)this.Results[0];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
 		#endregion
 		
 		#region Methods

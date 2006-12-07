@@ -86,6 +86,17 @@ namespace AIMLbot
         public bool isAcceptingUserInput = true;
 
         /// <summary>
+        /// The message to show if a user tries to use the bot whilst it is set to not process user input
+        /// </summary>
+        private string NotAcceptingUserInputMessage
+        {
+            get
+            {
+                return this.GlobalSettings.grabSetting("notacceptinguserinputmessage");
+            }
+        }
+
+        /// <summary>
         /// The maximum amount of time a request should take (in milliseconds)
         /// </summary>
         public double TimeOut
@@ -487,6 +498,10 @@ namespace AIMLbot
             {
                 this.GlobalSettings.addSetting("maxlogbuffersize", "64");
             }
+            if (!this.GlobalSettings.containsSettingCalled("notacceptinguserinputmessage"))
+            {
+                this.GlobalSettings.addSetting("notacceptinguserinputmessage", "This bot is currently set to not accept user input.");
+            }
             if (!this.GlobalSettings.containsSettingCalled("stripperregex"))
             {
                 this.GlobalSettings.addSetting("stripperregex", "[^0-9a-zA-Z]");
@@ -623,48 +638,55 @@ namespace AIMLbot
         {
             Result result = new Result(request.user, this, request);
 
-            // Normalize the input
-            AIMLLoader loader = new AIMLLoader(this);
-            AIMLbot.Normalize.SplitIntoSentences splitter = new AIMLbot.Normalize.SplitIntoSentences(this);
-            string[] rawSentences = splitter.Transform(request.rawInput);
-            foreach (string sentence in rawSentences)
+            if (this.isAcceptingUserInput)
             {
-                result.InputSentences.Add(sentence);
-                string path = loader.generatePath(sentence, request.user.getLastBotOutput(), request.user.Topic, true);
-                result.NormalizedPaths.Add(path);
-            }
-
-            // grab the templates for the various sentences from the graphmaster
-            foreach (string path in result.NormalizedPaths)
-            {
-                Utils.SubQuery query = new SubQuery(path);
-                query.Template = this.Graphmaster.evaluate(path, query, request, MatchState.Topic, new StringBuilder());
-                result.SubQueries.Add(query);
-            }
-
-            // process the templates into appropriate output
-            foreach (SubQuery query in result.SubQueries)
-            {
-                if (query.Template.Length > 0)
+                // Normalize the input
+                AIMLLoader loader = new AIMLLoader(this);
+                AIMLbot.Normalize.SplitIntoSentences splitter = new AIMLbot.Normalize.SplitIntoSentences(this);
+                string[] rawSentences = splitter.Transform(request.rawInput);
+                foreach (string sentence in rawSentences)
                 {
-                    try
+                    result.InputSentences.Add(sentence);
+                    string path = loader.generatePath(sentence, request.user.getLastBotOutput(), request.user.Topic, true);
+                    result.NormalizedPaths.Add(path);
+                }
+
+                // grab the templates for the various sentences from the graphmaster
+                foreach (string path in result.NormalizedPaths)
+                {
+                    Utils.SubQuery query = new SubQuery(path);
+                    query.Template = this.Graphmaster.evaluate(path, query, request, MatchState.Topic, new StringBuilder());
+                    result.SubQueries.Add(query);
+                }
+
+                // process the templates into appropriate output
+                foreach (SubQuery query in result.SubQueries)
+                {
+                    if (query.Template.Length > 0)
                     {
-                        XmlNode templateNode = AIMLTagHandler.getNode(query.Template);
-                        string outputSentence = this.processNode(templateNode, query, request, result, request.user);
-                        if (outputSentence.Length > 0)
+                        try
                         {
-                            result.OutputSentences.Add(outputSentence);
+                            XmlNode templateNode = AIMLTagHandler.getNode(query.Template);
+                            string outputSentence = this.processNode(templateNode, query, request, result, request.user);
+                            if (outputSentence.Length > 0)
+                            {
+                                result.OutputSentences.Add(outputSentence);
+                            }
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        if (this.WillCallHome)
+                        catch (Exception e)
                         {
-                            this.phoneHome(e.Message, request);
+                            if (this.WillCallHome)
+                            {
+                                this.phoneHome(e.Message, request);
+                            }
+                            this.writeToLog("WARNING! A problem was encountered when trying to process the input: " + request.rawInput + " with the template: \"" + query.Template + "\"");
                         }
-                        this.writeToLog("WARNING! A problem was encountered when trying to process the input: " + request.rawInput + " with the template: \""+query.Template+"\"");
                     }
                 }
+            }
+            else
+            {
+                result.OutputSentences.Add(this.NotAcceptingUserInputMessage);
             }
 
             // populate the Result object
