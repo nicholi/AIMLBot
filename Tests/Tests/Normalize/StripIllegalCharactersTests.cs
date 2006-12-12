@@ -15,6 +15,7 @@ namespace Tests.Normalize
         public void setupMockBot()
         {
             this.mockBot = new AIMLbot.Bot();
+            this.mockBot.loadSettings();
         }
 
         [Test]

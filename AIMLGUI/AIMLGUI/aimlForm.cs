@@ -22,6 +22,7 @@ namespace AIMLGUI
             InitializeComponent();
             this.richTextBoxInput.Focus();
             myBot = new Bot();
+            myBot.loadSettings();
             myUser = new User("DefaultUser",this.myBot);
             myBot.WrittenToLog += new Bot.LogMessageDelegate(myBot_WrittenToLog);
         }

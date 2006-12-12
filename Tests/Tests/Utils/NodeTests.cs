@@ -22,6 +22,7 @@ namespace Tests.Utils
         public void setupMockObjects()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockBot.GlobalSettings.addSetting("timeout", "9999999999");
             this.mockNode = new AIMLbot.Utils.Node();
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
@@ -303,6 +304,7 @@ namespace Tests.Utils
         public void testEvaluateTimeOut()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockBot.GlobalSettings.addSetting("timeout", "10");
             this.mockNode = new AIMLbot.Utils.Node();
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
@@ -330,6 +332,7 @@ namespace Tests.Utils
         public void testEvaluateWithEmptyNode()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockNode = new AIMLbot.Utils.Node();
             this.mockRequest = new Request("Test 1", new User("1", this.mockBot), this.mockBot);
             this.mockQuery = new AIMLbot.Utils.SubQuery("topic <topic> that <that> Test 1");

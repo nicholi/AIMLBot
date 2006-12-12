@@ -18,6 +18,7 @@ namespace Tests.Utils
         public void testLoadAIMLWithBadPath()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockBot.GlobalSettings.addSetting("aimldirectory", "doesnotexist");
             this.mockLoader = new AIMLbot.Utils.AIMLLoader(this.mockBot);
             this.mockLoader.loadAIML();
@@ -28,6 +29,7 @@ namespace Tests.Utils
         public void testLoadAIMLWithEmptyPath()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockBot.GlobalSettings.addSetting("aimldirectory", "aimlEmpty");
             this.mockLoader = new AIMLbot.Utils.AIMLLoader(this.mockBot);
             this.mockLoader.loadAIML();
@@ -37,6 +39,7 @@ namespace Tests.Utils
         public void testLoadAIMLWithValidAIMLfiles()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockLoader = new AIMLbot.Utils.AIMLLoader(this.mockBot);
             this.mockLoader.loadAIML();
             Assert.AreEqual(28, this.mockBot.Size);
@@ -47,6 +50,7 @@ namespace Tests.Utils
         public void testLoadAIMLFileWithBadXML()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockBot.GlobalSettings.addSetting("aimldirectory", "badaiml");
             this.mockLoader = new AIMLbot.Utils.AIMLLoader(this.mockBot);
             this.mockLoader.loadAIMLFile(Path.Combine(this.mockBot.PathToAIML,"badlyFormed.aiml"));
@@ -57,6 +61,7 @@ namespace Tests.Utils
         public void testLoadAIMLFileWithValidXMLButMissingTemplate()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockBot.GlobalSettings.addSetting("aimldirectory", "badaiml");
             this.mockLoader = new AIMLbot.Utils.AIMLLoader(this.mockBot);
             this.mockLoader.loadAIMLFile(Path.Combine(this.mockBot.PathToAIML, "missingTemplate.aiml"));
@@ -67,6 +72,7 @@ namespace Tests.Utils
         public void testLoadAIMLFileWithValidXMLButMissingPattern()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockBot.GlobalSettings.addSetting("aimldirectory", "badaiml");
             this.mockLoader = new AIMLbot.Utils.AIMLLoader(this.mockBot);
             this.mockLoader.loadAIMLFile(Path.Combine(this.mockBot.PathToAIML, "missingPattern.aiml"));
@@ -76,6 +82,7 @@ namespace Tests.Utils
         public void testGeneratePathWorksWithGoodData()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             XmlDocument testDoc = new XmlDocument();
             testDoc.Load(Path.Combine(this.mockBot.PathToAIML,"testThat.aiml"));
             XmlNode testNode = testDoc.LastChild.FirstChild.FirstChild;
@@ -89,6 +96,7 @@ namespace Tests.Utils
         public void testGeneratePathWorksWithGoodDataWithWildcards()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             XmlDocument testDoc = new XmlDocument();
             testDoc.Load(Path.Combine(this.mockBot.PathToAIML, "testWildcards.aiml"));
             XmlNode testNode = testDoc.LastChild.FirstChild.FirstChild;
@@ -102,6 +110,7 @@ namespace Tests.Utils
         public void testGeneratePathWorksWithNoThatTag()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             XmlDocument testDoc = new XmlDocument();
             testDoc.Load(Path.Combine(this.mockBot.PathToAIML, "testNoThat.aiml"));
             XmlNode testNode = testDoc.LastChild.FirstChild;
@@ -115,6 +124,7 @@ namespace Tests.Utils
         public void testGeneratePathWorksAsUserInput()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             XmlDocument testDoc = new XmlDocument();
             testDoc.Load(Path.Combine(this.mockBot.PathToAIML, "testNoThat.aiml"));
             XmlNode testNode = testDoc.LastChild.FirstChild;

@@ -325,20 +325,7 @@ namespace AIMLbot
         /// </summary>
         public Bot()
         {
-            this.setup();
-            // try a safe default setting for the settings xml file
-            string path = Path.Combine(Environment.CurrentDirectory, Path.Combine("config","Settings.xml"));
-            this.loadSettings(path);            
-        }
-
-        /// <summary>
-        /// Ctor
-        /// </summary>
-        /// <param name="pathToSettings">Where to find the settings xml file</param>
-        public Bot(string pathToSettings)
-        {
-            this.setup();
-            this.loadSettings(pathToSettings);
+            this.setup();  
         }
 
         #region Settings methods
@@ -380,11 +367,21 @@ namespace AIMLbot
         }
 
         /// <summary>
+        /// Loads settings based upon the default location of the Settings.xml file
+        /// </summary>
+        public void loadSettings()
+        {
+            // try a safe default setting for the settings xml file
+            string path = Path.Combine(Environment.CurrentDirectory, Path.Combine("config", "Settings.xml"));
+            this.loadSettings(path);          
+        }
+
+        /// <summary>
         /// Loads settings and configuration info from various xml files referenced in the settings file passed in the args. 
         /// Also generates some default values if such values have not been set by the settings file.
         /// </summary>
         /// <param name="pathToSettings">Path to the settings xml file</param>
-        private void loadSettings(string pathToSettings)
+        public void loadSettings(string pathToSettings)
         {
             this.GlobalSettings.loadSettings(pathToSettings);
 

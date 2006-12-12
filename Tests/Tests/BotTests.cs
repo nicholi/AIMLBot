@@ -16,9 +16,10 @@ namespace Tests
         private string pathToCustomTagDll = "..//..//..//..//ExampleCustomAIMLTags//ExampleCustomAIMLTags//bin//Debug//ExampleCustomAIMLTags.dll";
 
         [Test]
-        public void testDefaultConstructor()
+        public void testLoadSettings()
         {
             this.mockBot = new AIMLbot.Bot();
+            this.mockBot.loadSettings();
             Assert.AreEqual(true, this.mockBot.GlobalSettings.containsSettingCalled("aimldirectory"));
             Assert.AreEqual(true, this.mockBot.GlobalSettings.containsSettingCalled("feelings"));
             Assert.AreEqual("", this.mockBot.AdminEmail);
@@ -32,10 +33,11 @@ namespace Tests
         }
 
         [Test]
-        public void testConstructorWithPathAsArg()
+        public void testLoadSettingsWithPath()
         {
             string pathToSettings = Path.Combine(Environment.CurrentDirectory,Path.Combine("configAlt","SettingsAlt.xml"));
-            this.mockBot = new AIMLbot.Bot(pathToSettings);
+            this.mockBot = new AIMLbot.Bot();
+            this.mockBot.loadSettings(pathToSettings);
             Assert.AreEqual(true, this.mockBot.GlobalSettings.containsSettingCalled("aimldirectory"));
             Assert.AreEqual(true, this.mockBot.GlobalSettings.containsSettingCalled("feelings"));
             Assert.AreEqual("test@test.com", this.mockBot.AdminEmail);
@@ -48,17 +50,19 @@ namespace Tests
 
         [Test]
         [ExpectedException(typeof(FileNotFoundException))]
-        public void testConstructorWithEmptyArg()
+        public void testLoadSettingsWithEmptyArg()
         {
             // Other tests for loading settings are covered in the generic SettingsDictionaryTests.cs file
-            this.mockBot = new AIMLbot.Bot("");
+            this.mockBot = new AIMLbot.Bot();
+            this.mockBot.loadSettings("");
         }
 
         [Test]
         public void testSplittersSetUpFromBadData()
         {
             string pathToSettings = Path.Combine(Environment.CurrentDirectory, Path.Combine("configAlt", "SettingsAltBad.xml"));
-            this.mockBot = new AIMLbot.Bot(pathToSettings);
+            this.mockBot = new AIMLbot.Bot();
+            this.mockBot.loadSettings(pathToSettings);
             Assert.AreEqual(4, this.mockBot.Splitters.Count);
         }
 
@@ -66,7 +70,8 @@ namespace Tests
         public void testAttributesAreOKWithGoodData()
         {
             string pathToSettings = Path.Combine(Environment.CurrentDirectory, Path.Combine("configAlt", "SettingsAlt.xml"));
-            this.mockBot = new AIMLbot.Bot(pathToSettings);
+            this.mockBot = new AIMLbot.Bot();
+            this.mockBot.loadSettings(pathToSettings);
             Assert.AreEqual(this.mockBot.AdminEmail, "test@test.com");
             Assert.AreEqual(this.mockBot.IsLogging, true);
             System.Globalization.CultureInfo mockCIObj = new System.Globalization.CultureInfo("en-GB");
@@ -85,7 +90,8 @@ namespace Tests
         public void testAttributesAreSetupAfterBadData()
         {
             string pathToSettings = Path.Combine(Environment.CurrentDirectory, Path.Combine("configAlt", "SettingsAltBad.xml"));
-            this.mockBot = new AIMLbot.Bot(pathToSettings);
+            this.mockBot = new AIMLbot.Bot();
+            this.mockBot.loadSettings(pathToSettings);
             Assert.AreEqual(this.mockBot.AdminEmail, "");
             Assert.AreEqual(this.mockBot.IsLogging, false);
             System.Globalization.CultureInfo mockCIObj = new System.Globalization.CultureInfo("en-US");
@@ -223,6 +229,7 @@ namespace Tests
         public void testBotLogging()
         {
             this.mockBot = new AIMLbot.Bot();
+            this.mockBot.loadSettings();
             this.mockBot.GlobalSettings.addSetting("maxlogbuffersize", "3");
             this.mockBot.GlobalSettings.addSetting("islogging", "true");
 
@@ -251,6 +258,7 @@ namespace Tests
         public void testLoadFromAIML()
         {
             this.mockBot = new AIMLbot.Bot();
+            this.mockBot.loadSettings();
             this.mockBot.loadAIMLFromFiles();
             Assert.AreEqual(28, this.mockBot.Size);
         }
@@ -259,6 +267,7 @@ namespace Tests
         public void testSimpleChat()
         {
             this.mockBot = new AIMLbot.Bot();
+            this.mockBot.loadSettings();
             this.mockBot.loadAIMLFromFiles();
             Result output = this.mockBot.Chat("bye", "1");
             Assert.AreEqual("Cheerio.", output.RawOutput);
@@ -268,6 +277,7 @@ namespace Tests
         public void testTimeOutChatWorks()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockBot.loadAIMLFromFiles();
             Result output = this.mockBot.Chat("infiniteloop1", "1");
             Assert.AreEqual(true, output.request.hasTimedOut);
@@ -278,6 +288,7 @@ namespace Tests
         public void testChatRepsonseWhenNotAcceptingInput()
         {
             this.mockBot = new AIMLbot.Bot();
+            this.mockBot.loadSettings();
             this.mockBot.loadAIMLFromFiles();
             this.mockBot.isAcceptingUserInput = false;
             Result output = this.mockBot.Chat("Hi", "1");
@@ -288,6 +299,7 @@ namespace Tests
         public void testSaveSerialization()
         {
             this.mockBot = new AIMLbot.Bot();
+            this.mockBot.loadSettings();
             this.mockBot.loadAIMLFromFiles();
             FileInfo fi = new FileInfo(this.binaryGraphmasterFileName);
             if (fi.Exists)
@@ -303,6 +315,7 @@ namespace Tests
         public void testLoadFromBinary()
         {
             this.mockBot = new AIMLbot.Bot();
+            this.mockBot.loadSettings();
             this.mockBot.loadFromBinaryFile("Graphmaster.dat");
             Result output = this.mockBot.Chat("bye", "1");
             Assert.AreEqual("Cheerio.", output.RawOutput);
@@ -312,6 +325,7 @@ namespace Tests
         public void testCustomTagGoodData()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockBot.loadAIMLFromFiles();
             FileInfo fi = new FileInfo(this.pathToCustomTagDll);
             Assert.AreEqual(true, fi.Exists);
@@ -325,6 +339,7 @@ namespace Tests
         public void testCustomTagBadFile()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockBot.loadAIMLFromFiles();
             this.mockBot.loadCustomTagHandlers("doesnotexist.dll");
         }
@@ -333,6 +348,7 @@ namespace Tests
         public void TestCustomTagNotFoundInLoadedDll()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockBot.loadAIMLFromFiles();
             FileInfo fi = new FileInfo(this.pathToCustomTagDll);
             Assert.AreEqual(true, fi.Exists);
@@ -345,6 +361,7 @@ namespace Tests
         public void testCustomTagAccessToWebService()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockBot.loadAIMLFromFiles();
             FileInfo fi = new FileInfo(this.pathToCustomTagDll);
             Assert.AreEqual(true, fi.Exists);
@@ -357,6 +374,7 @@ namespace Tests
         public void testCustomTagAccessToRSSFeed()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockBot.loadAIMLFromFiles();
             FileInfo fi = new FileInfo(this.pathToCustomTagDll);
             Assert.AreEqual(true, fi.Exists);
@@ -370,6 +388,7 @@ namespace Tests
         public void testCustomTagAccessToRssFeedWithArguments()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockBot.loadAIMLFromFiles();
             FileInfo fi = new FileInfo(this.pathToCustomTagDll);
             Assert.AreEqual(true, fi.Exists);
@@ -384,6 +403,7 @@ namespace Tests
         public void testCustomTagDuplicationException()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockBot.loadAIMLFromFiles();
             FileInfo fi = new FileInfo(this.pathToCustomTagDll);
             Assert.AreEqual(true, fi.Exists);
@@ -395,6 +415,7 @@ namespace Tests
         public void testCustomTagPigLatin()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockBot.loadAIMLFromFiles();
             FileInfo fi = new FileInfo(this.pathToCustomTagDll);
             Assert.AreEqual(true, fi.Exists);
@@ -407,6 +428,7 @@ namespace Tests
         public void testWildCardsDontMixBetweenSentences()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockBot.loadAIMLFromFiles();
             Result output = this.mockBot.Chat("My name is FIRST. My name is SECOND.","1");
             Assert.AreEqual("Hello FIRST! Hello SECOND!", output.Output);

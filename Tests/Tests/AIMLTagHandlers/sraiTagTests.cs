@@ -19,6 +19,7 @@ namespace Tests.AIMLTagHandlers
         public void setupMockObjects()
         {
             this.mockBot = new Bot();
+            this.mockBot.loadSettings();
             this.mockBot.loadAIMLFromFiles();
             this.mockUser = new User("1", this.mockBot);
             this.mockRequest = new Request("This is a test", this.mockUser, this.mockBot);

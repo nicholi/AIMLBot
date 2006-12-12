@@ -8,6 +8,7 @@ namespace ConsoleBot
         static void Main(string[] args)
         {
             Bot myBot = new Bot();
+            myBot.loadSettings();
             User myUser = new User("consoleUser", myBot);
             myBot.isAcceptingUserInput = false;
             myBot.loadAIMLFromFiles();
