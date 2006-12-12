@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
-  <item name="aimldirectory" value="aiml"/>
-  <item name="configdirectory" value="config"/>
+  <item name="aimldirectory" value="C:\Documents and Settings\Nicholas\My Documents\Visual Studio 2005\Projects\Program#\Repos\trunk\AIMLWebService\aiml"/>
+  <item name="configdirectory" value="C:\Documents and Settings\Nicholas\My Documents\Visual Studio 2005\Projects\Program#\Repos\trunk\AIMLWebService\config"/>
   <item name="logdirectory" value="logs"/>
   <item name="splittersfile" value="Splitters.xml"/>
   <item name="person2substitutionsfile" value="Person2Substitutions.xml"/>
