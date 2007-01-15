@@ -270,11 +270,11 @@ namespace AIMLbot.Utils
                 }
 
                 // o.k. build the path
-                normalizedPath.Append(normalizedTopic);
-                normalizedPath.Append(" <topic> ");
-                normalizedPath.Append(normalizedThat);
-                normalizedPath.Append(" <that> ");
                 normalizedPath.Append(normalizedPattern);
+                normalizedPath.Append(" <that> ");
+                normalizedPath.Append(normalizedThat);
+                normalizedPath.Append(" <topic> ");
+                normalizedPath.Append(normalizedTopic);
 
                 return normalizedPath.ToString();
             }

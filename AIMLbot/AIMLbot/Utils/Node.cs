@@ -209,11 +209,11 @@ namespace AIMLbot.Utils
                 MatchState newMatchstate = matchstate;
                 if (firstWord == "<THAT>")
                 {
-                    newMatchstate = MatchState.UserInput;
+                    newMatchstate = MatchState.That;
                 }
                 else if (firstWord == "<TOPIC>")
                 {
-                    newMatchstate = MatchState.That;
+                    newMatchstate = MatchState.Topic;
                 }
 
                 Node childNode = (Node)this.children[firstWord];

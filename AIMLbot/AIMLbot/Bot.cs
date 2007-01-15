@@ -652,7 +652,7 @@ namespace AIMLbot
                 foreach (string path in result.NormalizedPaths)
                 {
                     Utils.SubQuery query = new SubQuery(path);
-                    query.Template = this.Graphmaster.evaluate(path, query, request, MatchState.Topic, new StringBuilder());
+                    query.Template = this.Graphmaster.evaluate(path, query, request, MatchState.UserInput, new StringBuilder());
                     result.SubQueries.Add(query);
                 }
 

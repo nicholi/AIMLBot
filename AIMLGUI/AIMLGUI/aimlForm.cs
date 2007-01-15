@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using SpeechLib;
 using AIMLbot;
 
 namespace AIMLGUI
@@ -20,6 +21,7 @@ namespace AIMLGUI
         public aimlForm()
         {
             InitializeComponent();
+            this.toolStripMenuItemSpeech.Checked = true;
             this.richTextBoxInput.Focus();
             myBot = new Bot();
             myBot.loadSettings();
@@ -282,7 +284,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
                 Result myResult = this.myBot.Chat(myRequest);
                 this.lastRequest = myRequest;
                 this.lastResult = myResult;
-                this.richTextBoxOutput.AppendText("Bot: " + myResult.RawOutput + Environment.NewLine + Environment.NewLine);
+                this.richTextBoxOutput.AppendText("Bot: " + myResult.Output + Environment.NewLine + Environment.NewLine);
+                if (this.toolStripMenuItemSpeech.Checked)
+                {
+                    SpVoice objSpeech = new SpVoice();
+                    objSpeech.Speak(myResult.Output, SpeechVoiceSpeakFlags.SVSFlagsAsync);
+                    objSpeech.SynchronousSpeakTimeout = 20;
+                    objSpeech.Rate = 4;
+                }
             }
             else
             {
@@ -351,6 +360,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
             {
                 this.richTextBoxOutput.Text += ex.Message + Environment.NewLine;
             }
+        }
+
+        private void toolStripMenuItemSpeech_Click(object sender, EventArgs e)
+        {
+            this.toolStripMenuItemSpeech.Checked = !this.toolStripMenuItemSpeech.Checked;
         }
     }
 }

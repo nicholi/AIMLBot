@@ -1,9 +1,3 @@
-bin\Debug\Tests.dll
-bin\Debug\Tests.pdb
-obj\Debug\ResolveAssemblyReference.cache
-obj\Debug\Tests.dll
-obj\Debug\Tests.pdb
-bin\Debug\nunit.framework.dll
 bin\Release\Tests.dll
 bin\Release\Tests.pdb
 bin\Release\nunit.framework.dll
@@ -12,5 +6,11 @@ obj\Release\Tests.dll
 obj\Release\Tests.pdb
 bin\Release\AIMLbot.dll
 bin\Release\AIMLbot.pdb
+bin\Debug\Tests.dll
+bin\Debug\Tests.pdb
 bin\Debug\AIMLbot.dll
+bin\Debug\nunit.framework.dll
 bin\Debug\AIMLbot.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\Tests.dll
+obj\Debug\Tests.pdb

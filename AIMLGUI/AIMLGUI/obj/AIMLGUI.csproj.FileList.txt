@@ -20,3 +20,9 @@ obj\Release\AIMLGUI.ViewInformation.resources
 obj\Release\AIMLGUI.csproj.GenerateResource.Cache
 obj\Release\AIMLGUI.exe
 obj\Release\AIMLGUI.pdb
+obj\Release\Interop.SpeechLib.dll
+obj\Release\AIMLGUI.csproj.ResolveComReference.cache
+bin\Release\Interop.SpeechLib.dll
+bin\Debug\Interop.SpeechLib.dll
+obj\Debug\Interop.SpeechLib.dll
+obj\Debug\AIMLGUI.csproj.ResolveComReference.cache

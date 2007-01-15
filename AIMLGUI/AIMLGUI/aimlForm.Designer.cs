@@ -37,6 +37,8 @@ namespace AIMLGUI
             this.toolStripMenuItemCustomLib = new System.Windows.Forms.ToolStripMenuItem();
             this.saveBotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemSpeech = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,6 +87,8 @@ namespace AIMLGUI
             this.toolStripMenuItemCustomLib,
             this.saveBotToolStripMenuItem,
             this.toolStripSeparator1,
+            this.toolStripMenuItemSpeech,
+            this.toolStripSeparator2,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
@@ -139,6 +143,20 @@ namespace AIMLGUI
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(201, 6);
+            // 
+            // toolStripMenuItemSpeech
+            // 
+            this.toolStripMenuItemSpeech.Checked = true;
+            this.toolStripMenuItemSpeech.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripMenuItemSpeech.Name = "toolStripMenuItemSpeech";
+            this.toolStripMenuItemSpeech.Size = new System.Drawing.Size(204, 22);
+            this.toolStripMenuItemSpeech.Text = "Synthesize Speech";
+            this.toolStripMenuItemSpeech.Click += new System.EventHandler(this.toolStripMenuItemSpeech_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(201, 6);
             // 
             // exitToolStripMenuItem
             // 
@@ -235,7 +253,9 @@ namespace AIMLGUI
             this.richTextBoxOutput.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.richTextBoxOutput.Size = new System.Drawing.Size(292, 198);
             this.richTextBoxOutput.TabIndex = 99;
-            this.richTextBoxOutput.Text = "";
+            this.richTextBoxOutput.Text = "Use the \"File\" -> \"Open Bot\" -> \"From AIML files\" menu to load AIML files into th" +
+                "e bot\'s brain. (Clicking \"OK\" in the \"Browse for folder\" box will load the AIML " +
+                "files from the default location.)";
             this.richTextBoxOutput.TextChanged += new System.EventHandler(this.richTextBoxOutput_TextChanged);
             // 
             // buttonGo
@@ -368,6 +388,8 @@ namespace AIMLGUI
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogAIML;
         private System.Windows.Forms.ToolStripMenuItem singleFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemCustomLib;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemSpeech;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
 
