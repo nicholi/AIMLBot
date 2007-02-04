@@ -125,13 +125,13 @@ namespace AIMLbot.Utils
                 topicName = node.Attributes["name"].Value;
             }
 
-            // get the list of category nodes found within this topic
-            XmlNodeList topicCategories = node.SelectNodes("descendant::category");
-
             // process all the category nodes
-            foreach (XmlNode thisNode in topicCategories)
+            foreach (XmlNode thisNode in node.ChildNodes)
             {
-                processCategory(thisNode, topicName, filename);
+                if (thisNode.Name == "category")
+                {
+                    processCategory(thisNode, topicName, filename);
+                }
             }
         }
 
@@ -154,8 +154,8 @@ namespace AIMLbot.Utils
         private void processCategory(XmlNode node, string topicName, string filename)
         {
             // reference and check the required nodes
-            XmlNode pattern = node.SelectSingleNode("descendant::pattern");
-            XmlNode template = node.SelectSingleNode("descendant::template");
+            XmlNode pattern = this.FindNode("pattern", node);
+            XmlNode template = this.FindNode("template", node);
 
             if (object.Equals(null, pattern))
             {
@@ -198,9 +198,9 @@ namespace AIMLbot.Utils
         /// <returns>The appropriately processed path</returns>
         public string generatePath(XmlNode node, string topicName, bool isUserInput)
         {
-            // get the three types of node that we need
-            XmlNode pattern = node.SelectSingleNode("descendant::pattern");
-            XmlNode that = node.SelectSingleNode("descendant::that");
+            // get the nodes that we need
+            XmlNode pattern = this.FindNode("pattern", node);
+            XmlNode that = this.FindNode("that", node);
 
             string patternText;
             string thatText = "*";
@@ -218,6 +218,24 @@ namespace AIMLbot.Utils
             }
 
             return this.generatePath(patternText, thatText, topicName, isUserInput);
+        }
+
+        /// <summary>
+        /// Given a name will try to find a node named "name" in the childnodes or return null
+        /// </summary>
+        /// <param name="name">The name of the node</param>
+        /// <param name="node">The node whose children need searching</param>
+        /// <returns>The node (or null)</returns>
+        private XmlNode FindNode(string name, XmlNode node)
+        {
+            foreach(XmlNode child in node.ChildNodes)
+            {
+                if (child.Name == name)
+                {
+                    return child;
+                }
+            }
+            return null;
         }
 
         /// <summary>
