@@ -34,7 +34,7 @@ namespace Tests.AIMLTagHandlers
             XmlNode testNode = StaticHelpers.getNode("<learn>./aiml/Salutations.aiml</learn>");
             this.mockBotTagHandler = new AIMLbot.AIMLTagHandlers.learn(this.mockBot, this.mockUser, this.mockQuery, this.mockRequest, this.mockResult, testNode);
             Assert.AreEqual("", this.mockBotTagHandler.Transform());
-            Assert.AreEqual(14, this.mockBot.Size);
+            Assert.AreEqual(16, this.mockBot.Size);
         }
 
         [Test]

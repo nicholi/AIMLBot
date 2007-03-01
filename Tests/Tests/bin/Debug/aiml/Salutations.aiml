@@ -28,6 +28,12 @@
     </template>
   </category>
   <category>
+    <pattern>TEST CUSTOM TAG OVERRIDE</pattern>
+    <template>
+      <system/>
+    </template>
+  </category>
+  <category>
     <pattern>BYE</pattern>
     <template>Cheerio</template>
   </category>
@@ -114,5 +120,24 @@
     <template>
       <piglatin>(All the world is a stage!)</piglatin>
     </template>
+  </category>
+  <category> 
+    <pattern>TEST SET AND CONDITION</pattern> 
+    <template>
+      <think>
+        <set name="temp">a</set>
+
+        <condition name="temp" value="a">
+          <set name="temp2">1</set>
+        </condition>
+        <condition name="temp" value="b">
+          <set name="temp2">2</set>
+        </condition>
+        <condition name="temp" value="c">
+          <set name="temp2">3</set>
+        </condition>
+      </think>
+      End value: <get name="temp2"/> 
+    </template> 
   </category>
 </aiml>

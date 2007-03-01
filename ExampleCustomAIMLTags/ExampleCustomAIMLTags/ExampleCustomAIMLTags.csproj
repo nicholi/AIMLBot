@@ -47,6 +47,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="system.cs" />
     <Compile Include="testtag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web References\com.fullerdata.www\Reference.cs">

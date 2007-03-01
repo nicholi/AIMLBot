@@ -18,35 +18,26 @@ namespace AIMLbot.Normalize
             : base(bot)
         { }
 
+        /// <summary>
+        /// Produces a random "marker" string that tags text that is already the result of a substitution
+        /// </summary>
+        /// <param name="len">The length of the marker</param>
+        /// <returns>the resulting marker</returns>
+        private static string getMarker(int len)
+        {
+            char[] chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+            StringBuilder result = new StringBuilder();
+            Random r = new Random();
+            for (int i = 0; i < len; i++)
+            {
+                result.Append(chars[r.Next(chars.Length)]);
+            }
+            return result.ToString();
+        }
+
         protected override string ProcessChange()
         {
-            string result = this.inputString;//MakeCaseInsensitive.TransformInput(this.inputString);
-            foreach (string pattern in this.bot.Substitutions.SettingNames)
-            {
-                string p2 = ApplySubstitutions.makeRegexSafe(pattern);
-                //string match = "\\b" + p2.Trim() + "\\b";
-                string match = @p2;
-                string replacement = this.bot.Substitutions.grabSetting(pattern);
-                if (replacement.StartsWith(" "))
-                {
-                    replacement = " ||" + replacement.TrimStart();
-                }
-                else
-                {
-                    replacement = "||" + replacement;
-                }
-                if (replacement.EndsWith(" "))
-                {
-                    replacement = replacement.TrimEnd() + "|| ";
-                }
-                else
-                {
-                    replacement = replacement + "||";
-                }
-                result = Regex.Replace(result, match, replacement, RegexOptions.IgnoreCase);
-            }
-
-            return result.Replace("||", "");
+            return ApplySubstitutions.Substitute(this.bot, this.bot.Substitutions, this.inputString);
         }
 
         /// <summary>
@@ -59,33 +50,17 @@ namespace AIMLbot.Normalize
         /// <returns>The processed string</returns>
         public static string Substitute(AIMLbot.Bot bot, AIMLbot.Utils.SettingsDictionary dictionary, string target)
         {
-            string result = target;//MakeCaseInsensitive.TransformInput(target);
+            string marker = ApplySubstitutions.getMarker(5);
+            string result = target;
             foreach (string pattern in dictionary.SettingNames)
             {
                 string p2 = ApplySubstitutions.makeRegexSafe(pattern);
-                //string match = "\\b" + @p2.Trim() + "\\b";
-                string match = @p2;
-                string replacement = dictionary.grabSetting(pattern);
-                if (replacement.StartsWith(" "))
-                {
-                    replacement = " ||" + replacement.TrimStart();
-                }
-                else
-                {
-                    replacement = "||" + replacement;
-                }
-                if (replacement.EndsWith(" "))
-                {
-                    replacement = replacement.TrimEnd() + "|| ";
-                }
-                else
-                {
-                    replacement = replacement + "||";
-                }
+                string match = "\\b"+@p2.Trim().Replace(" ","\\s*")+"\\b";
+                string replacement = marker+dictionary.grabSetting(pattern).Trim()+marker;
                 result = Regex.Replace(result, match, replacement, RegexOptions.IgnoreCase);
             }
 
-            return result.Replace("||", "");
+            return result.Replace(marker, "");
         }
 
 

@@ -260,7 +260,7 @@ namespace Tests
             this.mockBot = new AIMLbot.Bot();
             this.mockBot.loadSettings();
             this.mockBot.loadAIMLFromFiles();
-            Assert.AreEqual(28, this.mockBot.Size);
+            Assert.AreEqual(AIMLTagHandlers.sizeTagTests.Size, this.mockBot.Size);
         }
 
         [Test]
@@ -332,6 +332,43 @@ namespace Tests
             this.mockBot.loadCustomTagHandlers(this.pathToCustomTagDll);
             Result output = this.mockBot.Chat("test custom tag", "1");
             Assert.AreEqual("Test tag works! inner text is here.", output.RawOutput);
+        }
+
+        [Test]
+        public void testCustomTagOverride()
+        {
+            this.mockBot = new Bot();
+            this.mockBot.loadSettings();
+            this.mockBot.loadAIMLFromFiles();
+            FileInfo fi = new FileInfo(this.pathToCustomTagDll);
+            Assert.AreEqual(true, fi.Exists);
+            this.mockBot.loadCustomTagHandlers(this.pathToCustomTagDll);
+            Result output = this.mockBot.Chat("test custom tag override", "1");
+            Assert.AreEqual("Override default tag implementation works correctly.", output.RawOutput);
+        }
+
+        [Test]
+        public void testCustomTagsMultipleInstances()
+        {
+            this.mockBot = new Bot();
+            this.mockBot.loadSettings();
+            this.mockBot.loadAIMLFromFiles();
+            AIMLbot.User mockUser = new User("1", this.mockBot);
+            AIMLbot.Request mockRequest = new Request("Pig latin",mockUser,this.mockBot);
+            AIMLbot.Result mockResult = new Result(mockUser,this.mockBot,mockRequest);
+            AIMLbot.Utils.SubQuery mockSubquery = new AIMLbot.Utils.SubQuery("PIG LATIN <that> * <topic> *");
+            FileInfo fi = new FileInfo(this.pathToCustomTagDll);
+            Assert.AreEqual(true, fi.Exists);
+            this.mockBot.loadCustomTagHandlers(this.pathToCustomTagDll);
+
+            XmlNode pigLatin1 = AIMLbot.Utils.AIMLTagHandler.getNode("<piglatin>(All the world is a stage!)</piglatin>");
+            XmlNode pigLatin2 = AIMLbot.Utils.AIMLTagHandler.getNode("<piglatin>(All the world is still a stage!)</piglatin>");
+
+            AIMLbot.Utils.AIMLTagHandler taghandler1 = this.mockBot.getBespokeTags(mockUser, mockSubquery, mockRequest, mockResult, pigLatin1);
+            AIMLbot.Utils.AIMLTagHandler taghandler2 = this.mockBot.getBespokeTags(mockUser, mockSubquery, mockRequest, mockResult, pigLatin2);
+
+            Assert.AreEqual("(Allway ethay orldway isway away agestay!)",taghandler1.Transform());
+            Assert.AreEqual("(Allway ethay orldway isway illstay away agestay!)", taghandler2.Transform());
         }
 
         [Test]

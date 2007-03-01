@@ -31,6 +31,7 @@ namespace AIMLbot.Utils
             this.request = request;
             this.result = result;
             this.templateNode = templateNode;
+            this.templateNode.Attributes.RemoveNamedItem("xmlns");
         }
 
         /// <summary>
@@ -39,6 +40,11 @@ namespace AIMLbot.Utils
         public AIMLTagHandler()
         {
         }
+
+        /// <summary>
+        /// A flag to denote if inner tags are to be processed recursively before processing this tag
+        /// </summary>
+        public bool isRecursive = true;
 
         /// <summary>
         /// A representation of the user who made the request

@@ -29,6 +29,7 @@ namespace AIMLbot.AIMLTagHandlers
                         XmlNode templateNode)
             : base(bot, user, query, request, result, templateNode)
         {
+            this.isRecursive = false;
         }
 
         protected override string ProcessChange()
@@ -50,7 +51,7 @@ namespace AIMLbot.AIMLTagHandlers
                     {
                         Random r = new Random();
                         XmlNode chosenNode = (XmlNode)listNodes[r.Next(listNodes.Count-1)];
-                        return chosenNode.InnerText;
+                        return chosenNode.InnerXml;
                     }
                 }
             }

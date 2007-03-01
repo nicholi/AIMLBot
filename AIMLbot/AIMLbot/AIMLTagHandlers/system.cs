@@ -30,7 +30,6 @@ namespace AIMLbot.AIMLTagHandlers
 
         protected override string ProcessChange()
         {
-            //throw new Exception("The method or operation is not implemented.");
             this.bot.writeToLog("The system tag is not implemented in this bot");
             return string.Empty;
         }

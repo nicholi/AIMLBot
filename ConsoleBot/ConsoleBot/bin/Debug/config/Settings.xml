@@ -25,7 +25,7 @@
   <item name="adminemail" value=""/>
   <item name="islogging" value="false"/>
   <item name="willcallhome" value="false"/>
-  <item name="timeout" value="3000"/>
+  <item name="timeout" value="10000000"/>
   <item name="timeoutmessage" value="ERROR: The request has timed out."/>
   <item name="culture" value="en-US"/>
   <item name="ip" value="(c) 2006 Nicholas H.Tollervey. Released under the terms of the LGPL"/>

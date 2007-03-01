@@ -131,23 +131,19 @@ namespace AIMLbot.Utils
             // empty the hash
             this.clearSettings();
 
-            if (settingsAsXML.ChildNodes.Count == 2)
+            XmlNodeList rootChildren = settingsAsXML.DocumentElement.ChildNodes;
+
+            foreach (XmlNode myNode in rootChildren)
             {
-                if (settingsAsXML.LastChild.HasChildNodes)
+                if ((myNode.Name == "item") & (myNode.Attributes.Count == 2))
                 {
-                    foreach (XmlNode myNode in settingsAsXML.LastChild.ChildNodes)
+                    if ((myNode.Attributes[0].Name == "name") & (myNode.Attributes[1].Name == "value"))
                     {
-                        if ((myNode.Name == "item") & (myNode.Attributes.Count == 2))
+                        string name = myNode.Attributes["name"].Value;
+                        string value = myNode.Attributes["value"].Value;
+                        if (name.Length > 0)
                         {
-                            if ((myNode.Attributes[0].Name == "name") & (myNode.Attributes[1].Name == "value"))
-                            {
-                                string name = myNode.Attributes["name"].Value;
-                                string value = myNode.Attributes["value"].Value;
-                                if (name.Length > 0)
-                                {
-                                    this.addSetting(name, value);
-                                }
-                            }
+                            this.addSetting(name, value);
                         }
                     }
                 }

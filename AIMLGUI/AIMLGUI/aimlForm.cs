@@ -366,5 +366,62 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
         {
             this.toolStripMenuItemSpeech.Checked = !this.toolStripMenuItemSpeech.Checked;
         }
+
+        private void fromDefaultToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                AIMLbot.Utils.AIMLLoader loader = new AIMLbot.Utils.AIMLLoader(this.myBot);
+                this.myBot.isAcceptingUserInput = false;
+                loader.loadAIML(this.myBot.PathToAIML);
+                this.myBot.isAcceptingUserInput = true;
+            }
+            catch (Exception ex)
+            {
+                this.richTextBoxOutput.Text += ex.Message + Environment.NewLine;
+            }
+        }
+
+        private void toolStripMenuItemLoadSession_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FileInfo fi = new FileInfo(Application.ExecutablePath);
+                openFileDialogDump.InitialDirectory = fi.DirectoryName;
+                openFileDialogDump.AddExtension = true;
+                openFileDialogDump.DefaultExt = "xml";
+                openFileDialogDump.FileName = "UserSession.xml";
+                DialogResult dr = openFileDialogDump.ShowDialog(this);
+                if (dr == DialogResult.OK)
+                {
+                    this.myUser.Predicates.loadSettings(openFileDialogDump.FileName);
+                }
+            }
+            catch (Exception ex)
+            {
+                this.richTextBoxOutput.Text += ex.Message + Environment.NewLine;
+            }
+        }
+
+        private void toolStripMenuItemSaveSession_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FileInfo fi = new FileInfo(Application.ExecutablePath);
+                saveFileDialogDump.InitialDirectory = fi.DirectoryName;
+                saveFileDialogDump.AddExtension = true;
+                saveFileDialogDump.DefaultExt = "xml";
+                saveFileDialogDump.FileName = "UserSession.xml";
+                DialogResult dr = saveFileDialogDump.ShowDialog(this);
+                if (dr == DialogResult.OK)
+                {
+                    this.myUser.Predicates.DictionaryAsXML.Save(saveFileDialogDump.FileName);
+                }
+            }
+            catch (Exception ex)
+            {
+                this.richTextBoxOutput.Text += ex.Message + Environment.NewLine;
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- This is a comment to make sure comments work properly-->
 <root>
   <item name="aimldirectory" value="aiml"/>
   <item name="configdirectory" value="config"/>

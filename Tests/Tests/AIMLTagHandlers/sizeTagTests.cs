@@ -15,6 +15,8 @@ namespace Tests.AIMLTagHandlers
         private AIMLbot.Utils.SubQuery mockQuery;
         private AIMLbot.AIMLTagHandlers.size mockBotTagHandler;
 
+        public static int Size = 30;
+
         [TestFixtureSetUp]
         public void setupMockObjects()
         {
@@ -34,7 +36,7 @@ namespace Tests.AIMLTagHandlers
             Assert.AreEqual("0", this.mockBotTagHandler.Transform());
             AIMLbot.Utils.AIMLLoader loader = new AIMLbot.Utils.AIMLLoader(this.mockBot);
             loader.loadAIML();
-            Assert.AreEqual("28", this.mockBotTagHandler.Transform());
+            Assert.AreEqual(Convert.ToString(sizeTagTests.Size), this.mockBotTagHandler.Transform());
         }
 
         [Test]

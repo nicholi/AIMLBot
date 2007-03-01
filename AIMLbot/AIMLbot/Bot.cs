@@ -52,11 +52,16 @@ namespace AIMLbot
         public SettingsDictionary DefaultPredicates;
 
         /// <summary>
-        /// Holds instances of the custom tag handling classes (if loaded)
+        /// Holds information about the available custom tag handling classes (if loaded)
         /// Key = class name
-        /// Value = class instance
+        /// Value = TagHandler class that provides information about the class
         /// </summary>
         private Hashtable CustomTags;
+
+        /// <summary>
+        /// Holds references to the assemblies that hold the custom tag handling code.
+        /// </summary>
+        private Hashtable LateBindingAssemblies = new Hashtable();
 
         /// <summary>
         /// An arraylist containing the tokens used to split the input into sentences during the 
@@ -306,6 +311,7 @@ namespace AIMLbot
         /// data.
         /// </summary>
         public int MaxThatSize = 256;
+
         #endregion
 
         #region Delegates
@@ -711,116 +717,160 @@ namespace AIMLbot
                 request.hasTimedOut = true;
                 return string.Empty;
             }
-
-            StringBuilder newInnerText = new StringBuilder();
-            if (node.HasChildNodes)
+                        
+            // process the node
+            string tagName = node.Name.ToLower();
+            if (tagName == "template")
             {
-                // recursively check
-                foreach (XmlNode childNode in node.ChildNodes)
+                StringBuilder templateResult = new StringBuilder();
+                if (node.HasChildNodes)
                 {
-                    childNode.InnerText = this.processNode(childNode, query, request, result, user);
+                    // recursively check
+                    foreach (XmlNode childNode in node.ChildNodes)
+                    {
+                        templateResult.Append(this.processNode(childNode, query, request, result, user));
+                    }
                 }
-            }
-            
-            // process the node itself
-            AIMLTagHandler tagHandler = null;
-            switch (node.Name.ToLower())
-            {
-                case "bot":
-                    tagHandler = new AIMLTagHandlers.bot(this, user, query, request, result, node);
-                    break;
-                case "condition":
-                    tagHandler = new AIMLTagHandlers.condition(this, user, query, request, result, node);
-                    break;
-                case "date":
-                    tagHandler = new AIMLTagHandlers.date(this, user, query, request, result, node);
-                    break;
-                case "formal":
-                    tagHandler = new AIMLTagHandlers.formal(this, user, query, request, result, node);
-                    break;
-                case "gender":
-                    tagHandler = new AIMLTagHandlers.gender(this, user, query, request, result, node);
-                    break;
-                case "get":
-                    tagHandler = new AIMLTagHandlers.get(this, user, query, request, result, node);
-                    break;
-                case "gossip":
-                    tagHandler = new AIMLTagHandlers.gossip(this, user, query, request, result, node);
-                    break;
-                case "id":
-                    tagHandler = new AIMLTagHandlers.id(this, user, query, request, result, node);
-                    break;
-                case "input":
-                    tagHandler = new AIMLTagHandlers.input(this, user, query, request, result, node);
-                    break;
-                case "javascript":
-                    tagHandler = new AIMLTagHandlers.javascript(this, user, query, request, result, node);
-                    break;
-                case "learn":
-                    tagHandler = new AIMLTagHandlers.learn(this, user, query, request, result, node);
-                    break;
-                case "lowercase":
-                    tagHandler = new AIMLTagHandlers.lowercase(this, user, query, request, result, node);
-                    break;
-                case "person":
-                    tagHandler = new AIMLTagHandlers.person(this, user, query, request, result, node);
-                    break;
-                case "person2":
-                    tagHandler = new AIMLTagHandlers.person2(this, user, query, request, result, node);
-                    break;
-                case "random":
-                    tagHandler = new AIMLTagHandlers.random(this, user, query, request, result, node);
-                    break;
-                case "sentence":
-                    tagHandler = new AIMLTagHandlers.sentence(this, user, query, request, result, node);
-                    break;
-                case "set":
-                    tagHandler = new AIMLTagHandlers.set(this, user, query, request, result, node);
-                    break;
-                case "size":
-                    tagHandler = new AIMLTagHandlers.size(this, user, query, request, result, node);
-                    break;
-                case "sr":
-                    tagHandler = new AIMLTagHandlers.sr(this, user, query, request, result, node);
-                    break;
-                case "srai":
-                    tagHandler = new AIMLTagHandlers.srai(this, user, query, request, result, node);
-                    break;
-                case "star":
-                    tagHandler = new AIMLTagHandlers.star(this, user, query, request, result, node);
-                    break;
-                case "system":
-                    tagHandler = new AIMLTagHandlers.system(this, user, query, request, result, node);
-                    break;
-                case "that":
-                    tagHandler = new AIMLTagHandlers.that(this, user, query, request, result, node);
-                    break;
-                case "thatstar":
-                    tagHandler = new AIMLTagHandlers.thatstar(this, user, query, request, result, node);
-                    break;
-                case "think":
-                    tagHandler = new AIMLTagHandlers.think(this, user, query, request, result, node);
-                    break;
-                case "topicstar":
-                    tagHandler = new AIMLTagHandlers.topicstar(this, user, query, request, result, node);
-                    break;
-                case "uppercase":
-                    tagHandler = new AIMLTagHandlers.uppercase(this, user, query, request, result, node);
-                    break;
-                case "version":
-                    tagHandler = new AIMLTagHandlers.version(this, user, query, request, result, node);
-                    break;
-                default:
-                    tagHandler = this.getBespokeTags(user, query, request, result, node);
-                    break;
-            }
-            if (object.Equals(null, tagHandler))
-            {
-                return node.InnerText;
+                return templateResult.ToString();
             }
             else
             {
-                return tagHandler.Transform();
+                AIMLTagHandler tagHandler = null;
+                tagHandler = this.getBespokeTags(user, query, request, result, node);
+                if (object.Equals(null, tagHandler))
+                {
+                    switch (tagName)
+                    {
+                        case "bot":
+                            tagHandler = new AIMLTagHandlers.bot(this, user, query, request, result, node);
+                            break;
+                        case "condition":
+                            tagHandler = new AIMLTagHandlers.condition(this, user, query, request, result, node);
+                            break;
+                        case "date":
+                            tagHandler = new AIMLTagHandlers.date(this, user, query, request, result, node);
+                            break;
+                        case "formal":
+                            tagHandler = new AIMLTagHandlers.formal(this, user, query, request, result, node);
+                            break;
+                        case "gender":
+                            tagHandler = new AIMLTagHandlers.gender(this, user, query, request, result, node);
+                            break;
+                        case "get":
+                            tagHandler = new AIMLTagHandlers.get(this, user, query, request, result, node);
+                            break;
+                        case "gossip":
+                            tagHandler = new AIMLTagHandlers.gossip(this, user, query, request, result, node);
+                            break;
+                        case "id":
+                            tagHandler = new AIMLTagHandlers.id(this, user, query, request, result, node);
+                            break;
+                        case "input":
+                            tagHandler = new AIMLTagHandlers.input(this, user, query, request, result, node);
+                            break;
+                        case "javascript":
+                            tagHandler = new AIMLTagHandlers.javascript(this, user, query, request, result, node);
+                            break;
+                        case "learn":
+                            tagHandler = new AIMLTagHandlers.learn(this, user, query, request, result, node);
+                            break;
+                        case "lowercase":
+                            tagHandler = new AIMLTagHandlers.lowercase(this, user, query, request, result, node);
+                            break;
+                        case "person":
+                            tagHandler = new AIMLTagHandlers.person(this, user, query, request, result, node);
+                            break;
+                        case "person2":
+                            tagHandler = new AIMLTagHandlers.person2(this, user, query, request, result, node);
+                            break;
+                        case "random":
+                            tagHandler = new AIMLTagHandlers.random(this, user, query, request, result, node);
+                            break;
+                        case "sentence":
+                            tagHandler = new AIMLTagHandlers.sentence(this, user, query, request, result, node);
+                            break;
+                        case "set":
+                            tagHandler = new AIMLTagHandlers.set(this, user, query, request, result, node);
+                            break;
+                        case "size":
+                            tagHandler = new AIMLTagHandlers.size(this, user, query, request, result, node);
+                            break;
+                        case "sr":
+                            tagHandler = new AIMLTagHandlers.sr(this, user, query, request, result, node);
+                            break;
+                        case "srai":
+                            tagHandler = new AIMLTagHandlers.srai(this, user, query, request, result, node);
+                            break;
+                        case "star":
+                            tagHandler = new AIMLTagHandlers.star(this, user, query, request, result, node);
+                            break;
+                        case "system":
+                            tagHandler = new AIMLTagHandlers.system(this, user, query, request, result, node);
+                            break;
+                        case "that":
+                            tagHandler = new AIMLTagHandlers.that(this, user, query, request, result, node);
+                            break;
+                        case "thatstar":
+                            tagHandler = new AIMLTagHandlers.thatstar(this, user, query, request, result, node);
+                            break;
+                        case "think":
+                            tagHandler = new AIMLTagHandlers.think(this, user, query, request, result, node);
+                            break;
+                        case "topicstar":
+                            tagHandler = new AIMLTagHandlers.topicstar(this, user, query, request, result, node);
+                            break;
+                        case "uppercase":
+                            tagHandler = new AIMLTagHandlers.uppercase(this, user, query, request, result, node);
+                            break;
+                        case "version":
+                            tagHandler = new AIMLTagHandlers.version(this, user, query, request, result, node);
+                            break;
+                        default:
+                            tagHandler = null;
+                            break;
+                    }
+                }
+                if (object.Equals(null, tagHandler))
+                {
+                    return node.InnerText;
+                }
+                else
+                {
+                    if (tagHandler.isRecursive)
+                    {
+                        if (node.HasChildNodes)
+                        {
+                            // recursively check
+                            foreach (XmlNode childNode in node.ChildNodes)
+                            {
+                                if (childNode.NodeType != XmlNodeType.Text)
+                                {
+                                    childNode.InnerXml = this.processNode(childNode, query, request, result, user);
+                                }
+                            }
+                        }
+                        return tagHandler.Transform();
+                    }
+                    else
+                    {
+                        string resultNodeInnerXML = tagHandler.Transform();
+                        XmlNode resultNode = AIMLTagHandler.getNode("<node>" + resultNodeInnerXML + "</node>");
+                        if (resultNode.HasChildNodes)
+                        {
+                            StringBuilder recursiveResult = new StringBuilder();
+                            // recursively check
+                            foreach (XmlNode childNode in resultNode.ChildNodes)
+                            {
+                                recursiveResult.Append(this.processNode(childNode, query, request, result, user));
+                            }
+                            return recursiveResult.ToString();
+                        }
+                        else
+                        {
+                            return resultNode.InnerXml;
+                        }
+                    }
+                }
             }
         }
 
@@ -833,18 +883,27 @@ namespace AIMLbot
         /// <param name="result">the result to be sent to the user</param>
         /// <param name="node">the node to evaluate</param>
         /// <returns>the output string</returns>
-        private AIMLTagHandler getBespokeTags(User user, SubQuery query, Request request, Result result, XmlNode node)
+        public AIMLTagHandler getBespokeTags(User user, SubQuery query, Request request, Result result, XmlNode node)
         {
             if (this.CustomTags.ContainsKey(node.Name.ToLower()))
             {
-                AIMLTagHandler customTagHandler = (AIMLTagHandler)this.CustomTags[node.Name.ToLower()];
-                customTagHandler.user = user;
-                customTagHandler.query = query;
-                customTagHandler.request = request;
-                customTagHandler.result = result;
-                customTagHandler.templateNode = node;
-                customTagHandler.bot = this;
-                return customTagHandler;
+                TagHandler customTagHandler = (TagHandler)this.CustomTags[node.Name.ToLower()];
+
+                AIMLTagHandler newCustomTag = customTagHandler.Instantiate(this.LateBindingAssemblies);
+                if(object.Equals(null,newCustomTag))
+                {
+                    return null;
+                }
+                else
+                {
+                    newCustomTag.user = user;
+                    newCustomTag.query = query;
+                    newCustomTag.request = request;
+                    newCustomTag.result = result;
+                    newCustomTag.templateNode = node;
+                    newCustomTag.bot = this;
+                    return newCustomTag;
+                }
             }
             else
             {
@@ -908,17 +967,27 @@ namespace AIMLbot
                     if (typeCustomAttributes[j] is CustomTagAttribute)
                     {
                         // We've found a custom tag handling class
-                        // so instantiate it and store it away in the hashtable for 
+                        // so store the assembly and store it away in the hashtable as a TagHandler class for 
                         // later usage
-                        AIMLTagHandler customtaghandler = (AIMLTagHandler)tagDLL.CreateInstance(tagDLLTypes[i].FullName);
-                        string tagname = tagDLLTypes[i].Name.ToLower();
-                        if (this.CustomTags.ContainsKey(tagname))
+                        
+                        // store Assembly
+                        if (!this.LateBindingAssemblies.ContainsKey(tagDLL.FullName))
                         {
-                            throw new Exception("ERROR! Unable to add the custom tag: <" + tagname + ">, found in: " + pathToDLL + " as a handler for this tag already exists.");
+                            this.LateBindingAssemblies.Add(tagDLL.FullName, tagDLL);
+                        }
+
+                        // create the TagHandler representation
+                        TagHandler newTagHandler = new TagHandler();
+                        newTagHandler.AssemblyName = tagDLL.FullName;
+                        newTagHandler.ClassName = tagDLLTypes[i].FullName;
+                        newTagHandler.TagName = tagDLLTypes[i].Name.ToLower();
+                        if (this.CustomTags.ContainsKey(newTagHandler.TagName))
+                        {
+                            throw new Exception("ERROR! Unable to add the custom tag: <" + newTagHandler.TagName + ">, found in: " + pathToDLL + " as a handler for this tag already exists.");
                         }
                         else
                         {
-                            this.CustomTags.Add(tagname, customtaghandler);
+                            this.CustomTags.Add(newTagHandler.TagName, newTagHandler);
                         }
                     }
                 }

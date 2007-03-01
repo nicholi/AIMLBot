@@ -21,6 +21,9 @@ namespace ExampleCustomAIMLTags
     /// AIMLTagHandlers as they have direct access to the node to be processed (among other things - see below).
     /// 7. Override the ProcessChange() method. This is where the work happens. Nota Bene: It is good 
     /// practice to check the name of the node being processed and return string.Empty if it doesn't match.
+    /// 8. By default the inner XML of the tag is recursively processed before the tag itself is processed. If
+    /// you want the result of the tag to be processed first and then the resulting inner XML then set the
+    /// this.isRecursive boolean flag to false (useful when working with tags similar to random or condition).
     /// 
     /// When working within ProcessChange you have access to the following useful objects:
     /// 

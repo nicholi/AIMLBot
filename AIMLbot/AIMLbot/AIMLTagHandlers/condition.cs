@@ -110,6 +110,7 @@ namespace AIMLbot.AIMLTagHandlers
                         XmlNode templateNode)
             : base(bot, user, query, request, result, templateNode)
         {
+            this.isRecursive = false;
         }
 
         protected override string ProcessChange()
@@ -147,7 +148,7 @@ namespace AIMLbot.AIMLTagHandlers
                         Regex matcher = new Regex(value.Replace(" ", "\\s").Replace("*", "[\\sA-Z0-9]+"), RegexOptions.IgnoreCase);
                         if (matcher.IsMatch(actualValue))
                         {
-                            return this.templateNode.InnerText;
+                            return this.templateNode.InnerXml;
                         }
                     }
                 }
@@ -168,13 +169,13 @@ namespace AIMLbot.AIMLTagHandlers
                                         Regex matcher = new Regex(childLINode.Attributes[0].Value.Replace(" ", "\\s").Replace("*", "[\\sA-Z0-9]+"), RegexOptions.IgnoreCase);
                                         if (matcher.IsMatch(actualValue))
                                         {
-                                            return childLINode.InnerText;
+                                            return childLINode.InnerXml;
                                         }
                                     }
                                 }
                                 else if (childLINode.Attributes.Count == 0)
                                 {
-                                    return childLINode.InnerText;
+                                    return childLINode.InnerXml;
                                 }
                             }
                         }
@@ -214,13 +215,13 @@ namespace AIMLbot.AIMLTagHandlers
                                     Regex matcher = new Regex(value.Replace(" ", "\\s").Replace("*","[\\sA-Z0-9]+"), RegexOptions.IgnoreCase);
                                     if (matcher.IsMatch(actualValue))
                                     {
-                                        return childLINode.InnerText;
+                                        return childLINode.InnerXml;
                                     }
                                 }
                             }
                             else if (childLINode.Attributes.Count == 0)
                             {
-                                return childLINode.InnerText;
+                                return childLINode.InnerXml;
                             }
                         }
                     }

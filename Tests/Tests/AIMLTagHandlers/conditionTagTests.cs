@@ -108,5 +108,13 @@ namespace Tests.AIMLTagHandlers
             this.mockResult = this.mockBot.Chat(this.mockRequest);
             Assert.AreEqual("default match found.", this.mockResult.RawOutput);
         }
+
+        [Test]
+        public void testSetAndCondition()
+        {
+            this.mockRequest = new Request("TEST SET AND CONDITION", this.mockUser, this.mockBot);
+            this.mockResult = this.mockBot.Chat(this.mockRequest);
+            Assert.AreEqual("End value: 1.", this.mockResult.RawOutput);
+        }
     }
 }

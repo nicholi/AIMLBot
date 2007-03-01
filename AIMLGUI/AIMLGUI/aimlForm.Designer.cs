@@ -34,7 +34,9 @@ namespace AIMLGUI
             this.fromAIMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fromDatFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.singleFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fromDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemCustomLib = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemSaveSession = new System.Windows.Forms.ToolStripMenuItem();
             this.saveBotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemSpeech = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,6 +60,7 @@ namespace AIMLGUI
             this.saveFileDialogDump = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialogDump = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialogAIML = new System.Windows.Forms.FolderBrowserDialog();
+            this.toolStripMenuItemLoadSession = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.statusStripBottom.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -84,7 +87,9 @@ namespace AIMLGUI
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newBotToolStripMenuItem,
+            this.toolStripMenuItemLoadSession,
             this.toolStripMenuItemCustomLib,
+            this.toolStripMenuItemSaveSession,
             this.saveBotToolStripMenuItem,
             this.toolStripSeparator1,
             this.toolStripMenuItemSpeech,
@@ -97,6 +102,7 @@ namespace AIMLGUI
             // newBotToolStripMenuItem
             // 
             this.newBotToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fromDefaultToolStripMenuItem,
             this.fromAIMLToolStripMenuItem,
             this.fromDatFileToolStripMenuItem,
             this.singleFileToolStripMenuItem});
@@ -107,23 +113,30 @@ namespace AIMLGUI
             // fromAIMLToolStripMenuItem
             // 
             this.fromAIMLToolStripMenuItem.Name = "fromAIMLToolStripMenuItem";
-            this.fromAIMLToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.fromAIMLToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.fromAIMLToolStripMenuItem.Text = "From AIML files";
             this.fromAIMLToolStripMenuItem.Click += new System.EventHandler(this.fromAIMLToolStripMenuItem_Click);
             // 
             // fromDatFileToolStripMenuItem
             // 
             this.fromDatFileToolStripMenuItem.Name = "fromDatFileToolStripMenuItem";
-            this.fromDatFileToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.fromDatFileToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.fromDatFileToolStripMenuItem.Text = "From dat file";
             this.fromDatFileToolStripMenuItem.Click += new System.EventHandler(this.fromDatFileToolStripMenuItem_Click);
             // 
             // singleFileToolStripMenuItem
             // 
             this.singleFileToolStripMenuItem.Name = "singleFileToolStripMenuItem";
-            this.singleFileToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.singleFileToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.singleFileToolStripMenuItem.Text = "Single File";
             this.singleFileToolStripMenuItem.Click += new System.EventHandler(this.singleFileToolStripMenuItem_Click);
+            // 
+            // fromDefaultToolStripMenuItem
+            // 
+            this.fromDefaultToolStripMenuItem.Name = "fromDefaultToolStripMenuItem";
+            this.fromDefaultToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.fromDefaultToolStripMenuItem.Text = "From Default AIML";
+            this.fromDefaultToolStripMenuItem.Click += new System.EventHandler(this.fromDefaultToolStripMenuItem_Click);
             // 
             // toolStripMenuItemCustomLib
             // 
@@ -131,6 +144,13 @@ namespace AIMLGUI
             this.toolStripMenuItemCustomLib.Size = new System.Drawing.Size(204, 22);
             this.toolStripMenuItemCustomLib.Text = "Load Custom Tag Library";
             this.toolStripMenuItemCustomLib.Click += new System.EventHandler(this.toolStripMenuItemCustomLib_Click);
+            // 
+            // toolStripMenuItemSaveSession
+            // 
+            this.toolStripMenuItemSaveSession.Name = "toolStripMenuItemSaveSession";
+            this.toolStripMenuItemSaveSession.Size = new System.Drawing.Size(204, 22);
+            this.toolStripMenuItemSaveSession.Text = "Save Session";
+            this.toolStripMenuItemSaveSession.Click += new System.EventHandler(this.toolStripMenuItemSaveSession_Click);
             // 
             // saveBotToolStripMenuItem
             // 
@@ -331,6 +351,13 @@ namespace AIMLGUI
             this.folderBrowserDialogAIML.RootFolder = System.Environment.SpecialFolder.ApplicationData;
             this.folderBrowserDialogAIML.ShowNewFolderButton = false;
             // 
+            // toolStripMenuItemLoadSession
+            // 
+            this.toolStripMenuItemLoadSession.Name = "toolStripMenuItemLoadSession";
+            this.toolStripMenuItemLoadSession.Size = new System.Drawing.Size(204, 22);
+            this.toolStripMenuItemLoadSession.Text = "Load Session";
+            this.toolStripMenuItemLoadSession.Click += new System.EventHandler(this.toolStripMenuItemLoadSession_Click);
+            // 
             // aimlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -390,6 +417,9 @@ namespace AIMLGUI
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemCustomLib;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemSpeech;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem fromDefaultToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemSaveSession;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemLoadSession;
     }
 }
 
