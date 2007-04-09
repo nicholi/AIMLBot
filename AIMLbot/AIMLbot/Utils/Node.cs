@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 
@@ -16,7 +16,7 @@ namespace AIMLbot.Utils
         /// <summary>
         /// Contains the child nodes of this node
         /// </summary>
-        private Hashtable children = new Hashtable();
+        private Dictionary<string, Node> children = new Dictionary<string, Node>();
 
         /// <summary>
         /// The number of direct children (non-recursive) of this node
@@ -85,20 +85,19 @@ namespace AIMLbot.Utils
             string newPath = path.Substring(firstWord.Length, path.Length - firstWord.Length).Trim();
 
             // o.k. check we don't already have a child with the key from this sentence
-            Node childNode = (Node)this.children[firstWord];
-
             // if we do then pass the handling of this sentence down the branch to the 
             // child nodemapper otherwise the child nodemapper doesn't yet exist, so create a new one
-            if (object.Equals(null, childNode))
+            if (this.children.ContainsKey(firstWord))
             {
-                childNode = new Node();
-                childNode.word = firstWord;
+                Node childNode = this.children[firstWord];
                 childNode.addCategory(newPath, template, filename);
-                this.children.Add(childNode.word, childNode);
             }
             else
             {
+                Node childNode = new Node();
+                childNode.word = firstWord;
                 childNode.addCategory(newPath, template, filename);
+                this.children.Add(childNode.word, childNode);
             }
         }
 

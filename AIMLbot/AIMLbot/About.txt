@@ -3,4 +3,4 @@ The AIMLBot library (Program#) is a .NET implementation of the AIML standard.
 
 Further details can be obtained from the author's website or the project's home on Sourceforge:
 
-http://sourceforge.net/projects/aimlbot
+http://aimlbot.sourceforge.net/

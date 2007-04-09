@@ -1,7 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Text;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace AIMLbot.Normalize
 {
@@ -43,7 +42,7 @@ namespace AIMLbot.Normalize
 
         /// <summary>
         /// Splits the supplied raw input into an array of strings according to the tokens found in
-        /// the bot's Splitters arraylist
+        /// the bot's Splitters List<>
         /// </summary>
         /// <param name="inputString">The raw input to split</param>
         /// <returns>An array of strings representing the constituent "sentences"</returns>
@@ -55,14 +54,14 @@ namespace AIMLbot.Normalize
 
         /// <summary>
         /// Splits the raw input supplied via the ctor into an array of strings according to the tokens
-        /// found in the bot's Splitters arraylist
+        /// found in the bot's Splitters List<>
         /// </summary>
         /// <returns>An array of strings representing the constituent "sentences"</returns>
         public string[] Transform()
         {
-            string[] tokens = (string[])this.bot.Splitters.ToArray(typeof(string));
+            string[] tokens = (string[])this.bot.Splitters.ToArray();
             string[] rawResult = this.inputString.Split(tokens, System.StringSplitOptions.RemoveEmptyEntries);
-            ArrayList tidyResult = new ArrayList();
+            List<string> tidyResult = new List<string>();
             foreach (string rawSentence in rawResult)
             {
                 string tidySentence = rawSentence.Trim();
@@ -71,7 +70,7 @@ namespace AIMLbot.Normalize
                     tidyResult.Add(tidySentence);
                 }
             }
-            return (string[])tidyResult.ToArray(typeof(string));
+            return (string[])tidyResult.ToArray();
         }
     }
 }

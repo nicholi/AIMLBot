@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace AIMLbot
@@ -32,7 +32,7 @@ namespace AIMLbot
         /// <summary>
         /// A collection of all the result objects returned to the user in this session
         /// </summary>
-        private ArrayList Results = new ArrayList();
+        private List<Result> Results = new List<Result>();
 
 		/// <summary>
 		/// the value of the "topic" predicate

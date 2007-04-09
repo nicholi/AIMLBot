@@ -55,7 +55,8 @@ namespace AIMLbot.Normalize
             foreach (string pattern in dictionary.SettingNames)
             {
                 string p2 = ApplySubstitutions.makeRegexSafe(pattern);
-                string match = "\\b"+@p2.Trim().Replace(" ","\\s*")+"\\b";
+                //string match = "\\b"+@p2.Trim().Replace(" ","\\s*")+"\\b";
+                string match = "\\b" + p2.TrimEnd().TrimStart() + "\\b";
                 string replacement = marker+dictionary.grabSetting(pattern).Trim()+marker;
                 result = Regex.Replace(result, match, replacement, RegexOptions.IgnoreCase);
             }

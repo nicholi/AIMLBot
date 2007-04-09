@@ -1,7 +1,7 @@
 using System;
 using System.Xml;
 using System.Text;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace AIMLbot.AIMLTagHandlers
 {
@@ -39,7 +39,7 @@ namespace AIMLbot.AIMLTagHandlers
                 if (this.templateNode.HasChildNodes)
                 {
                     // only grab <li> nodes
-                    ArrayList listNodes = new ArrayList();
+                    List<XmlNode> listNodes = new List<XmlNode>();
                     foreach (XmlNode childNode in this.templateNode.ChildNodes)
                     {
                         if (childNode.Name == "li")

@@ -3,7 +3,6 @@ using System.Xml;
 using AIMLbot.Utils;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Collections;
 
 namespace ExampleCustomAIMLTags
 {

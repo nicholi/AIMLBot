@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Xml;
 using System.IO;
 using AIMLbot.Normalize;
@@ -7,7 +7,7 @@ using AIMLbot.Normalize;
 namespace AIMLbot.Utils
 {
     /// <summary>
-    /// A bespoke hashtable for loading, adding, checking, removing and extracting
+    /// A bespoke Dictionary<,> for loading, adding, checking, removing and extracting
     /// settings.
     /// </summary>
     public class SettingsDictionary
@@ -17,13 +17,13 @@ namespace AIMLbot.Utils
         /// <summary>
         /// Holds a dictionary of settings
         /// </summary>
-        private Hashtable settingsHash = new Hashtable();
+        private Dictionary<string, string> settingsHash = new Dictionary<string, string>();
 
         /// <summary>
-        /// Contains an ordered collection of all the keys (unfortunately HashTables are
+        /// Contains an ordered collection of all the keys (unfortunately Dictionary<,>s are
         /// not ordered)
         /// </summary>
-        private ArrayList orderedKeys = new ArrayList();
+        private List<string> orderedKeys = new List<string>();
 
         /// <summary>
         /// The bot this dictionary is associated with
@@ -179,9 +179,9 @@ namespace AIMLbot.Utils
         }
 
         /// <summary>
-        /// Removes a named setting from the hashtable
+        /// Removes a named setting from the Dictionary<,>
         /// </summary>
-        /// <param name="name">the key for the hashtable</param>
+        /// <param name="name">the key for the Dictionary<,></param>
         private void removeFromHash(string name)
         {
             string normalizedName = MakeCaseInsensitive.TransformInput(name);

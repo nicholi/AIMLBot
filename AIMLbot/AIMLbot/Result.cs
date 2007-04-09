@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace AIMLbot
@@ -38,7 +38,7 @@ namespace AIMLbot
         /// <summary>
         /// The normalized sentence(s) (paths) fed into the graphmaster
         /// </summary>
-        public ArrayList NormalizedPaths = new ArrayList();
+        public List<string> NormalizedPaths = new List<string>();
 
         /// <summary>
         /// The amount of time the request took to process
@@ -101,17 +101,17 @@ namespace AIMLbot
         /// The subQueries processed by the bot's graphmaster that contain the templates that 
         /// are to be converted into the collection of Sentences
         /// </summary>
-        public ArrayList SubQueries = new ArrayList();
+        public List<Utils.SubQuery> SubQueries = new List<Utils.SubQuery>();
 
         /// <summary>
         /// The individual sentences produced by the bot that form the complete response
         /// </summary>
-        public ArrayList OutputSentences = new ArrayList();
+        public List<string> OutputSentences = new List<string>();
 
         /// <summary>
         /// The individual sentences that constitute the raw input from the user
         /// </summary>
-        public ArrayList InputSentences = new ArrayList();
+        public List<string> InputSentences = new List<string>();
 
         /// <summary>
         /// Ctor

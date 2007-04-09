@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.IO;
@@ -56,23 +56,23 @@ namespace AIMLbot
         /// Key = class name
         /// Value = TagHandler class that provides information about the class
         /// </summary>
-        private Hashtable CustomTags;
+        private Dictionary<string, TagHandler> CustomTags;
 
         /// <summary>
         /// Holds references to the assemblies that hold the custom tag handling code.
         /// </summary>
-        private Hashtable LateBindingAssemblies = new Hashtable();
+        private Dictionary<string, Assembly> LateBindingAssemblies = new Dictionary<string, Assembly>();
 
         /// <summary>
-        /// An arraylist containing the tokens used to split the input into sentences during the 
+        /// An List<> containing the tokens used to split the input into sentences during the 
         /// normalization process
         /// </summary>
-        public ArrayList Splitters = new ArrayList();
+        public List<string> Splitters = new List<string>();
 
         /// <summary>
         /// A buffer to hold log messages to be written out to the log file when a max size is reached
         /// </summary>
-        private ArrayList LogBuffer = new ArrayList();
+        private List<string> LogBuffer = new List<string>();
 
         /// <summary>
         /// How big to let the log buffer get before writing to disk
@@ -367,9 +367,8 @@ namespace AIMLbot
             this.PersonSubstitutions = new SettingsDictionary(this);
             this.Substitutions = new SettingsDictionary(this);
             this.DefaultPredicates = new SettingsDictionary(this);
-            this.CustomTags = new Hashtable();
+            this.CustomTags = new Dictionary<string, TagHandler>();
             this.Graphmaster = new AIMLbot.Utils.Node(); 
-
         }
 
         /// <summary>
@@ -967,7 +966,7 @@ namespace AIMLbot
                     if (typeCustomAttributes[j] is CustomTagAttribute)
                     {
                         // We've found a custom tag handling class
-                        // so store the assembly and store it away in the hashtable as a TagHandler class for 
+                        // so store the assembly and store it away in the Dictionary<,> as a TagHandler class for 
                         // later usage
                         
                         // store Assembly

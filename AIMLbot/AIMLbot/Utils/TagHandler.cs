@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 
@@ -30,9 +30,9 @@ namespace AIMLbot.Utils
         /// </summary>
         /// <param name="Assemblies">All the assemblies the bot knows about</param>
         /// <returns>The instantiated class</returns>
-        public AIMLTagHandler Instantiate(Hashtable Assemblies)
+        public AIMLTagHandler Instantiate(Dictionary<string, Assembly> Assemblies)
         {
-            if (Assemblies.Contains(this.AssemblyName))
+            if (Assemblies.ContainsKey(this.AssemblyName))
             {
                 Assembly tagDLL = (Assembly)Assemblies[this.AssemblyName]; 
                 Type[] tagDLLTypes = tagDLL.GetTypes();
