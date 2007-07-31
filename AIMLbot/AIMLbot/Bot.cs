@@ -681,7 +681,7 @@ namespace AIMLbot
                             {
                                 this.phoneHome(e.Message, request);
                             }
-                            this.writeToLog("WARNING! A problem was encountered when trying to process the input: " + request.rawInput + " with the template: \"" + query.Template + "\"");
+                            this.writeToLog("WARNING! A problem was encountered when trying to process the input: " + request.rawInput + " with the template: \"" + query.Template + "\": "+Environment.NewLine+Environment.NewLine+e.Message);
                         }
                     }
                 }
