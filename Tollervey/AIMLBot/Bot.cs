@@ -7,7 +7,7 @@ using System.Xml;
 using System.Text;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Reflection;
-using Tollervey.AIMLbot.Utils;
+using Tollervey.AIMLBot.Utils;
 
 namespace Tollervey.AIMLBot
 {
@@ -294,7 +294,7 @@ namespace Tollervey.AIMLBot
         /// <summary>
         /// The "brain" of the bot
         /// </summary>
-        public AIMLbot.Utils.Node Graphmaster;
+        public AIMLBot.Utils.Node Graphmaster;
 
         /// <summary>
         /// If set to false the input from AIML files will undergo the same normalization process that
@@ -366,7 +366,7 @@ namespace Tollervey.AIMLBot
             this.Substitutions = new SettingsDictionary(this);
             this.DefaultPredicates = new SettingsDictionary(this);
             this.CustomTags = new Dictionary<string, TagHandler>();
-            this.Graphmaster = new AIMLbot.Utils.Node(); 
+            this.Graphmaster = new AIMLBot.Utils.Node(); 
         }
 
         /// <summary>
@@ -427,7 +427,7 @@ namespace Tollervey.AIMLBot
             }
             if (!this.GlobalSettings.containsSettingCalled("website"))
             {
-                this.GlobalSettings.addSetting("website", "http://sourceforge.net/projects/aimlbot");
+                this.GlobalSettings.addSetting("website", "http://sourceforge.net/projects/AIMLBot");
             }
             if (this.GlobalSettings.containsSettingCalled("adminemail"))
             {
@@ -642,7 +642,7 @@ namespace Tollervey.AIMLBot
             {
                 // Normalize the input
                 AIMLLoader loader = new AIMLLoader(this);
-                AIMLbot.Normalize.SplitIntoSentences splitter = new AIMLbot.Normalize.SplitIntoSentences(this);
+                AIMLBot.Normalize.SplitIntoSentences splitter = new AIMLBot.Normalize.SplitIntoSentences(this);
                 string[] rawSentences = splitter.Transform(request.rawInput);
                 foreach (string sentence in rawSentences)
                 {
@@ -1001,7 +1001,7 @@ namespace Tollervey.AIMLBot
         /// <param name="request">the request object that encapsulates all sorts of useful information</param>
         public void phoneHome(string errorMessage, Request request)
         {
-            MailMessage msg = new MailMessage("donotreply@aimlbot.com",this.AdminEmail);
+            MailMessage msg = new MailMessage("donotreply@AIMLBot.com",this.AdminEmail);
             msg.Subject = "WARNING! AIMLBot has encountered a problem...";
             string message = @"Dear Botmaster,
 
@@ -1025,7 +1025,7 @@ Please check your AIML!
 
 Regards,
 
-The AIMLbot program.
+The AIMLBot program.
 ";
             message = message.Replace("*TIME*", DateTime.Now.ToString());
             message = message.Replace("*MESSAGE*", errorMessage);

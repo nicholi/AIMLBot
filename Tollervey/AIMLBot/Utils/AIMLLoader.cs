@@ -16,14 +16,14 @@ namespace Tollervey.AIMLBot.Utils
         /// <summary>
         /// The bot whose brain is being processed
         /// </summary>
-        private AIMLbot.Bot bot;
+        private AIMLBot.Bot bot;
         #endregion
 
         /// <summary>
         /// Ctor
         /// </summary>
         /// <param name="bot">The bot whose brain is being processed</param>
-        public AIMLLoader(AIMLbot.Bot bot)
+        public AIMLLoader(AIMLBot.Bot bot)
         {
             this.bot = bot;
         }
@@ -314,8 +314,8 @@ namespace Tollervey.AIMLBot.Utils
             StringBuilder result = new StringBuilder();
 
             // objects for normalization of the input
-            Normalize.ApplySubstitutions substitutor = new AIMLbot.Normalize.ApplySubstitutions(this.bot);
-            Normalize.StripIllegalCharacters stripper = new AIMLbot.Normalize.StripIllegalCharacters(this.bot);
+            Normalize.ApplySubstitutions substitutor = new AIMLBot.Normalize.ApplySubstitutions(this.bot);
+            Normalize.StripIllegalCharacters stripper = new AIMLBot.Normalize.StripIllegalCharacters(this.bot);
 
             string substitutedInput = substitutor.Transform(input);
             // split the pattern into it's component words

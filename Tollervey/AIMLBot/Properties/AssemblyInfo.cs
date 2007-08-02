@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AIMLbot")]
+[assembly: AssemblyTitle("AIMLBot")]
 [assembly: AssemblyDescription("An implementation of an AIML interpreting chatter bot")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ntoll.org")]
-[assembly: AssemblyProduct("AIMLbot")]
+[assembly: AssemblyProduct("AIMLBot")]
 [assembly: AssemblyCopyright("Copyright ©  2006 Nicholas H.Tollervey (ntoll@ntoll.org)")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

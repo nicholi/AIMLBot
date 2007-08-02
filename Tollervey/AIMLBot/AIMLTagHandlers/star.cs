@@ -19,7 +19,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
     /// 
     /// The star element does not have any content. 
     /// </summary>
-    public class star : AIMLbot.Utils.AIMLTagHandler
+    public class star : AIMLBot.Utils.AIMLTagHandler
     {
         /// <summary>
         /// Ctor
@@ -30,11 +30,11 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public star(AIMLbot.Bot bot,
-                        AIMLbot.User user,
-                        AIMLbot.Utils.SubQuery query,
-                        AIMLbot.Request request,
-                        AIMLbot.Result result,
+        public star(AIMLBot.Bot bot,
+                        AIMLBot.User user,
+                        AIMLBot.Utils.SubQuery query,
+                        AIMLBot.Request request,
+                        AIMLBot.Result result,
                         XmlNode templateNode)
             : base(bot, user, query, request, result, templateNode)
         {

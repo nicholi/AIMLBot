@@ -13,7 +13,7 @@ namespace Tollervey.AIMLBot.Normalize
         /// <summary>
         /// The bot this sentence splitter is associated with
         /// </summary>
-        private AIMLbot.Bot bot;
+        private AIMLBot.Bot bot;
 
         /// <summary>
         /// The raw input string
@@ -25,7 +25,7 @@ namespace Tollervey.AIMLBot.Normalize
         /// </summary>
         /// <param name="bot">The bot this sentence splitter is associated with</param>
         /// <param name="inputString">The raw input string to be processed</param>
-        public SplitIntoSentences(AIMLbot.Bot bot, string inputString)
+        public SplitIntoSentences(AIMLBot.Bot bot, string inputString)
         {
             this.bot = bot;
             this.inputString = inputString;
@@ -35,7 +35,7 @@ namespace Tollervey.AIMLBot.Normalize
         /// Ctor
         /// </summary>
         /// <param name="bot">The bot this sentence splitter is associated with</param>
-        public SplitIntoSentences(AIMLbot.Bot bot)
+        public SplitIntoSentences(AIMLBot.Bot bot)
         {
             this.bot = bot;
         }

@@ -22,7 +22,7 @@ namespace Tollervey.AIMLBot.Utils
         /// <summary>
         /// The bot that this transformation is connected with
         /// </summary>
-        public AIMLbot.Bot bot;
+        public AIMLBot.Bot bot;
 
         /// <summary>
         /// The input string to be transformed in some way
@@ -47,7 +47,7 @@ namespace Tollervey.AIMLBot.Utils
         /// </summary>
         /// <param name="bot">The bot this transformer is a part of</param>
         /// <param name="inputString">The input string to be transformed</param>
-        public TextTransformer(AIMLbot.Bot bot, string inputString)
+        public TextTransformer(AIMLBot.Bot bot, string inputString)
         {
             this.bot = bot;
             this.inputString = inputString;
@@ -57,7 +57,7 @@ namespace Tollervey.AIMLBot.Utils
         /// ctor
         /// </summary>
         /// <param name="bot">The bot this transformer is a part of</param>
-        public TextTransformer(AIMLbot.Bot bot)
+        public TextTransformer(AIMLBot.Bot bot)
         {
             this.bot = bot;
             this.inputString = string.Empty;

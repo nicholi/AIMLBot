@@ -19,11 +19,11 @@ namespace Tollervey.AIMLBot.Utils
         /// <param name="request">The request itself</param>
         /// <param name="result">The result to be passed back to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public AIMLTagHandler   (   AIMLbot.Bot bot, 
-                                    AIMLbot.User user, 
-                                    AIMLbot.Utils.SubQuery query,
-                                    AIMLbot.Request request, 
-                                    AIMLbot.Result result, 
+        public AIMLTagHandler   (   AIMLBot.Bot bot, 
+                                    AIMLBot.User user, 
+                                    AIMLBot.Utils.SubQuery query,
+                                    AIMLBot.Request request, 
+                                    AIMLBot.Result result, 
                                     XmlNode templateNode) :base(bot,templateNode.OuterXml)
         {
             this.user = user;
@@ -49,22 +49,22 @@ namespace Tollervey.AIMLBot.Utils
         /// <summary>
         /// A representation of the user who made the request
         /// </summary>
-        public AIMLbot.User user;
+        public AIMLBot.User user;
 
         /// <summary>
         /// The query that produced this node containing the wildcard matches
         /// </summary>
-        public AIMLbot.Utils.SubQuery query;
+        public AIMLBot.Utils.SubQuery query;
 
         /// <summary>
         /// A representation of the input into the bot made by the user
         /// </summary>
-        public AIMLbot.Request request;
+        public AIMLBot.Request request;
 
         /// <summary>
         /// A representation of the result to be returned to the user
         /// </summary>
-        public AIMLbot.Result result;
+        public AIMLBot.Result result;
 
         /// <summary>
         /// The template node to be processed by the class

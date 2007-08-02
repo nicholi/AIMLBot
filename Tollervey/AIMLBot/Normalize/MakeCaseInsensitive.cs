@@ -7,12 +7,12 @@ namespace Tollervey.AIMLBot.Normalize
     /// <summary>
     /// Normalizes the input text into upper case
     /// </summary>
-    public class MakeCaseInsensitive : AIMLbot.Utils.TextTransformer
+    public class MakeCaseInsensitive : AIMLBot.Utils.TextTransformer
     {
-        public MakeCaseInsensitive(AIMLbot.Bot bot, string inputString) : base(bot, inputString)
+        public MakeCaseInsensitive(AIMLBot.Bot bot, string inputString) : base(bot, inputString)
         { }
 
-        public MakeCaseInsensitive(AIMLbot.Bot bot) : base(bot) 
+        public MakeCaseInsensitive(AIMLBot.Bot bot) : base(bot) 
         { }
 
         protected override string ProcessChange()

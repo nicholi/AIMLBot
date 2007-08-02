@@ -19,7 +19,7 @@ namespace Tollervey.AIMLBot
         /// <summary>
         /// The bot this user is using
         /// </summary>
-        public AIMLbot.Bot bot;
+        public AIMLBot.Bot bot;
 
         /// <summary>
         /// The GUID that identifies this user to the bot
@@ -48,7 +48,7 @@ namespace Tollervey.AIMLBot
 		/// <summary>
 		/// the predicates associated with this particular user
 		/// </summary>
-        public AIMLbot.Utils.SettingsDictionary Predicates;
+        public AIMLBot.Utils.SettingsDictionary Predicates;
 
         /// <summary>
         /// The most recent result to be returned by the bot
@@ -77,13 +77,13 @@ namespace Tollervey.AIMLBot
         /// </summary>
         /// <param name="UserID">The GUID of the user</param>
         /// <param name="bot">the bot the user is connected to</param>
-		public User(string UserID, AIMLbot.Bot bot)
+		public User(string UserID, AIMLBot.Bot bot)
 		{
             if (UserID.Length > 0)
             {
                 this.id = UserID;
                 this.bot = bot;
-                this.Predicates = new AIMLbot.Utils.SettingsDictionary(this.bot);
+                this.Predicates = new AIMLBot.Utils.SettingsDictionary(this.bot);
                 this.bot.DefaultPredicates.Clone(this.Predicates);
                 this.Predicates.addSetting("topic", "*");
             }

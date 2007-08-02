@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Xml;
 using System.IO;
-using AIMLbot.Normalize;
+using Tollervey.AIMLBot.Normalize;
 
 namespace Tollervey.AIMLBot.Utils
 {
@@ -35,7 +35,6 @@ namespace Tollervey.AIMLBot.Utils
             return result;
         }
 
-        #region Methods
         /// <summary>
         /// Loads bespoke settings into the class from the file referenced in pathToSettings.
         /// 

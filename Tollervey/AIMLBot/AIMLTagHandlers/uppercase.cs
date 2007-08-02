@@ -12,7 +12,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
     /// If no character in this string has a different uppercase version, based on the Unicode 
     /// standard, then the original string is returned. 
     /// </summary>
-    public class uppercase : AIMLbot.Utils.AIMLTagHandler
+    public class uppercase : AIMLBot.Utils.AIMLTagHandler
     {
         /// <summary>
         /// Ctor
@@ -23,11 +23,11 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public uppercase(AIMLbot.Bot bot,
-                        AIMLbot.User user,
-                        AIMLbot.Utils.SubQuery query,
-                        AIMLbot.Request request,
-                        AIMLbot.Result result,
+        public uppercase(AIMLBot.Bot bot,
+                        AIMLBot.User user,
+                        AIMLBot.Utils.SubQuery query,
+                        AIMLBot.Request request,
+                        AIMLBot.Result result,
                         XmlNode templateNode)
             : base(bot, user, query, request, result, templateNode)
         {

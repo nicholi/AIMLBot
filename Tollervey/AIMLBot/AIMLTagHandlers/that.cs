@@ -22,7 +22,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
     /// 
     /// The template-side that element does not have any content. 
     /// </summary>
-    public class that : AIMLbot.Utils.AIMLTagHandler
+    public class that : AIMLBot.Utils.AIMLTagHandler
     {
         /// <summary>
         /// Ctor
@@ -33,11 +33,11 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public that(AIMLbot.Bot bot,
-                        AIMLbot.User user,
-                        AIMLbot.Utils.SubQuery query,
-                        AIMLbot.Request request,
-                        AIMLbot.Result result,
+        public that(AIMLBot.Bot bot,
+                        AIMLBot.User user,
+                        AIMLBot.Utils.SubQuery query,
+                        AIMLBot.Request request,
+                        AIMLBot.Result result,
                         XmlNode templateNode)
             : base(bot, user, query, request, result, templateNode)
         {

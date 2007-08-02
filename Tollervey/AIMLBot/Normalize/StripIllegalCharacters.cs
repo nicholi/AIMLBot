@@ -8,12 +8,12 @@ namespace Tollervey.AIMLBot.Normalize
     /// Strips any illegal characters found within the input string. Illegal characters are referenced from
     /// the bot's Strippers regex that is defined in the setup XML file.
     /// </summary>
-    public class StripIllegalCharacters : AIMLbot.Utils.TextTransformer
+    public class StripIllegalCharacters : AIMLBot.Utils.TextTransformer
     {
-        public StripIllegalCharacters(AIMLbot.Bot bot, string inputString) : base(bot, inputString)
+        public StripIllegalCharacters(AIMLBot.Bot bot, string inputString) : base(bot, inputString)
         { }
 
-        public StripIllegalCharacters(AIMLbot.Bot bot)
+        public StripIllegalCharacters(AIMLBot.Bot bot)
             : base(bot) 
         { }
 

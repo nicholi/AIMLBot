@@ -11,7 +11,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
     /// 
     /// The atomic sr does not have any content. 
     /// </summary>
-    public class sr : AIMLbot.Utils.AIMLTagHandler
+    public class sr : AIMLBot.Utils.AIMLTagHandler
     {
         /// <summary>
         /// Ctor
@@ -22,11 +22,11 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public sr(AIMLbot.Bot bot,
-                        AIMLbot.User user,
-                        AIMLbot.Utils.SubQuery query,
-                        AIMLbot.Request request,
-                        AIMLbot.Result result,
+        public sr(AIMLBot.Bot bot,
+                        AIMLBot.User user,
+                        AIMLBot.Utils.SubQuery query,
+                        AIMLBot.Request request,
+                        AIMLBot.Result result,
                         XmlNode templateNode)
             : base(bot, user, query, request, result, templateNode)
         {
@@ -40,7 +40,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
                 star recursiveStar = new star(this.bot, this.user, this.query, this.request, this.result, starNode);
                 string starContent = recursiveStar.Transform();
 
-                XmlNode sraiNode = AIMLbot.Utils.AIMLTagHandler.getNode("<srai>"+starContent+"</srai>");
+                XmlNode sraiNode = AIMLBot.Utils.AIMLTagHandler.getNode("<srai>"+starContent+"</srai>");
                 srai sraiHandler = new srai(this.bot, this.user, this.query, this.request, this.result, sraiNode);
                 return sraiHandler.Transform();
             }
