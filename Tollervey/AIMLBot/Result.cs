@@ -101,7 +101,7 @@ namespace Tollervey.AIMLBot
         /// The subQueries processed by the bot's graphmaster that contain the templates that 
         /// are to be converted into the collection of Sentences
         /// </summary>
-        public List<Utils.SubQuery> SubQueries = new List<Utils.SubQuery>();
+        public List<Utils.Query> SubQueries = new List<Utils.Query>();
 
         /// <summary>
         /// The individual sentences produced by the bot that form the complete response

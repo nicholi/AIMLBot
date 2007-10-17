@@ -135,7 +135,7 @@ namespace Tollervey.AIMLBot.Utils
         /// <param name="matchstate">The part of the input path the node represents</param>
         /// <param name="wildcard">The contents of the user input absorbed by the AIML wildcards "_" and "*"</param>
         /// <returns>The template to process to generate the output</returns>
-        public string evaluate(string[] path, SubQuery query, Request request, string matchstate, StringBuilder wildcardmatches)
+        public string evaluate(string[] path, Query query, Request request, string matchstate, StringBuilder wildcardmatches)
         {
             // check for timeout
             if (request.StartedOn.AddMilliseconds(request.bot.TimeOut) < DateTime.Now)

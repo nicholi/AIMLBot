@@ -578,13 +578,13 @@ namespace Tollervey.AIMLBot
                 // grab the templates for the various sentences from the graphmaster
                 foreach (string path in result.NormalizedPaths)
                 {
-                    Utils.SubQuery query = new SubQuery(path);
+                    Utils.Query query = new Query(path);
                     query.Template = this.Graphmaster.evaluate(query, request, MatchState.UserInput, new StringBuilder());
                     result.SubQueries.Add(query);
                 }
 
                 // process the templates into appropriate output
-                foreach (SubQuery query in result.SubQueries)
+                foreach (Query query in result.SubQueries)
                 {
                     if (query.Template.Length > 0)
                     {
@@ -631,7 +631,7 @@ namespace Tollervey.AIMLBot
         /// <param name="result">the result to be sent to the user</param>
         /// <param name="node">the node to evaluate</param>
         /// <returns>the output string</returns>
-        public AIMLTag getBespokeTags(User user, SubQuery query, Request request, Result result, XmlNode node)
+        public AIMLTag getBespokeTags(User user, Query query, Request request, Result result, XmlNode node)
         {
             if (this.CustomTags.ContainsKey(node.Name.ToLower()))
             {

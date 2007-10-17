@@ -104,7 +104,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="templateNode">The node to be processed</param>
         public condition(AIMLBot.Bot bot,
                         AIMLBot.User user,
-                        AIMLBot.Utils.SubQuery query,
+                        AIMLBot.Utils.Query query,
                         AIMLBot.Request request,
                         AIMLBot.Result result,
                         XmlNode templateNode)

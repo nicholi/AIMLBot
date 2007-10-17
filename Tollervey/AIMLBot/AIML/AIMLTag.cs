@@ -22,7 +22,7 @@ namespace Tollervey.AIMLBot.Utils
         /// <param name="templateNode">The node to be processed</param>
         public AIMLTag   (  AIMLBot.Bot bot, 
                             AIMLBot.User user, 
-                            AIMLBot.Utils.SubQuery query,
+                            AIMLBot.Utils.Query query,
                             AIMLBot.Request request, 
                             AIMLBot.Result result, 
                             XmlNode templateNode)
@@ -54,7 +54,7 @@ namespace Tollervey.AIMLBot.Utils
         /// <summary>
         /// The query that produced this node containing the wildcard matches
         /// </summary>
-        protected AIMLBot.Utils.SubQuery query;
+        protected AIMLBot.Utils.Query query;
 
         /// <summary>
         /// A representation of the input into the bot made by the user
@@ -112,7 +112,7 @@ namespace Tollervey.AIMLBot.Utils
         /// <param name="result">the result to be sent to the user</param>
         /// <param name="user">the user who originated the request</param>
         /// <returns>the output string</returns>
-        private string processNode(XmlNode node, SubQuery query, Request request, Result result, User user)
+        private string processNode(XmlNode node, Query query, Request request, Result result, User user)
         {
             // check for timeout (to avoid infinite loops)
             if (request.StartedOn.AddMilliseconds(request.bot.TimeOut) < DateTime.Now)

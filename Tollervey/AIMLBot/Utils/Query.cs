@@ -7,7 +7,7 @@ namespace Tollervey.AIMLBot.Utils
     /// A container class for holding wildcard matches encountered during an individual path's 
     /// interrogation of the graphmaster.
     /// </summary>
-    public class SubQuery
+    public class Query
     {
         #region Attributes
 
@@ -37,7 +37,7 @@ namespace Tollervey.AIMLBot.Utils
         /// Ctor
         /// </summary>
         /// <param name="fullPath">The path that this query relates to</param>
-        public SubQuery(string[] fullpath)
+        public Query(string[] fullpath)
         {
             this.fullpath = fullpath;
         }
