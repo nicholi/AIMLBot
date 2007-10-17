@@ -22,7 +22,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
     /// 
     /// The input element does not have any content. 
     /// </summary>
-    public class input : AIMLBot.Utils.AIMLTagHandler
+    public class input : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor

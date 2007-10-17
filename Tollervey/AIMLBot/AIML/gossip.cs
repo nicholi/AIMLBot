@@ -5,12 +5,14 @@ using System.Text;
 namespace Tollervey.AIMLBot.AIMLTagHandlers
 {
     /// <summary>
-    /// The date element tells the AIML interpreter that it should substitute the system local 
-    /// date and time. No formatting constraints on the output are specified.
+    /// The gossip element instructs the AIML interpreter to capture the result of processing the 
+    /// contents of the gossip elements and to store these contents in a manner left up to the 
+    /// implementation. Most common uses of gossip have been to store captured contents in a separate 
+    /// file. 
     /// 
-    /// The date element does not have any content. 
+    /// The gossip element does not have any attributes. It may contain any AIML template elements.
     /// </summary>
-    public class date : AIMLBot.Utils.AIMLTagHandler
+    public class gossip : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor
@@ -21,7 +23,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public date(AIMLBot.Bot bot,
+        public gossip(AIMLBot.Bot bot,
                         AIMLBot.User user,
                         AIMLBot.Utils.SubQuery query,
                         AIMLBot.Request request,
@@ -33,9 +35,13 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "date")
+            if (this.templateNode.Name.ToLower() == "gossip")
             {
-                return DateTime.Now.ToString(this.bot.Locale);
+                // gossip is merely logged by the bot and written to log files
+                if (this.templateNode.InnerText.Length > 0)
+                {
+                    this.bot.writeToLog("GOSSIP from user: "+this.user.UserID+", '"+this.templateNode.InnerText+"'");
+                }
             }
             return string.Empty;
         }

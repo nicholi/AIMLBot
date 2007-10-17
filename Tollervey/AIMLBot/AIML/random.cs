@@ -1,19 +1,16 @@
 using System;
 using System.Xml;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Tollervey.AIMLBot.AIMLTagHandlers
 {
     /// <summary>
-    /// The formal element tells the AIML interpreter to render the contents of the element 
-    /// such that the first letter of each word is in uppercase, as defined (if defined) by 
-    /// the locale indicated by the specified language (if specified). This is similar to methods 
-    /// that are sometimes called "Title Case". 
-    /// 
-    /// If no character in this string has a different uppercase version, based on the Unicode 
-    /// standard, then the original string is returned.
+    /// The random element instructs the AIML interpreter to return exactly one of its contained li 
+    /// elements randomly. The random element must contain one or more li elements of type 
+    /// defaultListItem, and cannot contain any other elements.
     /// </summary>
-    public class formal : AIMLBot.Utils.AIMLTagHandler
+    public class random : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor
@@ -24,7 +21,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public formal(AIMLBot.Bot bot,
+        public random(AIMLBot.Bot bot,
                         AIMLBot.User user,
                         AIMLBot.Utils.SubQuery query,
                         AIMLBot.Request request,
@@ -32,28 +29,31 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
                         XmlNode templateNode)
             : base(bot, user, query, request, result, templateNode)
         {
+            this.isRecursive = false;
         }
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "formal")
+            if (this.templateNode.Name.ToLower() == "random")
             {
-                StringBuilder result = new StringBuilder();
-                if (this.templateNode.InnerText.Length > 0)
+                if (this.templateNode.HasChildNodes)
                 {
-                    string[] words = this.templateNode.InnerText.ToLower().Split();
-                    foreach (string word in words)
+                    // only grab <li> nodes
+                    List<XmlNode> listNodes = new List<XmlNode>();
+                    foreach (XmlNode childNode in this.templateNode.ChildNodes)
                     {
-                        string newWord = word.Substring(0, 1);
-                        newWord = newWord.ToUpper();
-                        if (word.Length > 1)
+                        if (childNode.Name == "li")
                         {
-                            newWord += word.Substring(1);
+                            listNodes.Add(childNode);
                         }
-                        result.Append(newWord + " ");
+                    }
+                    if (listNodes.Count > 0)
+                    {
+                        Random r = new Random();
+                        XmlNode chosenNode = (XmlNode)listNodes[r.Next(listNodes.Count)];
+                        return chosenNode.InnerXml;
                     }
                 }
-                return result.ToString().Trim();
             }
             return string.Empty;
         }

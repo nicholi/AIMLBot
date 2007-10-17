@@ -5,27 +5,27 @@ using System.Text;
 namespace Tollervey.AIMLBot.AIMLTagHandlers
 {
     /// <summary>
-    /// The atomic version of the person2 element is a shortcut for: 
+    /// The atomic version of the gender element is a shortcut for:
     /// 
-    /// <person2><star/></person2> 
+    /// <gender><star/></gender> 
+    ///
+    /// The atomic gender does not have any content. 
     /// 
-    /// The atomic person2 does not have any content.
+    /// The non-atomic gender element instructs the AIML interpreter to: 
     /// 
-    /// The non-atomic person2 element instructs the AIML interpreter to: 
+    /// 1. replace male-gendered words in the result of processing the contents of the gender element 
+    /// with the grammatically-corresponding female-gendered words; and 
     /// 
-    /// 1. replace words with first-person aspect in the result of processing the contents of the 
-    /// person2 element with words with the grammatically-corresponding second-person aspect; and,
-    /// 
-    /// 2. replace words with second-person aspect in the result of processing the contents of the 
-    /// person2 element with words with the grammatically-corresponding first-person aspect. 
+    /// 2. replace female-gendered words in the result of processing the contents of the gender element 
+    /// with the grammatically-corresponding male-gendered words. 
     /// 
     /// The definition of "grammatically-corresponding" is left up to the implementation.
     /// 
-    /// Historically, implementations of person2 have dealt with pronouns, likely due to the fact 
-    /// that most AIML has been written in English. However, the decision about whether to transform 
-    /// the person aspect of other words is left up to the implementation.
+    /// Historically, implementations of gender have exclusively dealt with pronouns, likely due to the 
+    /// fact that most AIML has been written in English. However, the decision about whether to 
+    /// transform gender of other words is left up to the implementation.
     /// </summary>
-    public class person2 : AIMLBot.Utils.AIMLTagHandler
+    public class gender : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor
@@ -36,7 +36,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public person2(AIMLBot.Bot bot,
+        public gender(AIMLBot.Bot bot,
                         AIMLBot.User user,
                         AIMLBot.Utils.SubQuery query,
                         AIMLBot.Request request,
@@ -48,17 +48,17 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "person2")
+            if (this.templateNode.Name.ToLower() == "gender")
             {
                 if (this.templateNode.InnerText.Length > 0)
                 {
                     // non atomic version of the node
-                    return AIMLBot.Normalize.ApplySubstitutions.Substitute(this.bot, this.bot.Person2Substitutions, this.templateNode.InnerText);
+                    return AIMLBot.Normalize.ApplySubstitutions.Substitute(this.bot, this.bot.GenderSubstitutions, this.templateNode.InnerText);
                 }
                 else
                 {
                     // atomic version of the node
-                    XmlNode starNode = Utils.AIMLTagHandler.getNode("<star/>");
+                    XmlNode starNode = Utils.AIMLTag.getNode("<star/>");
                     star recursiveStar = new star(this.bot, this.user, this.query, this.request, this.result, starNode);
                     this.templateNode.InnerText = recursiveStar.Transform();
                     if (this.templateNode.InnerText.Length > 0)

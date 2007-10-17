@@ -19,7 +19,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
     /// 
     /// The star element does not have any content. 
     /// </summary>
-    public class star : AIMLBot.Utils.AIMLTagHandler
+    public class star : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor
@@ -40,44 +40,47 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         {
         }
 
-        protected override string ProcessChange()
+        public override void Render(System.IO.StringWriter writer)
         {
             if (this.templateNode.Name.ToLower() == "star")
             {
-                if (this.query.InputStar.Count > 0)
+                if (this.query.Wildcards.ContainsKey["star"])
                 {
-                    if (this.templateNode.Attributes.Count == 0)
+                    if (this.query.Wildcards["star"].Count > 0)
                     {
-                        // return the first (latest) star in the List<>
-                        return (string)this.query.InputStar[0];
-                    }
-                    else if (this.templateNode.Attributes.Count == 1)
-                    {
-                        if (this.templateNode.Attributes[0].Name.ToLower() == "index")
+                        if (this.templateNode.Attributes.Count == 0)
                         {
-                            try
+                            // return the first (latest) star in the List<>
+                            writer.Write(this.query.Wildcards["star"][0]);
+                        }
+                        else if (this.templateNode.Attributes.Count == 1)
+                        {
+                            if (this.templateNode.Attributes[0].Name.ToLower() == "index")
                             {
-                                int index = Convert.ToInt32(this.templateNode.Attributes[0].Value);
-                                index--;
-                                if ((index >= 0) & (index < this.query.InputStar.Count))
+                                try
                                 {
-                                    return (string)this.query.InputStar[index];
+                                    int index = Convert.ToInt32(this.templateNode.Attributes[0].Value);
+                                    index--;
+                                    if ((index >= 0) & (index < this.query.InputStar.Count))
+                                    {
+                                        writer.Write(this.query.Wildcards["star"][index]);
+                                    }
+                                    else
+                                    {
+                                        this.bot.writeToLog("InputStar out of bounds reference caused by input: " + this.request.rawInput);
+                                    }
                                 }
-                                else
+                                catch
                                 {
-                                    this.bot.writeToLog("InputStar out of bounds reference caused by input: " + this.request.rawInput);
+                                    this.bot.writeToLog("Index set to non-integer value whilst processing star tag in response to the input: " + this.request.rawInput);
                                 }
-                            }
-                            catch
-                            {
-                                this.bot.writeToLog("Index set to non-integer value whilst processing star tag in response to the input: " + this.request.rawInput);
                             }
                         }
                     }
-                }
-                else
-                {
-                    this.bot.writeToLog("A star tag tried to reference an empty InputStar collection when processing the input: "+this.request.rawInput);
+                    else
+                    {
+                        this.bot.writeToLog("A star tag tried to reference an empty InputStar collection when processing the input: " + this.request.rawInput);
+                    }
                 }
             }
             return string.Empty;

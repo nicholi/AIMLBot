@@ -22,7 +22,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
     /// 
     /// The template-side that element does not have any content. 
     /// </summary>
-    public class that : AIMLBot.Utils.AIMLTagHandler
+    public class that : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor

@@ -5,15 +5,17 @@ using System.Text;
 namespace Tollervey.AIMLBot.AIMLTagHandlers
 {
     /// <summary>
-    /// The srai element instructs the AIML interpreter to pass the result of processing the contents 
-    /// of the srai element to the AIML matching loop, as if the input had been produced by the user 
-    /// (this includes stepping through the entire input normalization process). The srai element does 
-    /// not have any attributes. It may contain any AIML template elements. 
+    /// An element called bot, which may be considered a restricted version of get, is used to 
+    /// tell the AIML interpreter that it should substitute the contents of a "bot predicate". The 
+    /// value of a bot predicate is set at load-time, and cannot be changed at run-time. The AIML 
+    /// interpreter may decide how to set the values of bot predicate at load-time. If the bot 
+    /// predicate has no value defined, the AIML interpreter should substitute an empty string.
     /// 
-    /// As with all AIML elements, nested forms should be parsed from inside out, so embedded srais are 
-    /// perfectly acceptable. 
+    /// The bot element has a required name attribute that identifies the bot predicate. 
+    /// 
+    /// The bot element does not have any content. 
     /// </summary>
-    public class srai : AIMLBot.Utils.AIMLTagHandler
+    public class bot : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor
@@ -24,7 +26,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public srai(AIMLBot.Bot bot,
+        public bot(AIMLBot.Bot bot,
                         AIMLBot.User user,
                         AIMLBot.Utils.SubQuery query,
                         AIMLBot.Request request,
@@ -36,15 +38,15 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "srai")
+            if (this.templateNode.Name.ToLower() == "bot")
             {
-                if (this.templateNode.InnerText.Length > 0)
+                if (this.templateNode.Attributes.Count == 1)
                 {
-                    Request subRequest = new Request(this.templateNode.InnerText, this.user, this.bot);
-                    subRequest.StartedOn = this.request.StartedOn; // make sure we don't keep adding time to the request
-                    Result subQuery = this.bot.Chat(subRequest);
-                    this.request.hasTimedOut = subRequest.hasTimedOut;
-                    return subQuery.Output;
+                    if (this.templateNode.Attributes[0].Name.ToLower() == "name")
+                    {
+                        string key = this.templateNode.Attributes["name"].Value;
+                        return (string)this.bot.GlobalSettings.grabSetting(key);
+                    }
                 }
             }
             return string.Empty;

@@ -21,7 +21,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
     /// 
     /// A set element may contain any AIML template elements.
     /// </summary>
-    public class set : AIMLBot.Utils.AIMLTagHandler
+    public class set : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor

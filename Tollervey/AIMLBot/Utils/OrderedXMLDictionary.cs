@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Xml;
 using System.IO;
-using Tollervey.AIMLBot.Normalize;
 
 namespace Tollervey.AIMLBot.Utils
 {
@@ -84,7 +83,7 @@ namespace Tollervey.AIMLBot.Utils
         public void Load(XmlDocument settingsAsXML)
         {
             // empty the hash
-            this.clearSettings();
+            this.Clear();
 
             XmlNodeList rootChildren = settingsAsXML.DocumentElement.ChildNodes;
 
@@ -98,7 +97,7 @@ namespace Tollervey.AIMLBot.Utils
                         string value = myNode.Attributes["value"].Value;
                         if (name.Length > 0)
                         {
-                            this.addSetting(name, value);
+                            this.Add(name, value);
                         }
                     }
                 }

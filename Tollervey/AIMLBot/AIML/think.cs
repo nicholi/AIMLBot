@@ -5,14 +5,12 @@ using System.Text;
 namespace Tollervey.AIMLBot.AIMLTagHandlers
 {
     /// <summary>
-    /// The uppercase element tells the AIML interpreter to render the contents of the element
-    /// in uppercase, as defined (if defined) by the locale indicated by the specified language
-    /// if specified).
+    /// The think element instructs the AIML interpreter to perform all usual processing of its 
+    /// contents, but to not return any value, regardless of whether the contents produce output.
     /// 
-    /// If no character in this string has a different uppercase version, based on the Unicode 
-    /// standard, then the original string is returned. 
+    /// The think element has no attributes. It may contain any AIML template elements.
     /// </summary>
-    public class uppercase : AIMLBot.Utils.AIMLTagHandler
+    public class think : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor
@@ -23,7 +21,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public uppercase(AIMLBot.Bot bot,
+        public think(AIMLBot.Bot bot,
                         AIMLBot.User user,
                         AIMLBot.Utils.SubQuery query,
                         AIMLBot.Request request,
@@ -33,13 +31,9 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         {
         }
 
-        protected override string ProcessChange()
+        public override void Render(System.IO.StringWriter writer)
         {
-            if (this.templateNode.Name.ToLower() == "uppercase")
-            {
-                return this.templateNode.InnerText.ToUpper(this.bot.Locale);
-            }
-            return string.Empty;
+            // think does not render anything
         }
     }
 }

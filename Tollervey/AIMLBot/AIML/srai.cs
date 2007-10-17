@@ -1,15 +1,19 @@
 using System;
 using System.Xml;
 using System.Text;
-using System.IO;
 
 namespace Tollervey.AIMLBot.AIMLTagHandlers
 {
     /// <summary>
-    /// The learn element instructs the AIML interpreter to retrieve a resource specified by a URI, 
-    /// and to process its AIML object contents.
+    /// The srai element instructs the AIML interpreter to pass the result of processing the contents 
+    /// of the srai element to the AIML matching loop, as if the input had been produced by the user 
+    /// (this includes stepping through the entire input normalization process). The srai element does 
+    /// not have any attributes. It may contain any AIML template elements. 
+    /// 
+    /// As with all AIML elements, nested forms should be parsed from inside out, so embedded srais are 
+    /// perfectly acceptable. 
     /// </summary>
-    public class learn : AIMLBot.Utils.AIMLTagHandler
+    public class srai : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor
@@ -20,7 +24,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public learn(AIMLBot.Bot bot,
+        public srai(AIMLBot.Bot bot,
                         AIMLBot.User user,
                         AIMLBot.Utils.SubQuery query,
                         AIMLBot.Request request,
@@ -32,27 +36,15 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "learn")
+            if (this.templateNode.Name.ToLower() == "srai")
             {
-                // currently only AIML files in the local filesystem can be referenced
-                // ToDo: Network HTTP and web service based learning
                 if (this.templateNode.InnerText.Length > 0)
                 {
-                    string path = this.templateNode.InnerText;
-                    FileInfo fi = new FileInfo(path);
-                    if (fi.Exists)
-                    {
-                        XmlDocument doc = new XmlDocument();
-                        try
-                        {
-                            doc.Load(path);
-                            this.bot.loadAIMLFromXML(doc, path);
-                        }
-                        catch
-                        {
-                            this.bot.writeToLog("ERROR! Attempted (but failed) to <learn> some new AIML from the following URI: " + path);
-                        }
-                    }
+                    Request subRequest = new Request(this.templateNode.InnerText, this.user, this.bot);
+                    subRequest.StartedOn = this.request.StartedOn; // make sure we don't keep adding time to the request
+                    Result subQuery = this.bot.Chat(subRequest);
+                    this.request.hasTimedOut = subRequest.hasTimedOut;
+                    return subQuery.Output;
                 }
             }
             return string.Empty;

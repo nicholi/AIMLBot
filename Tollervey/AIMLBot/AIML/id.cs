@@ -5,13 +5,13 @@ using System.Text;
 namespace Tollervey.AIMLBot.AIMLTagHandlers
 {
     /// <summary>
-    /// The sr element is a shortcut for: 
+    /// The id element tells the AIML interpreter that it should substitute the user ID. 
+    /// The determination of the user ID is not specified, since it will vary by application. 
+    /// A suggested default return value is "localhost". 
     /// 
-    /// <srai><star/></srai> 
-    /// 
-    /// The atomic sr does not have any content. 
+    /// The id element does not have any content.
     /// </summary>
-    public class sr : AIMLBot.Utils.AIMLTagHandler
+    public class id : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor
@@ -22,7 +22,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public sr(AIMLBot.Bot bot,
+        public id(AIMLBot.Bot bot,
                         AIMLBot.User user,
                         AIMLBot.Utils.SubQuery query,
                         AIMLBot.Request request,
@@ -34,15 +34,9 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "sr")
+            if (this.templateNode.Name.ToLower() == "id")
             {
-                XmlNode starNode = Utils.AIMLTagHandler.getNode("<star/>");
-                star recursiveStar = new star(this.bot, this.user, this.query, this.request, this.result, starNode);
-                string starContent = recursiveStar.Transform();
-
-                XmlNode sraiNode = AIMLBot.Utils.AIMLTagHandler.getNode("<srai>"+starContent+"</srai>");
-                srai sraiHandler = new srai(this.bot, this.user, this.query, this.request, this.result, sraiNode);
-                return sraiHandler.Transform();
+                return this.user.UserID;
             }
             return string.Empty;
         }

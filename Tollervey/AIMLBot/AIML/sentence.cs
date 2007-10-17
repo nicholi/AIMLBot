@@ -15,7 +15,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
     /// If no character in this string has a different uppercase version, based on the Unicode 
     /// standard, then the original string is returned. 
     /// </summary>
-    public class sentence : AIMLBot.Utils.AIMLTagHandler
+    public class sentence : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor
@@ -77,7 +77,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
                 else
                 {
                     // atomic version of the node
-                    XmlNode starNode = Utils.AIMLTagHandler.getNode("<star/>");
+                    XmlNode starNode = Utils.AIMLTag.getNode("<star/>");
                     star recursiveStar = new star(this.bot, this.user, this.query, this.request, this.result, starNode);
                     this.templateNode.InnerText = recursiveStar.Transform();
                     if (this.templateNode.InnerText.Length > 0)

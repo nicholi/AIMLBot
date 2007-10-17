@@ -91,7 +91,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
     /// AIML predicate, and a required attribute value, which contains a simple pattern expression. The 
     /// element may contain any AIML template elements. 
     /// </summary>
-    public class condition : AIMLBot.Utils.AIMLTagHandler
+    public class condition : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor

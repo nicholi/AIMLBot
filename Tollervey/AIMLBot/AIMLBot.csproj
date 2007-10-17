@@ -62,10 +62,10 @@
     <Compile Include="AIMLTagHandlers\uppercase.cs" />
     <Compile Include="AIMLTagHandlers\version.cs" />
     <Compile Include="Bot.cs" />
-    <Compile Include="Normalize\ApplySubstitutions.cs" />
-    <Compile Include="Normalize\MakeCaseInsensitive.cs" />
-    <Compile Include="Normalize\SplitIntoSentences.cs" />
-    <Compile Include="Normalize\StripIllegalCharacters.cs" />
+    <Compile Include="EventArgs\BotEvent.cs" />
+    <Compile Include="EventArgs\LogEvent.cs" />
+    <Compile Include="EventArgs\LogLevel.cs" />
+    <Compile Include="EventArgs\TagEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="Result.cs" />
@@ -74,12 +74,14 @@
     <Compile Include="Utils\AIMLTagHandler.cs" />
     <Compile Include="Utils\CustomTag.cs" />
     <Compile Include="Utils\Gender.cs" />
-    <Compile Include="Utils\MatchState.cs" />
     <Compile Include="Utils\Node.cs" />
+    <Compile Include="Utils\Normalize.cs" />
     <Compile Include="Utils\OrderedXMLDictionary.cs" />
     <Compile Include="Utils\SubQuery.cs" />
     <Compile Include="Utils\TagHandler.cs" />
-    <Compile Include="Utils\TextTransformer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AIMLTagHandlers\Elements\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

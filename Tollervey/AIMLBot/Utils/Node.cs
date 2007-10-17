@@ -32,72 +32,92 @@ namespace Tollervey.AIMLBot.Utils
         /// <summary>
         /// The template (if any) associated with this node
         /// </summary>
-        public string template = string.Empty;
+        public string Template = string.Empty;
 
         /// <summary>
-        /// The AIML source for the category that defines the template
+        /// The source URI for the category that points to the template
         /// </summary>
-        public string filename = string.Empty;
+        private string source = string.Empty;
+
+        /// <summary>
+        /// A URI to the source for the category that defines the template returned by this node
+        /// </summary>
+        public string Source
+        {
+            get { return this.source; }
+        }
 
         /// <summary>
         /// The word that identifies this node to it's parent node
         /// </summary>
-        public string word=string.Empty;
+        private string word=string.Empty;
+
+        /// <summary>
+        /// The word that identifies this node to it's parent node
+        /// </summary>
+        public string Word
+        {
+            get { return this.word; }
+        }
 
         #endregion
 
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="word">The token this node represents in the graphmaster</param>
+        public Node(string word)
+        {
+            this.word = word;
+        }
+
         #region Methods
 
-        #region Add category
+        #region Learn
 
         /// <summary>
-        /// Adds a category to the node
+        /// Adds extra branches and templates to the graphmaster
         /// </summary>
-        /// <param name="path">the path for the category</param>
+        /// <param name="path">the path for that identifies the template to learn</param>
         /// <param name="template">the template to find at the end of the path</param>
-        /// <param name="filename">the file that was the source of this category</param>
-        public void addCategory(string path, string template, string filename)
+        /// <param name="source">the URI that was the source of the category that points to the template</param>
+        public void Learn(string[] path, string template, string source)
         {
             if (template.Length == 0)
             {
-                throw new XmlException("The category with a pattern: " + path + " found in file: " + filename + " has an empty template tag. ABORTING");
+                throw new Exception("The category with a pattern: " + String.Join(" ",path) + " sourced from: " + source + " has an empty template tag. ABORTING");
             }
 
             // check we're not at the leaf node
-            if (path.Trim().Length == 0)
+            if (path.Length == 0)
             {
-                this.template = template;
-                this.filename = filename;
+                this.Template = template;
+                this.source = source;
                 return;
-            }
-
-            // otherwise, this sentence requires further child nodemappers in order to
-            // be fully mapped within the GraphMaster structure.
-
-            // split the input into its component words
-            string[] words = path.Trim().Split(" ".ToCharArray());
-
-            // get the first word (to form the key for the child nodemapper)
-            string firstWord = Normalize.MakeCaseInsensitive.TransformInput(words[0]);
-
-            // concatenate the rest of the sentence into a suffix (to act as the
-            // path argument in the child nodemapper)
-            string newPath = path.Substring(firstWord.Length, path.Length - firstWord.Length).Trim();
-
-            // o.k. check we don't already have a child with the key from this sentence
-            // if we do then pass the handling of this sentence down the branch to the 
-            // child nodemapper otherwise the child nodemapper doesn't yet exist, so create a new one
-            if (this.children.ContainsKey(firstWord))
-            {
-                Node childNode = this.children[firstWord];
-                childNode.addCategory(newPath, template, filename);
             }
             else
             {
-                Node childNode = new Node();
-                childNode.word = firstWord;
-                childNode.addCategory(newPath, template, filename);
-                this.children.Add(childNode.word, childNode);
+                // requires further child nodes for this category to be fully mapped into the graphmaster
+                string firstWord = path[0].ToUpper();
+
+                string[] newPath = new string[path.Length - 1];
+                if (newPath.Length > 0)
+                {
+                    path.CopyTo(newPath, 1);
+                }
+
+                // pass the handling of this sentence down the branch to a child node
+                if (this.children.ContainsKey(firstWord))
+                {
+                    Node childNode = this.children[firstWord];
+                    childNode.addCategory(newPath, template, source);
+                }
+                else
+                {
+                    Node childNode = new Node(firstWord);
+                    childNode.addCategory(newPath, template, source);
+                    this.children.Add(firstword, childNode);
+                }
             }
         }
 
@@ -115,7 +135,7 @@ namespace Tollervey.AIMLBot.Utils
         /// <param name="matchstate">The part of the input path the node represents</param>
         /// <param name="wildcard">The contents of the user input absorbed by the AIML wildcards "_" and "*"</param>
         /// <returns>The template to process to generate the output</returns>
-        public string evaluate(string path, SubQuery query, Request request, MatchState matchstate, StringBuilder wildcard)
+        public string evaluate(string[] path, SubQuery query, Request request, string matchstate, StringBuilder wildcardmatches)
         {
             // check for timeout
             if (request.StartedOn.AddMilliseconds(request.bot.TimeOut) < DateTime.Now)
@@ -136,16 +156,16 @@ namespace Tollervey.AIMLBot.Utils
                 {
                     // if we get here it means that there is a wildcard in the user input part of the
                     // path.
-                    this.storeWildCard(path, wildcard);
+                    this.storeWildCard(path, wildcardmatches);
                 }
-                return this.template;
+                return this.Template;
             }
 
             // if we've matched all the words in the input sentence and this is the end
             // of the line then return the cCategory for this node
             if (path.Length == 0)
             {
-                return this.template;
+                return this.Template;
             }
 
             // otherwise split the input into it's component words
@@ -291,14 +311,14 @@ namespace Tollervey.AIMLBot.Utils
             // valid if we proceed with the tail.
             if ((this.word == "_") || (this.word == "*"))
             {
-                this.storeWildCard(splitPath[0], wildcard);
-                return this.evaluate(newPath, query, request, matchstate, wildcard);
+                this.storeWildCard(splitPath[0], wildcardmatches);
+                return this.evaluate(newPath, query, request, matchstate, wildcardmatches);
             }
 
             // If we get here then we're at a dead end so return an empty string. Hopefully, if the
             // AIML files have been set up to include a "* <that> * <topic> *" catch-all this
             // state won't be reached. Remember to empty the surplus to requirements wildcard matches
-            wildcard = new StringBuilder();
+            wildcardmatches = new StringBuilder();
             return string.Empty;
         }
 

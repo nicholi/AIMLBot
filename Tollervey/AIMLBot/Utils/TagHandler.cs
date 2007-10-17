@@ -8,7 +8,7 @@ namespace Tollervey.AIMLBot.Utils
     /// <summary>
     /// Encapsulates information about a custom tag class
     /// </summary>
-    public class TagHandler
+    public class CustomTagHandler
     {
         /// <summary>
         /// The assembly this class is found in
@@ -30,12 +30,12 @@ namespace Tollervey.AIMLBot.Utils
         /// </summary>
         /// <param name="Assemblies">All the assemblies the bot knows about</param>
         /// <returns>The instantiated class</returns>
-        public AIMLTagHandler Instantiate(Dictionary<string, Assembly> Assemblies)
+        public AIMLTag Instantiate(Dictionary<string, Assembly> Assemblies)
         {
             if (Assemblies.ContainsKey(this.AssemblyName))
             {
                 Assembly tagDLL = (Assembly)Assemblies[this.AssemblyName]; 
-                return (AIMLTagHandler)tagDLL.CreateInstance(this.ClassName);
+                return (AIMLTag)tagDLL.CreateInstance(this.ClassName);
             }
             else
             {

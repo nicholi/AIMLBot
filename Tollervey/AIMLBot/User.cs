@@ -17,11 +17,6 @@ namespace Tollervey.AIMLBot
         private string id;
 
         /// <summary>
-        /// The bot this user is using
-        /// </summary>
-        public AIMLBot.Bot bot;
-
-        /// <summary>
         /// The GUID that identifies this user to the bot
         /// </summary>
         public string UserID
@@ -41,14 +36,14 @@ namespace Tollervey.AIMLBot
         {
             get
             {
-                return this.Predicates.grabSetting("topic");
+                return this.Predicates["topic"];
             }
         }
 
 		/// <summary>
 		/// the predicates associated with this particular user
 		/// </summary>
-        public AIMLBot.Utils.SettingsDictionary Predicates;
+        public Tollervey.AIMLBot.Utils.OrderedXMLDictionary Predicates;
 
         /// <summary>
         /// The most recent result to be returned by the bot
@@ -76,16 +71,13 @@ namespace Tollervey.AIMLBot
         /// Ctor
         /// </summary>
         /// <param name="UserID">The GUID of the user</param>
-        /// <param name="bot">the bot the user is connected to</param>
 		public User(string UserID, AIMLBot.Bot bot)
 		{
             if (UserID.Length > 0)
             {
                 this.id = UserID;
-                this.bot = bot;
-                this.Predicates = new AIMLBot.Utils.SettingsDictionary(this.bot);
-                this.bot.DefaultPredicates.Clone(this.Predicates);
-                this.Predicates.addSetting("topic", "*");
+                this.Predicates = new AIMLBot.Utils.OrderedXMLDictionary();
+                this.Predicates.Add("topic", "*");
             }
             else
             {

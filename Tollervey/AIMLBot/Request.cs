@@ -26,11 +26,6 @@ namespace Tollervey.AIMLBot
         public User user;
 
         /// <summary>
-        /// The bot to which the request is being made
-        /// </summary>
-        public Bot bot;
-
-        /// <summary>
         /// The final result produced by this request
         /// </summary>
         public Result result;
@@ -47,12 +42,10 @@ namespace Tollervey.AIMLBot
         /// </summary>
         /// <param name="rawInput">The raw input from the user</param>
         /// <param name="user">The user who made the request</param>
-        /// <param name="bot">The bot to which this is a request</param>
-        public Request(string rawInput, User user, Bot bot)
+        public Request(string rawInput, User user)
         {
             this.rawInput = rawInput;
             this.user = user;
-            this.bot = bot;
             this.StartedOn = DateTime.Now;
         }
     }

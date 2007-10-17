@@ -5,22 +5,15 @@ using System.Text;
 namespace Tollervey.AIMLBot.AIMLTagHandlers
 {
     /// <summary>
-    /// The get element tells the AIML interpreter that it should substitute the contents of a 
-    /// predicate, if that predicate has a value defined. If the predicate has no value defined, 
-    /// the AIML interpreter should substitute the empty string "". 
+    /// The formal element tells the AIML interpreter to render the contents of the element 
+    /// such that the first letter of each word is in uppercase, as defined (if defined) by 
+    /// the locale indicated by the specified language (if specified). This is similar to methods 
+    /// that are sometimes called "Title Case". 
     /// 
-    /// The AIML interpreter implementation may optionally provide a mechanism that allows the 
-    /// AIML author to designate default values for certain predicates (see [9.3.]). 
-    /// 
-    /// The get element must not perform any text formatting or other "normalization" on the predicate
-    /// contents when returning them. 
-    /// 
-    /// The get element has a required name attribute that identifies the predicate with an AIML 
-    /// predicate name. 
-    /// 
-    /// The get element does not have any content.
+    /// If no character in this string has a different uppercase version, based on the Unicode 
+    /// standard, then the original string is returned.
     /// </summary>
-    public class get : AIMLBot.Utils.AIMLTagHandler
+    public class formal : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor
@@ -31,7 +24,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public get(AIMLBot.Bot bot,
+        public formal(AIMLBot.Bot bot,
                         AIMLBot.User user,
                         AIMLBot.Utils.SubQuery query,
                         AIMLBot.Request request,
@@ -43,18 +36,24 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "get")
+            if (this.templateNode.Name.ToLower() == "formal")
             {
-                if (this.bot.GlobalSettings.Count > 0)
+                StringBuilder result = new StringBuilder();
+                if (this.templateNode.InnerText.Length > 0)
                 {
-                    if (this.templateNode.Attributes.Count == 1)
+                    string[] words = this.templateNode.InnerText.ToLower().Split();
+                    foreach (string word in words)
                     {
-                        if (this.templateNode.Attributes[0].Name.ToLower() == "name")
+                        string newWord = word.Substring(0, 1);
+                        newWord = newWord.ToUpper();
+                        if (word.Length > 1)
                         {
-                            return this.user.Predicates.grabSetting(this.templateNode.Attributes[0].Value);
+                            newWord += word.Substring(1);
                         }
+                        result.Append(newWord + " ");
                     }
                 }
+                return result.ToString().Trim();
             }
             return string.Empty;
         }

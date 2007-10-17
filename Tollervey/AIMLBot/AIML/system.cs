@@ -5,12 +5,9 @@ using System.Text;
 namespace Tollervey.AIMLBot.AIMLTagHandlers
 {
     /// <summary>
-    /// The think element instructs the AIML interpreter to perform all usual processing of its 
-    /// contents, but to not return any value, regardless of whether the contents produce output.
-    /// 
-    /// The think element has no attributes. It may contain any AIML template elements.
+    /// NOT IMPLEMENTED FOR SECURITY REASONS
     /// </summary>
-    public class think : AIMLBot.Utils.AIMLTagHandler
+    public class system : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor
@@ -21,7 +18,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public think(AIMLBot.Bot bot,
+        public system(AIMLBot.Bot bot,
                         AIMLBot.User user,
                         AIMLBot.Utils.SubQuery query,
                         AIMLBot.Request request,
@@ -33,6 +30,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
 
         protected override string ProcessChange()
         {
+            this.bot.writeToLog("The system tag is not implemented in this bot");
             return string.Empty;
         }
     }

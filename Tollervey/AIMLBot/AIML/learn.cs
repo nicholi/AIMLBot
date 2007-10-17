@@ -1,21 +1,15 @@
 using System;
 using System.Xml;
 using System.Text;
+using System.IO;
 
 namespace Tollervey.AIMLBot.AIMLTagHandlers
 {
     /// <summary>
-    /// An element called bot, which may be considered a restricted version of get, is used to 
-    /// tell the AIML interpreter that it should substitute the contents of a "bot predicate". The 
-    /// value of a bot predicate is set at load-time, and cannot be changed at run-time. The AIML 
-    /// interpreter may decide how to set the values of bot predicate at load-time. If the bot 
-    /// predicate has no value defined, the AIML interpreter should substitute an empty string.
-    /// 
-    /// The bot element has a required name attribute that identifies the bot predicate. 
-    /// 
-    /// The bot element does not have any content. 
+    /// The learn element instructs the AIML interpreter to retrieve a resource specified by a URI, 
+    /// and to process its AIML object contents.
     /// </summary>
-    public class bot : AIMLBot.Utils.AIMLTagHandler
+    public class learn : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor
@@ -26,7 +20,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public bot(AIMLBot.Bot bot,
+        public learn(AIMLBot.Bot bot,
                         AIMLBot.User user,
                         AIMLBot.Utils.SubQuery query,
                         AIMLBot.Request request,
@@ -38,14 +32,26 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "bot")
+            if (this.templateNode.Name.ToLower() == "learn")
             {
-                if (this.templateNode.Attributes.Count == 1)
+                // currently only AIML files in the local filesystem can be referenced
+                // ToDo: Network HTTP and web service based learning
+                if (this.templateNode.InnerText.Length > 0)
                 {
-                    if (this.templateNode.Attributes[0].Name.ToLower() == "name")
+                    string path = this.templateNode.InnerText;
+                    FileInfo fi = new FileInfo(path);
+                    if (fi.Exists)
                     {
-                        string key = this.templateNode.Attributes["name"].Value;
-                        return (string)this.bot.GlobalSettings.grabSetting(key);
+                        XmlDocument doc = new XmlDocument();
+                        try
+                        {
+                            doc.Load(path);
+                            this.bot.loadAIMLFromXML(doc, path);
+                        }
+                        catch
+                        {
+                            this.bot.writeToLog("ERROR! Attempted (but failed) to <learn> some new AIML from the following URI: " + path);
+                        }
                     }
                 }
             }

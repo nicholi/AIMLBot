@@ -5,14 +5,9 @@ using System.Text;
 namespace Tollervey.AIMLBot.AIMLTagHandlers
 {
     /// <summary>
-    /// The lowercase element tells the AIML interpreter to render the contents of the element 
-    /// in lowercase, as defined (if defined) by the locale indicated by the specified language
-    /// (if specified). 
-    /// 
-    /// If no character in this string has a different lowercase version, based on the Unicode 
-    /// standard, then the original string is returned. 
+    /// NOT IMPLEMENTED FOR SECURITY REASONS
     /// </summary>
-    public class lowercase : AIMLBot.Utils.AIMLTagHandler
+    public class javascript : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor
@@ -23,7 +18,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public lowercase(AIMLBot.Bot bot,
+        public javascript(AIMLBot.Bot bot,
                         AIMLBot.User user,
                         AIMLBot.Utils.SubQuery query,
                         AIMLBot.Request request,
@@ -35,10 +30,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "lowercase")
-            {
-                return this.templateNode.InnerText.ToLower(this.bot.Locale);
-            }
+            this.bot.writeToLog("The javascript tag is not implemented in this bot");
             return string.Empty;
         }
     }

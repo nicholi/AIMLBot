@@ -1,16 +1,26 @@
 using System;
 using System.Xml;
 using System.Text;
-using System.Collections.Generic;
 
 namespace Tollervey.AIMLBot.AIMLTagHandlers
 {
     /// <summary>
-    /// The random element instructs the AIML interpreter to return exactly one of its contained li 
-    /// elements randomly. The random element must contain one or more li elements of type 
-    /// defaultListItem, and cannot contain any other elements.
+    /// The get element tells the AIML interpreter that it should substitute the contents of a 
+    /// predicate, if that predicate has a value defined. If the predicate has no value defined, 
+    /// the AIML interpreter should substitute the empty string "". 
+    /// 
+    /// The AIML interpreter implementation may optionally provide a mechanism that allows the 
+    /// AIML author to designate default values for certain predicates (see [9.3.]). 
+    /// 
+    /// The get element must not perform any text formatting or other "normalization" on the predicate
+    /// contents when returning them. 
+    /// 
+    /// The get element has a required name attribute that identifies the predicate with an AIML 
+    /// predicate name. 
+    /// 
+    /// The get element does not have any content.
     /// </summary>
-    public class random : AIMLBot.Utils.AIMLTagHandler
+    public class get : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor
@@ -21,7 +31,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public random(AIMLBot.Bot bot,
+        public get(AIMLBot.Bot bot,
                         AIMLBot.User user,
                         AIMLBot.Utils.SubQuery query,
                         AIMLBot.Request request,
@@ -29,29 +39,20 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
                         XmlNode templateNode)
             : base(bot, user, query, request, result, templateNode)
         {
-            this.isRecursive = false;
         }
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "random")
+            if (this.templateNode.Name.ToLower() == "get")
             {
-                if (this.templateNode.HasChildNodes)
+                if (this.bot.GlobalSettings.Count > 0)
                 {
-                    // only grab <li> nodes
-                    List<XmlNode> listNodes = new List<XmlNode>();
-                    foreach (XmlNode childNode in this.templateNode.ChildNodes)
+                    if (this.templateNode.Attributes.Count == 1)
                     {
-                        if (childNode.Name == "li")
+                        if (this.templateNode.Attributes[0].Name.ToLower() == "name")
                         {
-                            listNodes.Add(childNode);
+                            return this.user.Predicates.grabSetting(this.templateNode.Attributes[0].Value);
                         }
-                    }
-                    if (listNodes.Count > 0)
-                    {
-                        Random r = new Random();
-                        XmlNode chosenNode = (XmlNode)listNodes[r.Next(listNodes.Count)];
-                        return chosenNode.InnerXml;
                     }
                 }
             }

@@ -5,12 +5,12 @@ using System.Text;
 namespace Tollervey.AIMLBot.AIMLTagHandlers
 {
     /// <summary>
-    /// The version element tells the AIML interpreter that it should substitute the version number
-    /// of the AIML interpreter.
+    /// The date element tells the AIML interpreter that it should substitute the system local 
+    /// date and time. No formatting constraints on the output are specified.
     /// 
-    /// The version element does not have any content. 
+    /// The date element does not have any content. 
     /// </summary>
-    public class version : AIMLBot.Utils.AIMLTagHandler
+    public class date : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor
@@ -21,7 +21,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public version(AIMLBot.Bot bot,
+        public date(AIMLBot.Bot bot,
                         AIMLBot.User user,
                         AIMLBot.Utils.SubQuery query,
                         AIMLBot.Request request,
@@ -33,9 +33,9 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "version")
+            if (this.templateNode.Name.ToLower() == "date")
             {
-                return this.bot.GlobalSettings.grabSetting("version");
+                return DateTime.Now.ToString(this.bot.Locale);
             }
             return string.Empty;
         }

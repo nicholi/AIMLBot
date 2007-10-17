@@ -5,12 +5,13 @@ using System.Text;
 namespace Tollervey.AIMLBot.AIMLTagHandlers
 {
     /// <summary>
-    /// The size element tells the AIML interpreter that it should substitute the number of 
-    /// categories currently loaded.
+    /// The sr element is a shortcut for: 
     /// 
-    /// The size element does not have any content. 
+    /// <srai><star/></srai> 
+    /// 
+    /// The atomic sr does not have any content. 
     /// </summary>
-    public class size : AIMLBot.Utils.AIMLTagHandler
+    public class sr : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor
@@ -21,7 +22,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public size(AIMLBot.Bot bot,
+        public sr(AIMLBot.Bot bot,
                         AIMLBot.User user,
                         AIMLBot.Utils.SubQuery query,
                         AIMLBot.Request request,
@@ -33,9 +34,15 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "size")
+            if (this.templateNode.Name.ToLower() == "sr")
             {
-                return Convert.ToString(this.bot.Size);
+                XmlNode starNode = Utils.AIMLTag.getNode("<star/>");
+                star recursiveStar = new star(this.bot, this.user, this.query, this.request, this.result, starNode);
+                string starContent = recursiveStar.Transform();
+
+                XmlNode sraiNode = AIMLBot.Utils.AIMLTag.getNode("<srai>"+starContent+"</srai>");
+                srai sraiHandler = new srai(this.bot, this.user, this.query, this.request, this.result, sraiNode);
+                return sraiHandler.Transform();
             }
             return string.Empty;
         }

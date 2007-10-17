@@ -5,13 +5,12 @@ using System.Text;
 namespace Tollervey.AIMLBot.AIMLTagHandlers
 {
     /// <summary>
-    /// The id element tells the AIML interpreter that it should substitute the user ID. 
-    /// The determination of the user ID is not specified, since it will vary by application. 
-    /// A suggested default return value is "localhost". 
+    /// The size element tells the AIML interpreter that it should substitute the number of 
+    /// categories currently loaded.
     /// 
-    /// The id element does not have any content.
+    /// The size element does not have any content. 
     /// </summary>
-    public class id : AIMLBot.Utils.AIMLTagHandler
+    public class size : AIMLBot.Utils.AIMLTag
     {
         /// <summary>
         /// Ctor
@@ -22,7 +21,7 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
         /// <param name="request">The request inputted into the system</param>
         /// <param name="result">The result to be passed to the user</param>
         /// <param name="templateNode">The node to be processed</param>
-        public id(AIMLBot.Bot bot,
+        public size(AIMLBot.Bot bot,
                         AIMLBot.User user,
                         AIMLBot.Utils.SubQuery query,
                         AIMLBot.Request request,
@@ -34,9 +33,9 @@ namespace Tollervey.AIMLBot.AIMLTagHandlers
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "id")
+            if (this.templateNode.Name.ToLower() == "size")
             {
-                return this.user.UserID;
+                return Convert.ToString(this.bot.Size);
             }
             return string.Empty;
         }

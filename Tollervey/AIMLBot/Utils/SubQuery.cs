@@ -10,10 +10,16 @@ namespace Tollervey.AIMLBot.Utils
     public class SubQuery
     {
         #region Attributes
+
+        private string[] fullpath;
+
         /// <summary>
         /// The path that this query relates to
         /// </summary>
-        public string FullPath;
+        public string[] FullPath
+        {
+            get { return this.fullpath; }
+        }
 
         /// <summary>
         /// The template found from searching the graphmaster brain with the path 
@@ -21,31 +27,19 @@ namespace Tollervey.AIMLBot.Utils
         public string Template = string.Empty;
 
         /// <summary>
-        /// If the raw input matches a wildcard then this attribute will contain the block of 
-        /// text that the user has inputted that is matched by the wildcard.
+        /// Dictionary of arrays of wildcard matches (star, thatstar and topicstar for example)
         /// </summary>
-        public List<string> InputStar = new List<string>();
+        public Dictionary<string, List<string>> Wildcards = new Dictionary<string, List<string>>();
 
-        /// <summary>
-        /// If the "that" part of the normalized path contains a wildcard then this attribute 
-        /// will contain the block of text that the user has inputted that is matched by the wildcard.
-        /// </summary>
-        public List<string> ThatStar = new List<string>();
-
-        /// <summary>
-        /// If the "topic" part of the normalized path contains a wildcard then this attribute 
-        /// will contain the block of text that the user has inputted that is matched by the wildcard.
-        /// </summary>
-        public List<string> TopicStar = new List<string>();
         #endregion
 
         /// <summary>
         /// Ctor
         /// </summary>
         /// <param name="fullPath">The path that this query relates to</param>
-        public SubQuery(string fullPath)
+        public SubQuery(string[] fullpath)
         {
-            this.FullPath = fullPath;
+            this.fullpath = fullpath;
         }
     }
 }
