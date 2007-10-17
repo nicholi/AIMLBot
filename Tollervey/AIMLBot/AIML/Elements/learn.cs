@@ -3,7 +3,7 @@ using System.Xml;
 using System.Text;
 using System.IO;
 
-namespace Tollervey.AIMLBot.AIMLTagHandlers
+namespace Tollervey.AIMLBot.AIML.Elements
 {
     /// <summary>
     /// The learn element instructs the AIML interpreter to retrieve a resource specified by a URI, 

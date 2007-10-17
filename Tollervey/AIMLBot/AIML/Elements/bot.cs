@@ -2,7 +2,7 @@ using System;
 using System.Xml;
 using System.Text;
 
-namespace Tollervey.AIMLBot.AIMLTagHandlers
+namespace Tollervey.AIMLBot.AIML.Elements
 {
     /// <summary>
     /// An element called bot, which may be considered a restricted version of get, is used to 

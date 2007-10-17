@@ -2,7 +2,7 @@ using System;
 using System.Xml;
 using System.Text;
 
-namespace Tollervey.AIMLBot.AIMLTagHandlers
+namespace Tollervey.AIMLBot.AIML.Elements
 {
     /// <summary>
     /// The gossip element instructs the AIML interpreter to capture the result of processing the 

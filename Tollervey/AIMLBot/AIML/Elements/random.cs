@@ -3,7 +3,7 @@ using System.Xml;
 using System.Text;
 using System.Collections.Generic;
 
-namespace Tollervey.AIMLBot.AIMLTagHandlers
+namespace Tollervey.AIMLBot.AIML.Elements
 {
     /// <summary>
     /// The random element instructs the AIML interpreter to return exactly one of its contained li 

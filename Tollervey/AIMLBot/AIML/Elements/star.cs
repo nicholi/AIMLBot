@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Xml;
 
-namespace Tollervey.AIMLBot.AIMLTagHandlers
+namespace Tollervey.AIMLBot.AIML.Elements
 {
     /// <summary>
     /// The star element indicates that an AIML interpreter should substitute the value "captured" 

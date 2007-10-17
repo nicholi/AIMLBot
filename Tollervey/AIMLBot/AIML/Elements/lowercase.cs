@@ -2,7 +2,7 @@ using System;
 using System.Xml;
 using System.Text;
 
-namespace Tollervey.AIMLBot.AIMLTagHandlers
+namespace Tollervey.AIMLBot.AIML.Elements
 {
     /// <summary>
     /// The lowercase element tells the AIML interpreter to render the contents of the element 

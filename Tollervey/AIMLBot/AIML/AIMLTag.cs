@@ -3,7 +3,7 @@ using System.Text;
 using System.Xml;
 using System.IO;
 
-namespace Tollervey.AIMLBot.Utils 
+namespace Tollervey.AIMLBot.AIML 
 {
     /// <summary>
     /// The template for all classes that handle the AIML tags found within template nodes of a
@@ -72,22 +72,22 @@ namespace Tollervey.AIMLBot.Utils
         protected XmlNode templateNode;
 
         /// <summary>
-        /// Outputs the processed AIML tag to the specified StringWriter
+        /// Outputs the processed AIML element to the specified StringWriter
         /// </summary>
         /// <param name="writer"></param>
         public abstract void Render(StringWriter writer);
 
         /// <summary>
-        /// Handles an instance of an event in a Tag's life
+        /// Handles an instance of an event in an element's life
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public delegate void TagEvent(object sender, EventArgs.TagEvent e);
+        public delegate void ElementEvent(object sender, EventArgs.TagEvent e);
 
         /// <summary>
         /// Raised if the tag cannot be rendered because of an error in the AIML
         /// </summary>
-        public event TagEvent TagRenderError;
+        public event ElementEvent ElementRenderError;
 
         #region Helper methods
 

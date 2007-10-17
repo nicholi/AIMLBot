@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 
-namespace Tollervey.AIMLBot.Utils
+namespace Tollervey.AIMLBot.AIML
 {
     /// <summary>
     /// Encapsulates information about a custom tag class

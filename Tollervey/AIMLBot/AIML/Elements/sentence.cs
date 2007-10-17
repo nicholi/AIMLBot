@@ -3,7 +3,7 @@ using System.Xml;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Tollervey.AIMLBot.AIMLTagHandlers
+namespace Tollervey.AIMLBot.AIML.Elements
 {
     /// <summary>
     /// The sentence element tells the AIML interpreter to render the contents of the element 

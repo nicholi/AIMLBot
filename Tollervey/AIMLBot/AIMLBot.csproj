@@ -33,34 +33,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AIMLTagHandlers\bot.cs" />
-    <Compile Include="AIMLTagHandlers\condition.cs" />
-    <Compile Include="AIMLTagHandlers\date.cs" />
-    <Compile Include="AIMLTagHandlers\formal.cs" />
-    <Compile Include="AIMLTagHandlers\gender.cs" />
-    <Compile Include="AIMLTagHandlers\get.cs" />
-    <Compile Include="AIMLTagHandlers\gossip.cs" />
-    <Compile Include="AIMLTagHandlers\id.cs" />
-    <Compile Include="AIMLTagHandlers\input.cs" />
-    <Compile Include="AIMLTagHandlers\javascript.cs" />
-    <Compile Include="AIMLTagHandlers\learn.cs" />
-    <Compile Include="AIMLTagHandlers\lowercase.cs" />
-    <Compile Include="AIMLTagHandlers\person.cs" />
-    <Compile Include="AIMLTagHandlers\person2.cs" />
-    <Compile Include="AIMLTagHandlers\random.cs" />
-    <Compile Include="AIMLTagHandlers\sentence.cs" />
-    <Compile Include="AIMLTagHandlers\set.cs" />
-    <Compile Include="AIMLTagHandlers\size.cs" />
-    <Compile Include="AIMLTagHandlers\sr.cs" />
-    <Compile Include="AIMLTagHandlers\srai.cs" />
-    <Compile Include="AIMLTagHandlers\star.cs" />
-    <Compile Include="AIMLTagHandlers\system.cs" />
-    <Compile Include="AIMLTagHandlers\that.cs" />
-    <Compile Include="AIMLTagHandlers\thatstar.cs" />
-    <Compile Include="AIMLTagHandlers\think.cs" />
-    <Compile Include="AIMLTagHandlers\topicstar.cs" />
-    <Compile Include="AIMLTagHandlers\uppercase.cs" />
-    <Compile Include="AIMLTagHandlers\version.cs" />
+    <Compile Include="AIML\AIMLTag.cs" />
+    <Compile Include="AIML\CustomTag.cs" />
+    <Compile Include="AIML\CustomTagHandler.cs" />
+    <Compile Include="AIML\Elements\bot.cs" />
+    <Compile Include="AIML\Elements\condition.cs" />
+    <Compile Include="AIML\Elements\date.cs" />
+    <Compile Include="AIML\Elements\formal.cs" />
+    <Compile Include="AIML\Elements\gender.cs" />
+    <Compile Include="AIML\Elements\get.cs" />
+    <Compile Include="AIML\Elements\gossip.cs" />
+    <Compile Include="AIML\Elements\id.cs" />
+    <Compile Include="AIML\Elements\input.cs" />
+    <Compile Include="AIML\Elements\javascript.cs" />
+    <Compile Include="AIML\Elements\learn.cs" />
+    <Compile Include="AIML\Elements\lowercase.cs" />
+    <Compile Include="AIML\Elements\person.cs" />
+    <Compile Include="AIML\Elements\person2.cs" />
+    <Compile Include="AIML\Elements\random.cs" />
+    <Compile Include="AIML\Elements\sentence.cs" />
+    <Compile Include="AIML\Elements\set.cs" />
+    <Compile Include="AIML\Elements\size.cs" />
+    <Compile Include="AIML\Elements\sr.cs" />
+    <Compile Include="AIML\Elements\srai.cs" />
+    <Compile Include="AIML\Elements\star.cs" />
+    <Compile Include="AIML\Elements\system.cs" />
+    <Compile Include="AIML\Elements\that.cs" />
+    <Compile Include="AIML\Elements\thatstar.cs" />
+    <Compile Include="AIML\Elements\think.cs" />
+    <Compile Include="AIML\Elements\topicstar.cs" />
+    <Compile Include="AIML\Elements\uppercase.cs" />
+    <Compile Include="AIML\Elements\version.cs" />
+    <Compile Include="AIML\Template.cs" />
     <Compile Include="Bot.cs" />
     <Compile Include="EventArgs\BotEvent.cs" />
     <Compile Include="EventArgs\LogEvent.cs" />
@@ -71,17 +75,10 @@
     <Compile Include="Result.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Utils\AIMLLoader.cs" />
-    <Compile Include="Utils\AIMLTagHandler.cs" />
-    <Compile Include="Utils\CustomTag.cs" />
-    <Compile Include="Utils\Gender.cs" />
     <Compile Include="Utils\Node.cs" />
     <Compile Include="Utils\Normalize.cs" />
     <Compile Include="Utils\OrderedXMLDictionary.cs" />
-    <Compile Include="Utils\SubQuery.cs" />
-    <Compile Include="Utils\TagHandler.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AIMLTagHandlers\Elements\" />
+    <Compile Include="Utils\Query.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
