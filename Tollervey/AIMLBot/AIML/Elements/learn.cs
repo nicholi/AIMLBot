@@ -9,7 +9,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// The learn element instructs the AIML interpreter to retrieve a resource specified by a URI, 
     /// and to process its AIML object contents.
     /// </summary>
-    public class learn : AIMLBot.Utils.AIMLTag
+    public class learn : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -32,13 +32,13 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "learn")
+            if (this.node.Name.ToLower() == "learn")
             {
                 // currently only AIML files in the local filesystem can be referenced
                 // ToDo: Network HTTP and web service based learning
-                if (this.templateNode.InnerText.Length > 0)
+                if (this.node.InnerText.Length > 0)
                 {
-                    string path = this.templateNode.InnerText;
+                    string path = this.node.InnerText;
                     FileInfo fi = new FileInfo(path);
                     if (fi.Exists)
                     {

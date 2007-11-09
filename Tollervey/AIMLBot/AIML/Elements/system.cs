@@ -7,7 +7,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// <summary>
     /// NOT IMPLEMENTED FOR SECURITY REASONS
     /// </summary>
-    public class system : AIMLBot.Utils.AIMLTag
+    public class system : AIMLElement
     {
         /// <summary>
         /// Ctor

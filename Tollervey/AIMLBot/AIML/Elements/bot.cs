@@ -15,7 +15,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// 
     /// The bot element does not have any content. 
     /// </summary>
-    public class bot : AIMLBot.Utils.AIMLTag
+    public class bot : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -38,13 +38,13 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "bot")
+            if (this.node.Name.ToLower() == "bot")
             {
-                if (this.templateNode.Attributes.Count == 1)
+                if (this.node.Attributes.Count == 1)
                 {
-                    if (this.templateNode.Attributes[0].Name.ToLower() == "name")
+                    if (this.node.Attributes[0].Name.ToLower() == "name")
                     {
-                        string key = this.templateNode.Attributes["name"].Value;
+                        string key = this.node.Attributes["name"].Value;
                         return (string)this.bot.GlobalSettings.grabSetting(key);
                     }
                 }

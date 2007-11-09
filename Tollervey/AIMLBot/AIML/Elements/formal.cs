@@ -13,7 +13,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// If no character in this string has a different uppercase version, based on the Unicode 
     /// standard, then the original string is returned.
     /// </summary>
-    public class formal : AIMLBot.Utils.AIMLTag
+    public class formal : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -36,12 +36,12 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "formal")
+            if (this.node.Name.ToLower() == "formal")
             {
                 StringBuilder result = new StringBuilder();
-                if (this.templateNode.InnerText.Length > 0)
+                if (this.node.InnerText.Length > 0)
                 {
-                    string[] words = this.templateNode.InnerText.ToLower().Split();
+                    string[] words = this.node.InnerText.ToLower().Split();
                     foreach (string word in words)
                     {
                         string newWord = word.Substring(0, 1);

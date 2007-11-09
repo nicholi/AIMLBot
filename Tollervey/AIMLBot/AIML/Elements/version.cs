@@ -10,7 +10,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// 
     /// The version element does not have any content. 
     /// </summary>
-    public class version : AIMLBot.Utils.AIMLTag
+    public class version : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -33,7 +33,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "version")
+            if (this.node.Name.ToLower() == "version")
             {
                 return this.bot.GlobalSettings.grabSetting("version");
             }

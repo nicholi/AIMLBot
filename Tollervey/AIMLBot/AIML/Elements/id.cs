@@ -11,7 +11,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// 
     /// The id element does not have any content.
     /// </summary>
-    public class id : AIMLBot.Utils.AIMLTag
+    public class id : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -34,7 +34,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "id")
+            if (this.node.Name.ToLower() == "id")
             {
                 return this.user.UserID;
             }

@@ -22,7 +22,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// 
     /// The input element does not have any content. 
     /// </summary>
-    public class input : AIMLBot.Utils.AIMLTag
+    public class input : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -45,22 +45,22 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "input")
+            if (this.node.Name.ToLower() == "input")
             {
-                if (this.templateNode.Attributes.Count == 0)
+                if (this.node.Attributes.Count == 0)
                 {
                     return this.user.getResultSentence();
                 }
-                else if (this.templateNode.Attributes.Count == 1)
+                else if (this.node.Attributes.Count == 1)
                 {
-                    if (this.templateNode.Attributes[0].Name.ToLower() == "index")
+                    if (this.node.Attributes[0].Name.ToLower() == "index")
                     {
-                        if (this.templateNode.Attributes[0].Value.Length > 0)
+                        if (this.node.Attributes[0].Value.Length > 0)
                         {
                             try
                             {
                                 // see if there is a split
-                                string[] dimensions = this.templateNode.Attributes[0].Value.Split(",".ToCharArray());
+                                string[] dimensions = this.node.Attributes[0].Value.Split(",".ToCharArray());
                                 if (dimensions.Length == 2)
                                 {
                                     int result = Convert.ToInt32(dimensions[0].Trim());
@@ -71,25 +71,25 @@ namespace Tollervey.AIMLBot.AIML.Elements
                                     }
                                     else
                                     {
-                                        this.bot.writeToLog("ERROR! An input tag with a bady formed index (" + this.templateNode.Attributes[0].Value + ") was encountered processing the input: " + this.request.rawInput);
+                                        this.bot.writeToLog("ERROR! An input tag with a bady formed index (" + this.node.Attributes[0].Value + ") was encountered processing the input: " + this.request.rawInput);
                                     }
                                 }
                                 else
                                 {
-                                    int result = Convert.ToInt32(this.templateNode.Attributes[0].Value.Trim());
+                                    int result = Convert.ToInt32(this.node.Attributes[0].Value.Trim());
                                     if (result > 0)
                                     {
                                         return this.user.getResultSentence(result - 1);
                                     }
                                     else
                                     {
-                                        this.bot.writeToLog("ERROR! An input tag with a bady formed index (" + this.templateNode.Attributes[0].Value + ") was encountered processing the input: " + this.request.rawInput);
+                                        this.bot.writeToLog("ERROR! An input tag with a bady formed index (" + this.node.Attributes[0].Value + ") was encountered processing the input: " + this.request.rawInput);
                                     }
                                 }
                             }
                             catch
                             {
-                                this.bot.writeToLog("ERROR! An input tag with a bady formed index (" + this.templateNode.Attributes[0].Value + ") was encountered processing the input: " + this.request.rawInput);
+                                this.bot.writeToLog("ERROR! An input tag with a bady formed index (" + this.node.Attributes[0].Value + ") was encountered processing the input: " + this.request.rawInput);
                             }
                         }
                     }

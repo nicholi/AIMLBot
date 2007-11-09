@@ -10,7 +10,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// 
     /// The date element does not have any content. 
     /// </summary>
-    public class date : AIMLBot.Utils.AIMLTag
+    public class date : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -33,7 +33,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "date")
+            if (this.node.Name.ToLower() == "date")
             {
                 return DateTime.Now.ToString(this.bot.Locale);
             }

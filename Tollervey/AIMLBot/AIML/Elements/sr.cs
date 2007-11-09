@@ -11,7 +11,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// 
     /// The atomic sr does not have any content. 
     /// </summary>
-    public class sr : AIMLBot.Utils.AIMLTag
+    public class sr : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -34,7 +34,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "sr")
+            if (this.node.Name.ToLower() == "sr")
             {
                 XmlNode starNode = Utils.AIMLTag.getNode("<star/>");
                 star recursiveStar = new star(this.bot, this.user, this.query, this.request, this.result, starNode);

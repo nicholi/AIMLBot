@@ -20,7 +20,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// 
     /// The get element does not have any content.
     /// </summary>
-    public class get : AIMLBot.Utils.AIMLTag
+    public class get : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -43,15 +43,15 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "get")
+            if (this.node.Name.ToLower() == "get")
             {
                 if (this.bot.GlobalSettings.Count > 0)
                 {
-                    if (this.templateNode.Attributes.Count == 1)
+                    if (this.node.Attributes.Count == 1)
                     {
-                        if (this.templateNode.Attributes[0].Name.ToLower() == "name")
+                        if (this.node.Attributes[0].Name.ToLower() == "name")
                         {
-                            return this.user.Predicates.grabSetting(this.templateNode.Attributes[0].Value);
+                            return this.user.Predicates.grabSetting(this.node.Attributes[0].Value);
                         }
                     }
                 }

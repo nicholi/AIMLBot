@@ -14,7 +14,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// 
     /// The topicstar element does not have any content. 
     /// </summary>
-    public class topicstar : AIMLBot.Utils.AIMLTag
+    public class topicstar : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -37,9 +37,9 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "topicstar")
+            if (this.node.Name.ToLower() == "topicstar")
             {
-                if (this.templateNode.Attributes.Count == 0)
+                if (this.node.Attributes.Count == 0)
                 {
                     if (this.query.TopicStar.Count > 0)
                     {
@@ -50,15 +50,15 @@ namespace Tollervey.AIMLBot.AIML.Elements
                         this.bot.writeToLog("ERROR! An out of bounds index to topicstar was encountered when processing the input: " + this.request.rawInput);
                     }
                 }
-                else if (this.templateNode.Attributes.Count == 1)
+                else if (this.node.Attributes.Count == 1)
                 {
-                    if (this.templateNode.Attributes[0].Name.ToLower() == "index")
+                    if (this.node.Attributes[0].Name.ToLower() == "index")
                     {
-                        if (this.templateNode.Attributes[0].Value.Length > 0)
+                        if (this.node.Attributes[0].Value.Length > 0)
                         {
                             try
                             {
-                                int result = Convert.ToInt32(this.templateNode.Attributes[0].Value.Trim());
+                                int result = Convert.ToInt32(this.node.Attributes[0].Value.Trim());
                                 if (this.query.TopicStar.Count > 0)
                                 {
                                     if (result > 0)
@@ -67,7 +67,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
                                     }
                                     else
                                     {
-                                        this.bot.writeToLog("ERROR! An input tag with a bady formed index (" + this.templateNode.Attributes[0].Value + ") was encountered processing the input: " + this.request.rawInput);
+                                        this.bot.writeToLog("ERROR! An input tag with a bady formed index (" + this.node.Attributes[0].Value + ") was encountered processing the input: " + this.request.rawInput);
                                     }
                                 }
                                 else
@@ -77,7 +77,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
                             }
                             catch
                             {
-                                this.bot.writeToLog("ERROR! A thatstar tag with a bady formed index (" + this.templateNode.Attributes[0].Value + ") was encountered processing the input: " + this.request.rawInput);
+                                this.bot.writeToLog("ERROR! A thatstar tag with a bady formed index (" + this.node.Attributes[0].Value + ") was encountered processing the input: " + this.request.rawInput);
                             }
                         }
                     }

@@ -15,7 +15,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// If no character in this string has a different uppercase version, based on the Unicode 
     /// standard, then the original string is returned. 
     /// </summary>
-    public class sentence : AIMLBot.Utils.AIMLTag
+    public class sentence : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -38,12 +38,12 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         protected override string ProcessChange()
         {
-            if(this.templateNode.Name.ToLower()=="sentence")
+            if(this.node.Name.ToLower()=="sentence")
             {
-                if (this.templateNode.InnerText.Length > 0)
+                if (this.node.InnerText.Length > 0)
                 {
                     StringBuilder result = new StringBuilder();
-                    char[] letters = this.templateNode.InnerText.Trim().ToCharArray();
+                    char[] letters = this.node.InnerText.Trim().ToCharArray();
                     bool doChange = true;
                     for (int i = 0; i < letters.Length; i++)
                     {
@@ -79,8 +79,8 @@ namespace Tollervey.AIMLBot.AIML.Elements
                     // atomic version of the node
                     XmlNode starNode = Utils.AIMLTag.getNode("<star/>");
                     star recursiveStar = new star(this.bot, this.user, this.query, this.request, this.result, starNode);
-                    this.templateNode.InnerText = recursiveStar.Transform();
-                    if (this.templateNode.InnerText.Length > 0)
+                    this.node.InnerText = recursiveStar.Transform();
+                    if (this.node.InnerText.Length > 0)
                     {
                         return this.ProcessChange();
                     }

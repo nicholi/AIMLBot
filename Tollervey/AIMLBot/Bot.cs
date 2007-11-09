@@ -7,6 +7,7 @@ using System.Xml;
 using System.Text;
 using System.Reflection;
 using Tollervey.AIMLBot.Utils;
+using Tollervey.AIMLBot.AIML;
 
 namespace Tollervey.AIMLBot
 {
@@ -47,7 +48,7 @@ namespace Tollervey.AIMLBot
         /// Key = class name
         /// Value = TagHandler class that provides information about the class
         /// </summary>
-        private Dictionary<string, CustomTagHandler> CustomTags;
+        private Dictionary<string, AIML.CustomAIMLElementHandler> CustomElements;
 
         /// <summary>
         /// Holds references to the assemblies that hold the custom tag handling code.
@@ -165,28 +166,11 @@ namespace Tollervey.AIMLBot
         /// <summary>
         /// The supposed sex of the bot
         /// </summary>
-        public Gender Sex
+        public string Sex
         {
             get
             {
-                int sex = Convert.ToInt32(this.GlobalSettings["gender"]);
-                Gender result;
-                switch (sex)
-                {
-                    case -1:
-                        result = Gender.Unknown;
-                        break;
-                    case 0:
-                        result = Gender.Female;
-                        break;
-                    case 1:
-                        result = Gender.Male;
-                        break;
-                    default:
-                        result = Gender.Unknown;
-                        break;
-                }
-                return result;
+                return this.GlobalSettings["sex"];
             }
         }
 
@@ -273,7 +257,7 @@ namespace Tollervey.AIMLBot
             this.PersonSubstitutions = new OrderedXMLDictionary();
             this.Substitutions = new OrderedXMLDictionary();
             this.DefaultPredicates = new OrderedXMLDictionary();
-            this.CustomTags = new Dictionary<string, CustomTagHandler>();
+            this.CustomElements = new Dictionary<string, CustomTagHandler>();
             this.Graphmaster = new AIMLBot.Utils.Node();
         }
 
@@ -620,10 +604,12 @@ namespace Tollervey.AIMLBot
             return result;
         }
 
-        
+        #endregion
+
+        #region Latebinding custom-element dll handlers
 
         /// <summary>
-        /// Searches the CustomTag collection and processes the AIML if an appropriate tag handler is found
+        /// Searches the CustomElement collection and processes the AIML if an appropriate tag handler is found
         /// </summary>
         /// <param name="user">the user who originated the request</param>
         /// <param name="query">the query that produced this node</param>
@@ -631,14 +617,14 @@ namespace Tollervey.AIMLBot
         /// <param name="result">the result to be sent to the user</param>
         /// <param name="node">the node to evaluate</param>
         /// <returns>the output string</returns>
-        public AIMLTag getBespokeTags(User user, Query query, Request request, Result result, XmlNode node)
+        public AIMLElement getBespokeElement(User user, Query query, Request request, Result result, XmlNode node)
         {
-            if (this.CustomTags.ContainsKey(node.Name.ToLower()))
+            if (this.CustomElements.ContainsKey(node.Name.ToLower()))
             {
-                CustomTagHandler customTagHandler = (CustomTagHandler)this.CustomTags[node.Name.ToLower()];
+                CustomTagHandler customTagHandler = (CustomTagHandler)this.CustomElements[node.Name.ToLower()];
 
                 AIMLTag newCustomTag = customTagHandler.Instantiate(this.LateBindingAssemblies);
-                if(object.Equals(null,newCustomTag))
+                if (object.Equals(null, newCustomTag))
                 {
                     return null;
                 }
@@ -659,15 +645,11 @@ namespace Tollervey.AIMLBot
             }
         }
 
-        #endregion
-
-        #region Latebinding custom-tag dll handlers
-
         /// <summary>
         /// Loads any custom tag handlers found in the dll referenced in the argument
         /// </summary>
         /// <param name="pathToDLL">the path to the dll containing the custom tag handling code</param>
-        public void loadCustomTagHandlers(string pathToDLL)
+        public void loadCustomElementHandlers(string pathToDLL)
         {
             Assembly tagDLL = Assembly.LoadFrom(pathToDLL);
             Type[] tagDLLTypes = tagDLL.GetTypes();
@@ -693,13 +675,13 @@ namespace Tollervey.AIMLBot
                         newTagHandler.AssemblyName = tagDLL.FullName;
                         newTagHandler.ClassName = tagDLLTypes[i].FullName;
                         newTagHandler.TagName = tagDLLTypes[i].Name.ToLower();
-                        if (this.CustomTags.ContainsKey(newTagHandler.TagName))
+                        if (this.CustomElements.ContainsKey(newTagHandler.TagName))
                         {
                             throw new Exception("ERROR! Unable to add the custom tag: <" + newTagHandler.TagName + ">, found in: " + pathToDLL + " as a handler for this tag already exists.");
                         }
                         else
                         {
-                            this.CustomTags.Add(newTagHandler.TagName, newTagHandler);
+                            this.CustomElements.Add(newTagHandler.TagName, newTagHandler);
                         }
                     }
                 }

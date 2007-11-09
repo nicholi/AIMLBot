@@ -12,7 +12,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// If no character in this string has a different lowercase version, based on the Unicode 
     /// standard, then the original string is returned. 
     /// </summary>
-    public class lowercase : AIMLBot.Utils.AIMLTag
+    public class lowercase : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -35,9 +35,9 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "lowercase")
+            if (this.node.Name.ToLower() == "lowercase")
             {
-                return this.templateNode.InnerText.ToLower(this.bot.Locale);
+                return this.node.InnerText.ToLower(this.bot.Locale);
             }
             return string.Empty;
         }

@@ -12,7 +12,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// If no character in this string has a different uppercase version, based on the Unicode 
     /// standard, then the original string is returned. 
     /// </summary>
-    public class uppercase : AIMLBot.Utils.AIMLTag
+    public class uppercase : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -35,9 +35,9 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         public override void Render(System.IO.StringWriter writer)
         {
-            if (this.templateNode.Name.ToLower() == "uppercase")
+            if (this.node.Name.ToLower() == "uppercase")
             {
-                writer.Write(this.templateNode.InnerText.ToUpper(this.bot.Locale));
+                writer.Write(this.node.InnerText.ToUpper(this.bot.Locale));
             }
         }
     }

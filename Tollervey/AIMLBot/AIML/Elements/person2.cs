@@ -25,7 +25,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// that most AIML has been written in English. However, the decision about whether to transform 
     /// the person aspect of other words is left up to the implementation.
     /// </summary>
-    public class person2 : AIMLBot.Utils.AIMLTag
+    public class person2 : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -48,20 +48,20 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "person2")
+            if (this.node.Name.ToLower() == "person2")
             {
-                if (this.templateNode.InnerText.Length > 0)
+                if (this.node.InnerText.Length > 0)
                 {
                     // non atomic version of the node
-                    return AIMLBot.Normalize.ApplySubstitutions.Substitute(this.bot, this.bot.Person2Substitutions, this.templateNode.InnerText);
+                    return AIMLBot.Normalize.ApplySubstitutions.Substitute(this.bot, this.bot.Person2Substitutions, this.node.InnerText);
                 }
                 else
                 {
                     // atomic version of the node
                     XmlNode starNode = Utils.AIMLTag.getNode("<star/>");
                     star recursiveStar = new star(this.bot, this.user, this.query, this.request, this.result, starNode);
-                    this.templateNode.InnerText = recursiveStar.Transform();
-                    if (this.templateNode.InnerText.Length > 0)
+                    this.node.InnerText = recursiveStar.Transform();
+                    if (this.node.InnerText.Length > 0)
                     {
                         return this.ProcessChange();
                     }

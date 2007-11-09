@@ -19,7 +19,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// 
     /// The star element does not have any content. 
     /// </summary>
-    public class star : AIMLBot.Utils.AIMLTag
+    public class star : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -42,24 +42,24 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         public override void Render(System.IO.StringWriter writer)
         {
-            if (this.templateNode.Name.ToLower() == "star")
+            if (this.node.Name.ToLower() == "star")
             {
                 if (this.query.Wildcards.ContainsKey["star"])
                 {
                     if (this.query.Wildcards["star"].Count > 0)
                     {
-                        if (this.templateNode.Attributes.Count == 0)
+                        if (this.node.Attributes.Count == 0)
                         {
                             // return the first (latest) star in the List<>
                             writer.Write(this.query.Wildcards["star"][0]);
                         }
-                        else if (this.templateNode.Attributes.Count == 1)
+                        else if (this.node.Attributes.Count == 1)
                         {
-                            if (this.templateNode.Attributes[0].Name.ToLower() == "index")
+                            if (this.node.Attributes[0].Name.ToLower() == "index")
                             {
                                 try
                                 {
-                                    int index = Convert.ToInt32(this.templateNode.Attributes[0].Value);
+                                    int index = Convert.ToInt32(this.node.Attributes[0].Value);
                                     index--;
                                     if ((index >= 0) & (index < this.query.InputStar.Count))
                                     {

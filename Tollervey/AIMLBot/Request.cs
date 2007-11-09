@@ -21,6 +21,11 @@ namespace Tollervey.AIMLBot
         public DateTime StartedOn;
 
         /// <summary>
+        /// The time after which this request is considered timed out
+        /// </summary>
+        public readonly DateTime TimeOutOn;
+
+        /// <summary>
         /// The user who made this request
         /// </summary>
         public User user;
@@ -42,11 +47,13 @@ namespace Tollervey.AIMLBot
         /// </summary>
         /// <param name="rawInput">The raw input from the user</param>
         /// <param name="user">The user who made the request</param>
-        public Request(string rawInput, User user)
+        /// <param name="timeout">The number of milliseconds before this request has timed out</param>
+        public Request(string rawInput, User user, double timeout)
         {
             this.rawInput = rawInput;
             this.user = user;
             this.StartedOn = DateTime.Now;
+            this.TimeOutOn = StartedOn.AddMilliseconds(timeout);
         }
     }
 }

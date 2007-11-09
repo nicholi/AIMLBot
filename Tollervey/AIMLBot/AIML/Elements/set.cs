@@ -21,7 +21,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// 
     /// A set element may contain any AIML template elements.
     /// </summary>
-    public class set : AIMLBot.Utils.AIMLTag
+    public class set : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -44,23 +44,23 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "set")
+            if (this.node.Name.ToLower() == "set")
             {
                 if (this.bot.GlobalSettings.Count > 0)
                 {
-                    if (this.templateNode.Attributes.Count == 1)
+                    if (this.node.Attributes.Count == 1)
                     {
-                        if (this.templateNode.Attributes[0].Name.ToLower() == "name")
+                        if (this.node.Attributes[0].Name.ToLower() == "name")
                         {
-                            if (this.templateNode.InnerText.Length > 0)
+                            if (this.node.InnerText.Length > 0)
                             {
-                                this.user.Predicates.addSetting(this.templateNode.Attributes[0].Value, this.templateNode.InnerText);
-                                return this.user.Predicates.grabSetting(this.templateNode.Attributes[0].Value);
+                                this.user.Predicates.addSetting(this.node.Attributes[0].Value, this.node.InnerText);
+                                return this.user.Predicates.grabSetting(this.node.Attributes[0].Value);
                             }
                             else
                             {
                                 // remove the predicate
-                                this.user.Predicates.removeSetting(this.templateNode.Attributes[0].Value);
+                                this.user.Predicates.removeSetting(this.node.Attributes[0].Value);
                                 return string.Empty;
                             }
                         }

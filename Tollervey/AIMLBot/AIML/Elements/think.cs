@@ -10,7 +10,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// 
     /// The think element has no attributes. It may contain any AIML template elements.
     /// </summary>
-    public class think : AIMLBot.Utils.AIMLTag
+    public class think : AIMLElement
     {
         /// <summary>
         /// Ctor

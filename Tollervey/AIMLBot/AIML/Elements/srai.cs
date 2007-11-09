@@ -13,7 +13,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// As with all AIML elements, nested forms should be parsed from inside out, so embedded srais are 
     /// perfectly acceptable. 
     /// </summary>
-    public class srai : AIMLBot.Utils.AIMLTag
+    public class srai : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -36,11 +36,11 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "srai")
+            if (this.node.Name.ToLower() == "srai")
             {
-                if (this.templateNode.InnerText.Length > 0)
+                if (this.node.InnerText.Length > 0)
                 {
-                    Request subRequest = new Request(this.templateNode.InnerText, this.user, this.bot);
+                    Request subRequest = new Request(this.node.InnerText, this.user, this.bot);
                     subRequest.StartedOn = this.request.StartedOn; // make sure we don't keep adding time to the request
                     Result subQuery = this.bot.Chat(subRequest);
                     this.request.hasTimedOut = subRequest.hasTimedOut;

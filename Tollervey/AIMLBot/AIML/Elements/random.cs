@@ -10,7 +10,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// elements randomly. The random element must contain one or more li elements of type 
     /// defaultListItem, and cannot contain any other elements.
     /// </summary>
-    public class random : AIMLBot.Utils.AIMLTag
+    public class random : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -34,13 +34,13 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "random")
+            if (this.node.Name.ToLower() == "random")
             {
-                if (this.templateNode.HasChildNodes)
+                if (this.node.HasChildNodes)
                 {
                     // only grab <li> nodes
                     List<XmlNode> listNodes = new List<XmlNode>();
-                    foreach (XmlNode childNode in this.templateNode.ChildNodes)
+                    foreach (XmlNode childNode in this.node.ChildNodes)
                     {
                         if (childNode.Name == "li")
                         {

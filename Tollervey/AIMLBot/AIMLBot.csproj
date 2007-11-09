@@ -33,9 +33,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AIML\AIMLTag.cs" />
-    <Compile Include="AIML\CustomTag.cs" />
-    <Compile Include="AIML\CustomTagHandler.cs" />
+    <Compile Include="AIML\AIMLElement.cs" />
+    <Compile Include="AIML\CustomAIMLElement.cs" />
+    <Compile Include="AIML\CustomAIMLElementHandler.cs" />
     <Compile Include="AIML\Elements\bot.cs" />
     <Compile Include="AIML\Elements\condition.cs" />
     <Compile Include="AIML\Elements\date.cs" />
@@ -66,10 +66,11 @@
     <Compile Include="AIML\Elements\version.cs" />
     <Compile Include="AIML\Template.cs" />
     <Compile Include="Bot.cs" />
+    <Compile Include="EventArgs\AIMLElementErrorEvent.cs" />
+    <Compile Include="EventArgs\AIMLElementEvent.cs" />
     <Compile Include="EventArgs\BotEvent.cs" />
     <Compile Include="EventArgs\LogEvent.cs" />
     <Compile Include="EventArgs\LogLevel.cs" />
-    <Compile Include="EventArgs\TagEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="Result.cs" />

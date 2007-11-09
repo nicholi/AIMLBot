@@ -10,7 +10,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// 
     /// The size element does not have any content. 
     /// </summary>
-    public class size : AIMLBot.Utils.AIMLTag
+    public class size : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -33,7 +33,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "size")
+            if (this.node.Name.ToLower() == "size")
             {
                 return Convert.ToString(this.bot.Size);
             }

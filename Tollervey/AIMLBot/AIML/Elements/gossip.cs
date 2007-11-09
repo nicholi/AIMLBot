@@ -12,7 +12,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// 
     /// The gossip element does not have any attributes. It may contain any AIML template elements.
     /// </summary>
-    public class gossip : AIMLBot.Utils.AIMLTag
+    public class gossip : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -35,12 +35,12 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "gossip")
+            if (this.node.Name.ToLower() == "gossip")
             {
                 // gossip is merely logged by the bot and written to log files
-                if (this.templateNode.InnerText.Length > 0)
+                if (this.node.InnerText.Length > 0)
                 {
-                    this.bot.writeToLog("GOSSIP from user: "+this.user.UserID+", '"+this.templateNode.InnerText+"'");
+                    this.bot.writeToLog("GOSSIP from user: "+this.user.UserID+", '"+this.node.InnerText+"'");
                 }
             }
             return string.Empty;

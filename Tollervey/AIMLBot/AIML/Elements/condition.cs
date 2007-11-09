@@ -91,7 +91,7 @@ namespace Tollervey.AIMLBot.AIML.Elements
     /// AIML predicate, and a required attribute value, which contains a simple pattern expression. The 
     /// element may contain any AIML template elements. 
     /// </summary>
-    public class condition : AIMLBot.Utils.AIMLTag
+    public class condition : AIMLElement
     {
         /// <summary>
         /// Ctor
@@ -115,31 +115,31 @@ namespace Tollervey.AIMLBot.AIML.Elements
 
         protected override string ProcessChange()
         {
-            if (this.templateNode.Name.ToLower() == "condition")
+            if (this.node.Name.ToLower() == "condition")
             {
                 // heuristically work out the type of condition being processed
 
-                if (this.templateNode.Attributes.Count == 2) // block
+                if (this.node.Attributes.Count == 2) // block
                 {
                     string name = "";
                     string value = "";
 
-                    if (this.templateNode.Attributes[0].Name == "name")
+                    if (this.node.Attributes[0].Name == "name")
                     {
-                        name = this.templateNode.Attributes[0].Value;
+                        name = this.node.Attributes[0].Value;
                     }
-                    else if (this.templateNode.Attributes[0].Name == "value")
+                    else if (this.node.Attributes[0].Name == "value")
                     {
-                        value = this.templateNode.Attributes[0].Value;
+                        value = this.node.Attributes[0].Value;
                     }
 
-                    if (this.templateNode.Attributes[1].Name == "name")
+                    if (this.node.Attributes[1].Name == "name")
                     {
-                        name = this.templateNode.Attributes[1].Value;
+                        name = this.node.Attributes[1].Value;
                     }
-                    else if (this.templateNode.Attributes[1].Name == "value")
+                    else if (this.node.Attributes[1].Name == "value")
                     {
-                        value = this.templateNode.Attributes[1].Value;
+                        value = this.node.Attributes[1].Value;
                     }
 
                     if ((name.Length > 0) & (value.Length > 0))
@@ -148,16 +148,16 @@ namespace Tollervey.AIMLBot.AIML.Elements
                         Regex matcher = new Regex(value.Replace(" ", "\\s").Replace("*", "[\\sA-Z0-9]+"), RegexOptions.IgnoreCase);
                         if (matcher.IsMatch(actualValue))
                         {
-                            return this.templateNode.InnerXml;
+                            return this.node.InnerXml;
                         }
                     }
                 }
-                else if (this.templateNode.Attributes.Count == 1) // single predicate
+                else if (this.node.Attributes.Count == 1) // single predicate
                 {
-                    if (this.templateNode.Attributes[0].Name == "name")
+                    if (this.node.Attributes[0].Name == "name")
                     {
-                        string name = this.templateNode.Attributes[0].Value;
-                        foreach (XmlNode childLINode in this.templateNode.ChildNodes)
+                        string name = this.node.Attributes[0].Value;
+                        foreach (XmlNode childLINode in this.node.ChildNodes)
                         {
                             if (childLINode.Name.ToLower() == "li")
                             {
@@ -181,9 +181,9 @@ namespace Tollervey.AIMLBot.AIML.Elements
                         }
                     }
                 }
-                else if (this.templateNode.Attributes.Count == 0) // multi-predicate
+                else if (this.node.Attributes.Count == 0) // multi-predicate
                 {
-                    foreach (XmlNode childLINode in this.templateNode.ChildNodes)
+                    foreach (XmlNode childLINode in this.node.ChildNodes)
                     {
                         if (childLINode.Name.ToLower() == "li")
                         {
