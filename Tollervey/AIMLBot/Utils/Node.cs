@@ -137,7 +137,7 @@ namespace Tollervey.AIMLBot.Utils
         /// <returns>The template to process to generate the output</returns>
         public string evaluate(string[] path, Query query, Request request, string matchstate, StringBuilder wildcardmatches)
         {
-            // check for timeout
+            // check for timeout and to avoid infinite loops
             if (request.StartedOn.AddMilliseconds(request.bot.TimeOut) < DateTime.Now)
             {
                 request.bot.writeToLog("WARNING! Request timeout. User: " + request.user.UserID + " raw input: \"" + request.rawInput + "\"");
