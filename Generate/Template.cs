@@ -38,11 +38,11 @@ namespace AimlBot.Generate
     /// requires "interpretation" or further processing before being passed back to the
     /// user.
     /// 
-    /// Classes that derive from the Template class call have the following methods 
+    /// Classes that derive from the Template class all have the following methods 
     /// called during their life:
     /// 
     /// Init - Sets up the object from the passed source (for example an XmlElement
-    /// representation of an AIML template or a string in some other scripting 
+    /// representation of an AIML template or a string in some other templating 
     /// language).
     /// 
     /// Load - Associates the object with a specific request and sets any appropriate
@@ -59,7 +59,7 @@ namespace AimlBot.Generate
     /// then called.
     /// 
     /// Use the OnUnload event to do final cleanup work, such as closing open files and database
-    /// connections, or finishing up logging or other template-specific tasks.
+    /// connections, or finishing logging or other template-specific tasks.
     /// 
     /// </summary>
     public class Template
@@ -80,13 +80,14 @@ namespace AimlBot.Generate
         #region Life-cycle methods
         /// <summary>
         /// Sets up the object from the passed source (for example an XmlElement
-        /// representation of an AIML template or a string in some other scripting 
+        /// representation of an AIML template or a string in some other templating 
         /// language).
         /// </summary>
         /// <param name="source">The source to be interpreted / processed in order to
         /// produce a response to the user.</param>
-        public virtual void Init(object source)
+        public void Init(object source)
         {
+            this.Source = source;
         }
 
         /// <summary>
@@ -126,6 +127,8 @@ namespace AimlBot.Generate
             {
                 this.OnUnload(this, new EventArgs());
             }
+            this.OnLoad = null;
+            this.OnUnload = null;
         }
         #endregion
 
@@ -146,7 +149,7 @@ namespace AimlBot.Generate
 
         /// <summary>
         /// Use the Unload event to do final cleanup work, such as closing open files and database
-        /// connections, or finishing up logging or other template-specific tasks.
+        /// connections, or finishing logging or other template-specific tasks.
         /// </summary>
         public event TemplateEvent OnUnload;
 

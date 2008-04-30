@@ -37,98 +37,108 @@ namespace AimlBot.UnitTests.Generate
     [TestFixture]
     public class Template : BaseTestClass
     {
-        [Test]
-        public void Test()
-        {
-            throw new Exception("To be done");
-        }
-
         #region Attributes
-        /// <summary>
-        /// The request for which this template is a to provide a response
-        /// </summary>
-        public Request Request;
 
-        /// <summary>
-        /// The source to be interpreted / processed in order to produce a response to
-        /// the user
-        /// </summary>
-        protected object Source;
+        private bool OnLoadCalled = false;
+        private bool OnUnloadCalled = false;
+
         #endregion
 
-        #region Life-cycle methods
-        /// <summary>
-        /// Sets up the object from the passed source (for example an XmlElement
-        /// representation of an AIML template or a string in some other scripting 
-        /// language).
-        /// </summary>
-        /// <param name="source">The source to be interpreted / processed in order to
-        /// produce a response to the user.</param>
-        public virtual void Init(object source)
+        #region Event Handler Methods
+
+        void t_OnUnload(AimlBot.Generate.Template sender, EventArgs e)
         {
+            this.OnUnloadCalled = true;
         }
 
-        /// <summary>
-        /// Associates the object with a specific request and sets any appropriate
-        /// properties. The OnLoad event is then called.
-        /// </summary>
-        /// <param name="request">The request this template is to form part of the 
-        /// response for.</param>
-        public void Load(Request request)
+        private void t_OnLoad(AimlBot.Generate.Template sender, EventArgs e)
         {
-            this.Request = request;
-            if (this.OnLoad != null)
+            this.OnLoadCalled = true;
+        }
+
+        void mt_OnUnload(AimlBot.Generate.Template sender, EventArgs e)
+        {
+            this.OnUnloadCalled = true;
+            ((MockTemplate)sender).Name = string.Empty;
+        }
+
+        void mt_OnLoad(AimlBot.Generate.Template sender, EventArgs e)
+        {
+            this.OnLoadCalled = true;
+            ((MockTemplate)sender).Name = "World";
+        }
+
+        #endregion
+
+        #region Child of Template class
+
+        public class MockTemplate : AimlBot.Generate.Template
+        {
+            public string Name;
+
+            public override string Render()
             {
-                this.OnLoad(this, new EventArgs());
+                return ((string)this.Source).Replace("$NAME$", this.Name);
             }
         }
 
-        /// <summary>
-        /// Returns a string containing the "interpreted" / processed template
-        /// that is to be added to the response.
-        /// </summary>
-        /// <returns>The output to be sent back to the user</returns>
-        public virtual string Render()
-        {
-            return string.Empty;
-        }
-
-        /// <summary>
-        /// Unload is called after the template has been rendered and is ready to be 
-        /// discarded. At this point any generic cleanup is performed. The OnUnload event 
-        /// is then called.
-        /// </summary>
-        public void Unload()
-        {
-            this.Request = null;
-            if (this.OnUnload != null)
-            {
-                this.OnUnload(this, new EventArgs());
-            }
-        }
         #endregion
 
-        #region Life-cycle events / delegates
+        [Test]
+        public void TestTemplateLifeCycleWithEventHandlers()
+        {
+            this.OnLoadCalled = false;
+            this.OnUnloadCalled = false;
+            AimlBot.Request r = new AimlBot.Request();
+            AimlBot.Generate.Template t = new AimlBot.Generate.Template();
+            t.OnLoad += new AimlBot.Generate.Template.TemplateEvent(t_OnLoad);
+            t.OnUnload += new AimlBot.Generate.Template.TemplateEvent(t_OnUnload);
 
-        /// <summary>
-        /// Handles an instance of an event in a template's life
-        /// </summary>
-        /// <param name="sender">The Template object that originated this event</param>
-        /// <param name="e">The event args passed via the originating AIMLElement class</param>
-        public delegate void TemplateEvent(Template sender, EventArgs e);
+            // lets run through the whole life cycle
+            t.Init("this is a template");
+            t.Load(r);
+            Assert.AreEqual(true, this.OnLoadCalled);
+            Assert.AreEqual(string.Empty, t.Render());
+            t.Unload();
+            Assert.AreEqual(true, this.OnUnloadCalled);
+        }
 
-        /// <summary>
-        /// Use the OnLoad event method to set template specific properties and establish 
-        /// database connections.
-        /// </summary>
-        public event TemplateEvent OnLoad;
+        [Test]
+        public void TestTemplateLifeCycleWithNoEventHandlers()
+        {
+            this.OnLoadCalled = false;
+            this.OnUnloadCalled = false;
+            AimlBot.Request r = new AimlBot.Request();
+            AimlBot.Generate.Template t = new AimlBot.Generate.Template();
 
-        /// <summary>
-        /// Use the Unload event to do final cleanup work, such as closing open files and database
-        /// connections, or finishing up logging or other template-specific tasks.
-        /// </summary>
-        public event TemplateEvent OnUnload;
+            // lets run through the whole life cycle
+            t.Init("this is a template");
+            t.Load(r);
+            Assert.AreEqual(false, this.OnLoadCalled);
+            Assert.AreEqual(string.Empty, t.Render());
+            t.Unload();
+            Assert.AreEqual(false, this.OnUnloadCalled);
+        }
 
-        #endregion
+        [Test]
+        public void TestTemplateAsParentObject()
+        {
+            this.OnLoadCalled = false;
+            this.OnUnloadCalled = false;
+            AimlBot.Request r = new AimlBot.Request();
+            MockTemplate mt = new MockTemplate();
+            mt.OnLoad += new AimlBot.Generate.Template.TemplateEvent(mt_OnLoad);
+            mt.OnUnload += new AimlBot.Generate.Template.TemplateEvent(mt_OnUnload);
+
+            // lets run through the whole life cycle
+            mt.Init("Hello, $NAME$!");
+            mt.Load(r);
+            Assert.AreEqual(true, this.OnLoadCalled);
+            Assert.AreEqual("World", mt.Name);
+            Assert.AreEqual("Hello, World!", mt.Render());
+            mt.Unload();
+            Assert.AreEqual(true, this.OnUnloadCalled);
+            Assert.AreEqual(string.Empty, mt.Name);
+        }
     }
 }
