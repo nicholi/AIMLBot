@@ -1,0 +1,3135 @@
+﻿<head>
+<title>AIML 1.0.1 (A.L.I.C.E. AI Foundation)</title>
+</head>
+<body>
+
+<!-- Main Table-->
+<div>
+<table>
+
+<!--Begin Contents-->
+	<tr>
+		<td width="100%" valign="top" colspan="2">
+			<h1 class="spectitle">
+				Artificial Intelligence Markup Language (AIML)<br />
+				Version 1.0.1
+			</h1>
+			<h2 class="specsubtitle">
+				A.L.I.C.E. AI Foundation Working Draft<br />
+				25 October 2001 (rev 006)
+			</h2>
+			<p class="specversioninfo">
+				This version:
+			</p>
+			<p class="spectopdetail">
+				<a href="http://alicebot.org/TR/2001/WD-aiml-1.0.1-20011025-006.html">http://alicebot.org/TR/2001/WD-aiml-1.0.1-20011025-006.html</a>
+			</p>
+			<p class="specversioninfo">
+				Latest version:
+			</p>
+			<p class="spectopdetail">
+				<a href="http://alicebot.org/TR/2001/WD-aiml">http://alicebot.org/TR/2001/WD-aiml</a>
+			</p>
+			<p class="specversioninfo">
+				Previous versions:
+			</p>
+			<p class="spectopdetail">
+				<a href="http://alicebot.org/TR/2001/WD-aiml-1.0.1-20011018-005.html">http://alicebot.org/TR/2001/WD-aiml-1.0.1-20011018-005.html</a>
+			</p>
+			<p class="spectopdetail">
+				<a href="http://alicebot.org/TR/2001/WD-aiml-1.0-20010926-004.html">http://alicebot.org/TR/2001/WD-aiml-1.0-20010926-004.html</a>
+			</p>
+			<p class="spectopdetail">
+				<a href="http://alicebot.org/TR/2001/WD-aiml-1.0-20010926-003.html">http://alicebot.org/TR/2001/WD-aiml-1.0-20010926-003.html</a>
+			</p>
+			<p class="specversioninfo">
+				Creator of AIML:
+			</p>
+			<p class="spectopdetail">
+				Richard Wallace
+			</p>
+			<p class="specversioninfo">
+				Author of this Document:
+			</p>
+			<p class="spectopdetail">
+				Noel Bush
+			</p>
+			<p class="specversioninfo">
+				Contributors to source material for this document:
+			</p>
+			<p class="spectopdetail">
+				Richard Wallace, Thomas Ringate, Anthony Taylor, Jon Baer
+			</p>
+			<p>
+				Copyright &copy; 2001 A.L.I.C.E. AI Foundation, All Rights Reserved. A.L.I.C.E. AI Foundation software licensing rules apply.
+			</p>
+			<h3 class="spectoplevelheading">
+				Abstract
+			</h3>
+			<p>
+				The Artificial Intelligence Markup Language is a derivative of XML (Extensible Markup Language) that is completely described in this document. Its goal is to enable pattern-based, stimulus-response knowledge content to be served, received and processed on the Web and offline in the manner that is presently possible with HTML and XML. AIML has been designed for ease of implementation, ease of use by newcomers, and for interoperability with XML and XML derivatives such as XHTML.
+			</p>
+			<h3 class="spectoplevelheading">
+				Status of this Document
+			</h3>
+			<p>
+				This document has been drafted for review by the
+				<a href="http://alicebot.org/committees/architecture.html">Alicebot and AIML Architecture Committee</a> of the
+				<a href="">A.L.I.C.E. AI Foundation</a>,
+				with the intention of providing a more thorough specification than that laid out in the &quot;AIML 1.0 Tag Set&quot;. It is being released by the Committee as a Working Draft to gather public feedback before its promotion to a Proposal, and eventually to final release as the AIML 1.0.1 Recommendation.
+			</p>
+			<p>
+				<b>NB:</b> Contents of this document are subject to change! This document should not be used as reference material or cited as a normative reference from another document.
+			</p>
+			<p>
+				This is not a signficantly new version of AIML (first published 3 August 2001 at <a href="http://alicebot.org/committees/architecture/resolutions/aiml10.html">http://alicebot.org/committees/architecture/resolutions/aiml10.html</a>); rather, it incorporates small amendments made by the Architecture Committee during the period of August-October 2001 and provides a more formal statement of the specification than has been available thus far. According to the Committee's current
+				<a href="http://alicebot.org/committees/architecture/resolutions/aiml-specification-process.html">specification release process</a>,
+				the incorporation of these changes requires that the specification be considered a new specification; the addition of the subminor &quot;.1&quot; to &quot;1.0&quot; reflects this.
+			</p>
+			<p>
+				Please report errors in this document to <a href="mailto:alicebot-archcomm@list.alicebot.org">alicebot-archcomm@alicebot.org</a>.
+			</p>
+			<h3 class="spectoplevelheading">
+				Table of Contents
+			</h3>
+			<p class="spectoc1">
+				<a href="#section-introduction">1. Introduction</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-origin-and-goals">1.1. Origin and Goals</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-terminology">1.2. Terminology</a>
+			</p>
+			<p class="spectoc1">
+				<a href="#section-aiml-objects">2. AIML Objects</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-well-formed-aiml-objects">2.1. Well-formed AIML Objects</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-characters">2.2. Characters</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-common-syntactic-constructs">2.3. Common Syntactic Constructs</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-character-data-and-mapping">2.4. Character Data and Markup</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-comments">2.5. Comments</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-processing-instructions">2.6. Processing Instructions</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-cdata-sections">2.7. CDATA Sections</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-prolog-and-dtds">2.8. Prolog and Document Type Declaration</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-standalone-dtd">2.9. Standalone Document Declaration</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-white-space-handling">2.10. White Space Handling</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-end-of-line-handling">2.11. End-of-Line Handling</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-language-identification">2.12. Language Identification</a>
+			</p>
+			<p class="spectoc1">
+				<a href="#section-aiml-object-structure">3. AIML Object Structure</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-aiml-namespace">3.1. AIML Namespace</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-aiml-element">3.2. AIML Element</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-forward-compatible-processing">3.3. Forward-Compatible Processing</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-aiml-pattern-expressions">3.4. AIML Pattern Expressions</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-aiml-predicates">3.5. AIML Predicates</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-embedding-aiml">3.6. Embedding AIML</a>
+			</p>
+			<p class="spectoc1">
+				<a href="#section-topic">4. Topic</a>
+			</p>
+			<p class="spectoc1">
+				<a href="#section-category">5. Category</a>
+			</p>
+			<p class="spectoc1">
+				<a href="#section-pattern">6. Pattern</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-pattern-side-that">6.1. Pattern-side That</a>
+			</p>
+			<p class="spectoc1">
+				<a href="#section-template">7. Template</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-atomic-template-elements">7.1. Atomic template elements</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-star">7.1.1. Star</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-template-side-that">7.1.2. Template-side That</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-input">7.1.3. Input</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-thatstar">7.1.4. Thatstar</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-topicstar">7.1.5. Topicstar</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-get">7.1.6. Get</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-bot">7.1.6.1. Bot</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-short-cut-elements">7.1.7. Short-cut elements</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-system-defined-predicates">7.1.8. System-defined predicates</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-text-formatting-elements">7.2. Text formatting elements</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-uppercase">7.2.1. Uppercase</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-lowercase">7.2.2. Lowercase</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-formal">7.2.3. Formal</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-sentence">7.2.4. Sentence</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-conditional-elements">7.3. Conditional elements</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-condition">7.3.1. Condition</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-random">7.3.2. Random</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-capture-elements">7.4. Capture elements</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-set">7.4.1. Set</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-gossip">7.4.2. Gossip</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-symbolic-reduction-elements">7.5. Symbolic Reduction elements</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-srai">7.5.1. SRAI</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-transformational-elements">7.6. Transformational elements</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-person">7.6.1. Person</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-person2">7.6.2. Person2</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-gender">7.6.3. Gender</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-covert-elements">7.7. Covert elements</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-think">7.7.1. Think</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-learn">7.7.2. Learn</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-external-processor-elements">7.8. External processor elements</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-system">7.8.1. System</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-javascript">7.8.2. JavaScript</a>
+			</p>
+			<p class="spectoc1">
+				<a href="#section-aiml-pattern-matching">8. AIML Pattern Matching</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-pattern-expression-syntax">8.1. Pattern Expression syntax</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-simple-pattern-expressions">8.1.1. Simple pattern expressions</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-mixed-pattern-expressions">8.1.2. Mixed pattern expressions</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-normal-words">8.1.3. Normal words</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-normal-characters">8.1.4. Normal characters</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-aiml-wildcards">8.1.5. AIML wildcards</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-pattern-side-bot-elements">8.1.6. Pattern-side bot elements</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-load-time-match-path-construction">8.2. Load-time match path construction</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-input-normalization">8.3. Input normalization</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-substitution-normalizations">8.3.1. Substitution normalizations</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-sentence-splitting-normalizations">8.3.2. Sentence-splitting normalizations</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-pattern-fitting-normalizations">8.3.3. Pattern-fitting normalizations</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-normalization-examples">8.3.4. Normalization examples</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-pattern-expression-matching-behavior">8.4. Pattern Expression matching behavior</a>
+			</p>
+			<p class="spectoc3">
+				<a href="#section-explanation-via-implementation-description-graphmaster">8.4.1. Explanation via implementation description: Graphmaster</a>
+			</p>
+			<p class="spectoc1">
+				<a href="#section-aiml-predicate-handling">9. AIML Predicate handling</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-aiml-predicate-name-syntax">9.1. AIML Predicate name syntax</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-aiml-predicate-behaviors">9.2. AIML Predicate behaviors</a>
+			</p>
+			<p class="spectoc2">
+				<a href="#section-aiml-predicate-defaults">9.3. AIML Predicate defaults</a>
+			</p>
+			<p class="spectoc1">
+				<a href="#section-aiml-schema">10. AIML Schema</a>
+			</p>
+			<p class="spectoc1">
+				<a href="#section-references">11. References</a>
+			</p>
+			<p class="spectoc1">
+				<a href="#section-version-history">12. Version History</a>
+			</p>
+			<h1>
+				<a id="section-introduction" name="section-introduction">1. Introduction</a>
+			</h1>
+			<p>
+				Artificial Intelligence Markup Language, abbreviated AIML, describes a class of data objects called AIML objects and partially describes the behavior of computer programs that process them. AIML is a derivative of XML, the
+				<a href="http://www.w3.org/TR/REC-xml">Extensible Markup Language</a>.
+				By construction, AIML objects are conforming XML documents, although AIML objects may also be contained within XML documents. As XML is itself an application profile or restricted form of SGML, the Standard Generalized Markup Language
+				[<a href="http://www.w3.org/TR/2000/WD-xml-2e-20000814#ISO8879" target="_blank">ISO 8879</a>],
+				AIML objects are also conforming SGML documents.
+			</p>
+			<p>
+				AIML objects are made up of units called topics and categories, which contain either parsed or unparsed data. Parsed data is made up of characters, some of which form character data, and some of which form AIML elements. AIML elements encapsulate the stimulus-response knowledge contained in the document. Character data within these elements is sometimes parsed by an AIML interpreter, and sometimes left unparsed for later processing by a Responder.
+			</p>
+			<p>
+				[Definition: A software module called an <b>AIML interpreter</b> is used to read AIML objects and provide application-level functionality based on their structure. An AIML interpreter may use the services of an XML processor, or it may take the place of one, but it must not violate any of the constraints defined for XML processors.] [Definition: It is assumed that an AIML interpreter is part of a larger application generically termed a <b>bot</b>, which carries the larger functional set of interaction based on AIML. This document does not constrain the specific behavior of a bot.] [Definition: A software module called a <b>responder</b> handles the human-to-bot or bot-to-bot interface work between an AIML interpreter and its object(s).]
+			</p>
+			<h2>
+				<a id="section-origin-and-goals" name="section-origin-and-goals">1.1. Origin and Goals</a>
+			</h2>
+			<p>
+				AIML was developed by Dr. Richard S. Wallace and the Alicebot free software community during 1995-2000. It was originally adapted from a non-XML grammar also called AIML, and formed the basis for the first Alicebot, A.L.I.C.E., the Artificial Linguistic Internet Computer Entity. Since its inception, it has been adopted as a standard by the A.L.I.C.E. AI Foundation, which now holds its copyright, and whose Alicebot and AIML Architecture Committee is responsible for its maintenance and further elaboration.
+			</p>
+			<p>
+				The design goals for AIML are:
+			</p>
+			<ol start="1" type="1">
+				<li>
+					AIML shall be easy for people to learn.
+				</li>
+				<li>
+					AIML shall encode the minimal concept set necessary to enable a stimulus-response knowledge system modeled on that of the original A.L.I.C.E.
+				</li>
+				<li>
+					AIML shall be compatible with XML.
+				</li>
+				<li>
+					It shall be easy to write programs that process AIML documents.
+				</li>
+				<li>
+					AIML objects should be human-legible and reasonably clear.
+				</li>
+				<li>
+					The design of AIML shall be formal and concise.
+				</li>
+				<li>
+					AIML shall not incorporate dependencies upon any other language.
+				</li>
+			</ol>
+			<p>
+				This specification provides all the information necessary to understand AIML Version 1.0.1 and construct computer programs to process it.
+			</p>
+			<p>
+				This version of the AIML specification may be distributed freely, as long as all text and legal notices remain intact.
+			</p>
+			<h2>
+				<a id="section-terminology" name="section-terminology">1.2. Terminology</a>
+			</h2>
+			<p>
+				Like much of this document, the terminology used in this document to describe AIML objects is borrowed freely from the W3C&#39;s XML Recommendation (<a href="http://www.w3.org/TR/REC-xml">http://www.w3.org/TR/REC-xml</a>). The following terms, copied almost verbatim from the XML Recommendation, are used in building those definitions and in describing the actions of an AIML interpreter:
+			</p>
+			<p class="specterm">
+				may
+			</p>
+			<p class="specdefinition">
+				[Definition: Conforming objects and AIML interpreters are permitted to but need not behave as described.]
+			</p>
+			<p class="specterm">
+				must
+			</p>
+			<p class="specdefinition">
+				[Definition: Conforming objects and AIML interpreters are required to behave as described; otherwise they are in error.]
+			</p>
+			<p class="specterm">
+				error
+			</p>
+			<p class="specdefinition">
+				[Definition: A violation of the rules of this specification; results are undefined. Conforming software may detect and report an error and may recover from it.]
+			</p>
+			<p class="specterm">
+				fatal error
+			</p>
+			<p class="specdefinition">
+				[Definition: An error which a conforming AIML interpreter must detect and report to the bot. After encountering a fatal error, the interpreter may continue processing the data to search for further errors and may report such errors to the bot. In order to support correction of errors, the interpreter may make unprocessed data from the object (with intermingled character data and AIML content) available to the bot. Once a fatal error is detected, however, the interpreter must not continue normal processing (i.e., it must not continue to pass character data and information about the object&#39;s logical structure to the bot in the normal way).]
+			</p>
+			<p class="specterm">
+				at user option
+			</p>
+			<p class="specdefinition">
+				[Definition: Conforming software may or must (depending on the modal verb in the sentence) behave as described; if it does, it must provide users a means to enable or disable the behavior described.]
+			</p>
+			<p class="specterm">
+				validity constraint
+			</p>
+			<p class="specdefinition">
+				[Definition: A rule that applies to all valid AIML objects. Violations of validity constraints are errors; they must, at user option, be reported by validating AIML interpreters.
+			</p>
+			<p class="specterm">
+				well-formedness constraint
+			</p>
+			<p class="specdefinition">
+				[Definition: A rule that applies to all well-formed XML documents, and hence to all well-formed AIML objects. Violations of well-formedness constraints are fatal errors, as in the XML specification.]
+			</p>
+			<p class="specterm">
+				for compatibility
+			</p>
+			<p class="specdefinition">
+				[Definition: Marks a sentence describing a feature of AIML included solely to ensure that AIML remains compatible with XML.]
+			</p>
+			<h1>
+				<a id="section-aiml-objects" name="section-aiml-objects">2. AIML Objects</a>
+			</h1>
+			<p>
+				[Definition: A data object is an <b>AIML object</b> if it is well-formed, as defined in the XML specification, and if it is valid according to the AIML specification--that is, if it conforms to the data model described in this document.]
+			</p>
+			<p>
+				Each AIML object has both a logical and a physical structure. Physically, the object is composed of units called topics and categories. An object begins in a &quot;root&quot; or object entity. Logically, the object is composed of elements and character references, all of which are indicated in the object by explicit markup.
+			</p>
+			<p>
+				An AIML object may also be &quot;overlaid&quot; by comments and processing instructions as described by the XML specification, as well as by XML content from other namespaces. Comments and processing instructions are not treated by an AIML interpreter. Foreign-namespace content may be passed by an AIML interpreter to a responder, but is not processed by the AIML interpreter itself.
+			</p>
+			<p>
+				In the following, we reiterate the AIML definitions of various aspects of object structure, although in the great majority of cases these simply repeat the XML definitions of the same. In several cases, there are further constraints on AIML interpreters that do not apply to all XML processors.
+			</p>
+			<h2>
+				<a id="section-well-formed-aiml-objects" name="section-well-formed-aiml-objects">2.1. Well-formed AIML Objects</a>
+			</h2>
+			<p>
+				[Definition: A textual object is a <b>well-formed AIML object</b> if it meets the criteria specified in this document and matches the definition of XML well-formedness (<a href="http://www.w3.org/TR/2000/REC-xml-20001006#sec-well-formed">http://www.w3.org/TR/2000/REC-xml-20001006#sec-well-formed</a>).]
+			</p>
+			<h2>
+				<a id="section-characters" name="section-characters">2.2. Characters</a>
+			</h2>
+			<p>
+				The AIML definitions for <b>text</b> and <b>characters</b> are adopted verbatim from the XML specification: <a href="http://www.w3.org/TR/2000/REC-xml-20001006#charsets">http://www.w3.org/TR/2000/REC-xml-20001006#charsets</a>.
+			</p>
+			<h2>
+				<a id="section-common-syntactic-constructs" name="section-common-syntactic-constructs">2.3. Common Syntactic Constructs</a>
+			</h2>
+			<p>
+				This document will use the same symbols used in the XML specification: <a href="http://www.w3.org/TR/2000/REC-xml-20001006#sec-common-syn">http://www.w3.org/TR/2000/REC-xml-20001006#sec-common-syn</a>.
+			</p>
+			<h2>
+				<a id="section-character-data-and-mapping" name="section-character-data-and-mapping">2.4. Character Data and Markup</a>
+			</h2>
+			<p>
+				AIML uses the same definitions of <b>character data</b> and <b>markup</b> as used in the XML specification: <a href="http://www.w3.org/TR/2000/REC-xml-20001006#syntax">http://www.w3.org/TR/2000/REC-xml-20001006#syntax</a>.
+			</p>
+			<h2>
+				<a id="section-comments" name="section-comments">2.5. Comments</a>
+			</h2>
+			<p>
+				AIML respects the same definition of <b>comments</b> as in XML: <a href="http://www.w3.org/TR/2000/REC-xml-20001006#sec-comments">http://www.w3.org/TR/2000/REC-xml-20001006#sec-comments</a>.
+			</p>
+			<p>
+				However, an AIML interpreter must <i>not</i> make it possible for a bot to retrieve the text of comments. Comments are regarded as a &quot;wholly XML&quot; feature, not at all part of the functional set of AIML interpretation.
+			</p>
+			<h2>
+				<a id="section-processing-instructions" name="section-processing-instructions">2.6. Processing Instructions</a>
+			</h2>
+			<p>
+				AIML respects the same definition of <b>processing instructions</b> as in XML: <a href="http://www.w3.org/TR/2000/REC-xml-20001006#sec-pi">http://www.w3.org/TR/2000/REC-xml-20001006#sec-pi</a>.  AIML does not make special use of the processing instruction function.
+			</p>
+			<h2>
+				<a id="section-cdata-sections" name="section-cdata-sections">2.7. CDATA Sections</a>
+			</h2>
+			<p>
+				As in XML (<a href="http://www.w3.org/TR/2000/REC-xml-20001006#sec-cdata-sect">http://www.w3.org/TR/2000/REC-xml-20001006#sec-cdata-sect</a>), <b>CDATA sections</b> may occur anywhere character data may occur in AIML, and are used to escape blocks of text containing characters that would otherwise be recognized as markup.
+			</p>
+			<p>
+				However, CDATA sections must not be used as a substitute for proper namespace qualification; that is, CDATA sections must not contain markup from other namespaces that is meant to be interpreted later by a responder.
+			</p>
+			<h2>
+				<a id="section-prolog-and-dtds" name="section-prolog-and-dtds">2.8. Prolog and Document Type Declaration</a>
+			</h2>
+			<p>
+				AIML adds no further constraints on the XML specification of prologs (<a href="http://www.w3.org/TR/2000/REC-xml-20001006#sec-prolog-dtd">http://www.w3.org/TR/2000/REC-xml-20001006#sec-prolog-dtd</a>).
+			</p>
+			<p>
+				Since AIML objects can appear within other XML documents, which themselves may or may not have prologs, AIML interpreters cannot require a prolog to be present.
+			</p>
+			<p>
+				AIML does not use Document Type Declarations. Instead, AIML uses W3C Schemas. This document may be understood as the description of the AIML schema. AIML objects are not required to refer to an AIML schema namespace; however, this is strongly advised since the AIML specification is subject to change and namespace identification will aid AIML interpreters in deciding upon proper interpretation of AIML objects.
+			</p>
+			<h2>
+				<a id="section-standalone-dtd" name="section-standalone-dtd">2.9. Standalone Document Declaration</a>
+			</h2>
+			<p>
+				AIML shares the XML definition of an <b>external markup declaration</b> (<a href="http://www.w3.org/TR/2000/REC-xml-20001006#sec-rmd">http://www.w3.org/TR/2000/REC-xml-20001006#sec-rmd</a>). AIML interpreters should make use of such declarations in interpreting AIML objects, and should pass along appropriate declaration information to responders.
+			</p>
+			<h2>
+				<a id="section-white-space-handling" name="section-white-space-handling">2.10. White Space Handling</a>
+			</h2>
+			<p>
+				AIML interpreters must respect the entirety of the XML definition of whitespace handling (<a href="http://www.w3.org/TR/2000/REC-xml-20001006#sec-white-space">http://www.w3.org/TR/2000/REC-xml-20001006#sec-white-space</a>), including the use of the special attribute <span class="specinlineterm">xml:space</span>.
+			</p>
+			<p>
+				The default behavior of AIML interpreters when handling whitespace must be:
+			</p>
+			<ol>
+				<li>
+					in cases where elements abut character data or other elements, with no intervening whitespace, to preserve this arrangement in the output;
+				</li>
+				<li>
+					in cases where at least one whitespace character in the AIML object intervenes between an element and character data or another element, to produce exactly one space character regardless of how many whitespace characters are present in the document, <i>unless</i> the <span class="specinlineterm">xml:space</span> attribute is applied to the parent element;
+				</li>
+				<li>
+					in cases where the <span class="specinlineterm">xml:space</span> is applied to an element, to respect the precise whitespace content of the element.
+				</li>
+			</ol>
+			<h2>
+				<a id="section-end-of-line-handling" name="section-end-of-line-handling">2.11. End-of-Line Handling</a>
+			</h2>
+			<p>
+				AIML interpreters should respect the end-of-line handling requirements of the XML specification (<a href="http://www.w3.org/TR/2000/REC-xml-20001006#sec-line-ends">http://www.w3.org/TR/2000/REC-xml-20001006#sec-line-ends</a>).
+			</p>
+			<h2>
+				<a id="section-language-identification" name="section-language-identification">2.12. Language Identification</a>
+			</h2>
+			<p>
+				AIML objects may make use of the XML attribute <span class="specinlineterm">xml:lang</span> for identifying the natural or formal language in which the content of an object is written. (See <a href="http://www.w3.org/TR/2000/REC-xml-20001006#sec-lang-tag">http://www.w3.org/TR/2000/REC-xml-20001006#sec-lang-tag</a>).
+			</p>
+			<p>
+				AIML is meant to be independent of human language, and thus the optional XML method of providing such information is the only means available to AIML authors; no additional entities support this kind of explicit markup.
+			</p>
+			<h1>
+				<a id="section-aiml-object-structure" name="section-aiml-object-structure">3. AIML Object Structure</a>
+			</h1>
+			<h2>
+				<a id="section-aiml-namespace" name="section-aiml-namespace">3.1. AIML Namespace</a>
+			</h2>
+			<p>
+				The AIML 1.0.1 namespace (herein referred to as &quot;the AIML namespace&quot;) has the URI	<a href="http://alicebot.org/2001/AIML">http://alicebot.org/2001/AIML-1.0.1</a>.
+			</p>
+			<p>
+				AIML interpreters must use the XML namespaces mechanism
+				[<a href="http://www.w3.org/TR/REC-xml-names/" target="_blank">XML Names</a>]
+				to recognize elements and attributes from this namespace. The complete list of AIML-defined elements is defined in this document. Vendors must not extend the AIML namespace with additional elements or attributes. Instead, any extension must be in a separate namespace.
+			</p>
+			<p>
+				This specification uses a prefix of <span class="specinlineterm">aiml:</span> for referring to elements in the AIML namespace. However, AIML objects are free to use any prefix, provided that there is a namespace declaration that binds the prefix to the URI of the AIML namespace.
+			</p>
+			<p>
+				An element from the AIML namespace may have any attribute not from the AIML namespace, provided that the expanded-name of the attribute has a non-null namespace URI. The presence of such attributes must not change the behavior of AIML units and functions described in this document. Thus, an AIML interpreter is always free to ignore such attributes, and must ignore such attributes without giving an error if it does not recognize the namespace URI. Such attributes can provide, for example, unique identifiers, optimization hints, or documentation.
+			</p>
+			<p>
+				It is an error for an element from the AIML namespace to have attributes with expanded-names that have null namespace URIs (i.e., attributes with unprefixed names) other than attributes defined for the element in this document.
+			</p>
+			<p class="Note">
+				<b>NOTE:</b> The conventions used for the names of AIML elements and attributes are that names are all lower-case, use hyphens to separate words, and use abbreviations only in support of historical usage (as in <span class="specinlineterm">&lt;li&gt;</span>).
+			</p>
+			<h2>
+				<a id="section-aiml-element" name="section-aiml-element">3.2. AIML Element</a>
+			</h2>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;aiml:aiml
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; <b>version</b> = <i>number</i>&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-Content: <i>top-level-elements</i>) --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:aiml&gt;
+				</p>
+			</div>
+			<p>
+				An AIML object is represented by an <span class="specinlineterm">aiml:aiml</span> element in an XML document.
+			</p>
+			<p>
+				An AIML object must have a <span class="specinlineterm">version</span> attribute, indicating the version of AIML that the object requires. For this version of AIML, the version should be <span class="specinlineterm">1.0.1</span>. When the value is not equal to <span class="specinlineterm">1.0.1</span>,
+				<a href="#section-forward-compatible-processing">forward-compatible processing mode</a>
+				is enabled.
+			</p>
+			<p>
+				The <span class="specinlineterm">aiml:aiml</span> element may contain the following types of elements:
+			</p>
+			<ul type="disc">
+				<li>
+					<span class="specinlineterm">aiml:topic</span>
+				</li>
+				<li>
+					<span class="specinlineterm">aiml:category</span>
+				</li>
+			</ul>
+			<p>
+				An element occurring as a child of an <span class="specinlineterm">aiml:aiml</span> element is called a <b>top-level</b> element.
+			</p>
+			<p>
+				This example shows the top-level structure of an AIML object. Ellipses (<span class="specinlineterm">...</span>) indicate where attribute values or content have been omitted. AIML objects may contain zero or more of each of these elements.
+			</p>
+			<p class="specexample">
+				&lt;aiml:aiml&nbsp; version=&quot;1.0.1&quot;<br />
+				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xmlns:aiml=&quot;http://alicebot.org/2001/AIML&quot;&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp; &lt;aiml:topic name=&quot;...&quot;&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp; &lt;/aiml:topic&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp; &lt;aiml:category&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp; &lt;/aiml:category&gt;
+			</p>
+			<p class="specexample">
+				&lt;/aiml:aiml&gt;
+			</p>
+			<p>
+				That is, an AIML object must contain zero or more <span class="specinlineterm">topic</span> elements, and one or more <span class="specinlineterm">category</span> elements.
+			</p>
+			<p>
+				The order in which the children of the <span class="specinlineterm">aiml:aiml</span> element occur is unconstrained (at user option). Users are free to order the elements as they prefer.
+			</p>
+			<p>
+				In addition, the <span class="specinlineterm">aiml:aiml</span> element may contain any element not from the AIML namespace, provided that the expanded-name of the element has a non-null namespace URI. The presence of such top-level elements must not change the behavior of AIML elements defined in this document. An AIML interpreter must always skip interpretation of such top-level elements, but must also pass these elements along to the responder. Such elements might be, for example, formatting elements from a namespace such as
+				<a href="http://www.w3.org/TR/xhtml1/" target="_blank">XHTML</a>,
+				<a href="http://www.w3.org/TR/smil20/" target="_blank">SMIL</a>,
+				or
+				<a href="http://www.w3.org/Style/XSL/XSL-FO/" target="_blank">XSL-FO</a>.
+			</p>
+			<h2>
+				<a id="section-forward-compatible-processing" name="section-forward-compatible-processing">3.3. Forward-Compatible Processing</a>
+			</h2>
+			<p>
+				An element enables forward-compatible mode for itself, its attributes, its descendants and their attributes if it is an <span class="specinlineterm">aiml:aiml</span> element whose <span class="specinlineterm">version</span> attribute is not equal to <span class="specinlineterm">1.0.1</span>.
+			</p>
+			<p>
+				If an element is processed in forward-compatible mode, then:
+			</p>
+			<ul type="disc">
+				<li>
+					if it is a top-level element and AIML 1.0.1 does not allow such elements as top-level elements, then the element must be ignored along with its content;
+				</li>
+				<li>
+					if it is an element in a <span class="specinlineterm">category</span> and AIML 1.0.1 does not allow such elements to occur in categories, then the element should be ignored;
+				</li>
+				<li>
+					if the element has an attribute that AIML 1.0.1 does not allow the element to have or if the element has an optional attribute with a value that the AIML 1.0.1 does not allow the attribute to have, then the attribute must be ignored.
+				</li>
+			</ul>
+			<p>
+				Thus, any AIML 1.0.1 interpreter must be able to process the following AIML object without error (but also without producing any behavior in response to the non-1.0.1 element):
+			</p>
+			<p class="specexample">
+				&lt;aiml:aiml&nbsp; version=&quot;1.1&quot;<br />
+				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xmlns:aiml=&quot;http://alicebot.org/2001/AIML&quot;&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp; &lt;aiml:topic name=&quot;demonstration *&quot;&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;aiml:category&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;aiml:pattern&gt;* EXAMPLE&lt;/aiml:pattern&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;aiml:template&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This is just an example, &lt;get name=&quot;username&quot;/&gt;.
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;aiml:exciting-new-1.1-feature/&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/aiml:template&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/aiml:category&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp; &lt;/aiml:topic&gt;
+			</p>
+			<h2>
+				<a id="section-aiml-pattern-expressions" name="section-aiml-pattern-expressions">3.4. AIML Pattern Expressions</a>
+			</h2>
+			<p>
+				Several AIML elements and element attributes require a restricted form of mixed character data and optional restricted element content that is called an <b>AIML Pattern Expression</b>. There are two types of pattern expressions: <b>simple pattern expressions</b> and <b>mixed pattern expressions</b>. Mixed pattern expressions cannot be fully described by either Document Type Declaration syntax or W3C Schema 1.0.1 syntax. The structure of AIML pattern expressions is given in
+				[<a href="#section-pattern-expression-syntax">8.1</a>].
+			</p>
+			<h2>
+				<a id="section-aiml-predicate-handling" name="section-aiml-predicate-handling">3.5. AIML Predicate Handling</a>
+			</h2>
+			<p>
+				Many AIML elements attributes deal with <b>predicates</b>. The definition of an AIML predicate is found in
+				[<a href="#section-aiml-predicates">9</a>],
+				and the restrictions on predicate name are given in
+				[<a href="#section-aiml-predicate-name-syntax">9.1</a>].
+			</p>
+			<p>
+				A special class of AIML predicates are <b>bot predicates</b>, which have the same name restrictions as all AIML predicates and whose values can only be retrieved, not set, at runtime. The values of bot predicates are set at load time.
+			</p>
+			<h2>
+				<a id="section-embedding-aiml" name="section-embedding-aiml">3.6. Embedding AIML</a>
+			</h2>
+			<p>
+				An AIML object may be a standalone XML document with the <span class="specinlineterm">aiml:aiml</span> element as the document element, or it may be embedded in another resource. Two forms of embedding are possible:
+			</p>
+			<ul type="disc">
+				<li>
+					the AIML object may be textually embedded in a non-AIML resource, or
+				</li>
+				<li>
+					the <span class="specinlineterm">aiml:aiml</span> element may occur in an XML document other than as the document element
+				</li>
+			</ul>
+			<p>
+				AIML 1.0.1 does <i>not</i> currently permit an <span class="specinlineterm">id</span> attribute on the <span class="specinlineterm">aiml:aiml</span> element to facilitate the second form of embedding, such as XSLT provides (see <a href="http://www.w3.org/TR/xslt#section-Embedding-Stylesheets">http://www.w3.org/TR/xslt#section-Embedding-Stylesheets</a>).
+			</p>
+			<p>
+				The following example shows how an XHTML document can contain an AIML object, such that an AIML interpreter could read the AIML object (including the &quot;overlaid&quot; XHTML content with which it coincides):
+			</p>
+			<p class="specexample">
+				&lt;!DOCTYPE<br />
+				&nbsp;&nbsp;&nbsp;html<br />
+				&nbsp;&nbsp;&nbsp;PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;<br />
+				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+			</p>
+			<p class="specexample">
+				&lt;html xmlns=http://www.w3.org/1999/xhtml xmlns:aiml=http://alicebot.org/2001/AIML xml:lang=&quot;en-US&quot;&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&lt;head&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Our Company&lt;/title&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&lt;/head&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&lt;body&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;aiml:aiml&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;aiml:category&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;aiml:pattern&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;About Our Company&lt;/h1&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/aiml:pattern&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;aiml:template&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We sell genetically engineered worms that clean the sidewalk and communicate via microwave transmissions.
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/p&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/aiml:template&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/aiml:category&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/aiml:aiml&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&lt;/body&gt;
+			</p>
+			<p class="specexample">
+				&lt;/html&gt;
+			</p>
+			<p>
+				(Note that indentation in this example is provided purely for clarity, but white space should be handled as described in
+				[<a href="#section-white-space-handling">2.10.</a>].)
+			</p>
+			<h1>
+				<a id="section-topic" name="section-topic">4. Topic</a>
+			</h1>
+			<p>
+				A <span class="specinlineterm">topic</span> is an optional top-level element that contains <span class="specinlineterm">category</span> elements. A <span class="specinlineterm">topic</span> element has a required <span class="specinlineterm">name</span> attribute that must contain a simple pattern expression. A <span class="specinlineterm">topic</span> element may contain one or more <span class="specinlineterm">category</span> elements.
+			</p>
+			<p>
+				The contents of the <span class="specinlineterm">topic</span> element's <span class="specinlineterm">name</span> attribute are appended to the full match path that is constructed by the AIML interpreter at load time, as described in
+				[<a href="#section-load-time-match-path-construction">8.2</a>].
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: top-level-element --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:topic<br />
+					 &nbsp;&nbsp; <b>name</b> = <i>aiml-simple-pattern-expression</i> &gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Content: aiml:category+ --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:topic&gt;
+				</p>
+			</div>
+			<h1>
+				<a id="section-category" name="section-category">5. Category</a>
+			</h1>
+			<p>
+				A <span class="specinlineterm">category</span> is a top-level (or second-level, if contained within a <span class="specinlineterm">topic</span>) element that contains exactly one <span class="specinlineterm">pattern</span> and exactly one <span class="specinlineterm">template</span>. A <span class="specinlineterm">category</span> does not have any attributes.
+			</p>
+			<p>
+				All <span class="specinlineterm">category</span> elements that do not occur as children of an explicit <span class="specinlineterm">topic</span> element must be assumed by the AIML interpreter to occur as children of an &quot;implied&quot; <span class="specinlineterm">topic</span> whose <span class="specinlineterm">name</span> attribute has the value <span class="specinlineterm">*</span> (single asterisk wildcard).
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: top-level-element --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:category&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Content: <i>aiml-category-elements</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:category&gt;
+				</p>
+			</div>
+			<h1>
+				<a id="section-pattern" name="section-pattern">6. Pattern</a>
+			</h1>
+			<p>
+				A <span class="specinlineterm">pattern</span> is an element whose content is a mixed pattern expression. Exactly one <span class="specinlineterm">pattern</span> must appear in each <span class="specinlineterm">category</span>. The <span class="specinlineterm">pattern</span> must always be the first child element of the <span class="specinlineterm">category</span>. A <span class="specinlineterm">pattern</span> does not have any attributes.
+			</p>
+			<p>
+				The contents of the <span class="specinlineterm">pattern</span> are appended to the full match path that is constructed by the AIML interpreter at load time, as described in
+				[<a href="#section-load-time-match-path-construction">8.2</a>].
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-category-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:pattern&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Content: <i>aiml-pattern-expression</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:pattern&gt;
+				</p>
+			</div>
+			<h2>
+				<a id="section-pattern-side-that" name="section-pattern-side-that">6.1. Pattern-side That</a>
+			</h2>
+			<p>
+				The pattern-side <span class="specinlineterm">that</span> element is a special type of pattern element used for context matching. The pattern-side <span class="specinlineterm">that</span> is optional in a category, but if it occurs it must occur no more than once, and must immediately follow the <span class="specinlineterm">pattern</span> and immediately precede the <span class="specinlineterm">template</span>. A pattern-side <span class="specinlineterm">that</span> element contains a simple pattern expression.
+			</p>
+			<p>
+				The contents of the pattern-side <span class="specinlineterm">that</span> are appended to the full match path that is constructed by the AIML interpreter at load time, as described in
+				[<a href="#section-load-time-match-path-construction">8.2</a>].
+			</p>
+			<p>
+				If a category does not contain a pattern-side <span class="specinlineterm">that</span>, the AIML interpreter must assume an &quot;implied&quot; pattern-side <span class="specinlineterm">that</span> containing the pattern expression <span class="specinlineterm">*</span> (single asterisk wildcard).
+			</p>
+			<p>
+				A pattern-side <span class="specinlineterm">that</span> element has no attributes.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-category-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:that&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Content: <i>aiml-pattern-expression</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:that&gt;
+				</p>
+			</div>
+			<h1>
+				<a id="section-template" name="section-template">7. Template</a>
+			</h1>
+			<p>
+				A <span class="specinlineterm">template</span> is an element that appears within <span class="specinlineterm">category</span> elements. The <span class="specinlineterm">template</span> must follow the pattern-side <span class="specinlineterm">that</span> element, if it exists; otherwise, it follows the <span class="specinlineterm">pattern</span> element. A <span class="specinlineterm">template</span> does not have any attributes.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-category-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:template&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Content: <i>aiml-template-elements</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:template&gt;
+				</p>
+			</div>
+			<p>
+				The majority of AIML content is within the <span class="specinlineterm">template</span>. The <span class="specinlineterm">template</span> may contain zero or more AIML template elements mixed with character data. The elements described below are grouped for convenience.
+			</p>
+			<h2>
+				<a id="section-atomic-template-elements" name="section-atomic-template-elements">7.1. Atomic template elements</a>
+			</h2>
+			<p>
+				An atomic template element in AIML indicates to an AIML interpreter that it must return a value according to the functional meaning of the element. Atomic elements do not have any content.
+			</p>
+			<h3>
+				<a id="section-star" name="section-star">7.1.1. Star</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">star</span> element indicates that an AIML interpreter should substitute the value &quot;captured&quot; by a particular wildcard from the <span class="specinlineterm">pattern</span>-specified portion of the match path when returning the template.
+			</p>
+			<p>
+				The <span class="specinlineterm">star</span> element has an optional integer <span class="specinlineterm">index</span> attribute that indicates which wildcard to use. The minimum acceptable value for the <span class="specinlineterm">index</span> is <span class="specinlineterm">&quot;1&quot;</span> (the first wildcard), and the maximum acceptable value is equal to the number of wildcards in the <span class="specinlineterm">pattern</span>.
+			</p>
+			<p>
+				An AIML interpreter should raise an error if the <span class="specinlineterm">index</span> attribute of a <span class="specinlineterm">star</span> specifies a wildcard that does not exist in the <span class="specinlineterm">category</span> element's <span class="specinlineterm">pattern</span>. Not specifying the <span class="specinlineterm">index</span> is the same as specifying an <span class="specinlineterm">index</span> of <span class="specinlineterm">&quot;1&quot;</span>.
+			</p>
+			<p>
+				The <span class="specinlineterm">star</span> element does not have any content.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:star<br />
+					 &nbsp;&nbsp; index = <i>single-integer-index</i> /&gt;
+				</p>
+			</div>
+			<h3>
+				<a id="section-template-side-that" name="section-template-side-that">7.1.2. Template-side That</a>
+			</h3>
+			<p>
+				The template-side <span class="specinlineterm">that</span> element indicates that an AIML interpreter should substitute the contents of a previous bot output.
+			</p>
+			<p>
+				The template-side <span class="specinlineterm">that</span> has an optional <span class="specinlineterm">index</span> attribute that may contain either a single integer or a comma-separated pair of integers. The minimum value for either of the integers in the <span class="specinlineterm">index</span> is <span class="specinlineterm">&quot;1&quot;</span>. The <span class="specinlineterm">index</span> tells the AIML interpreter <i>which</i> previous bot output should be returned (first dimension), and optionally which &quot;sentence&quot; (see
+				[<a href="#section-sentence-splitting-normalizations">8.3.2.</a>])
+				of the previous bot output (second dimension).
+			</p>
+			<p>
+				The AIML interpreter should raise an error if either of the specified <span class="specinlineterm">index</span> dimensions is invalid at run-time.
+			</p>
+			<p>
+				An unspecified <span class="specinlineterm">index</span> is the equivalent of <span class="specinlineterm">&quot;1,1&quot;</span>. An unspecified second dimension of the <span class="specinlineterm">index</span> is the equivalent of specifying a <span class="specinlineterm">&quot;1&quot;</span> for the second dimension.
+			</p>
+			<p>
+				The template-side <span class="specinlineterm">that</span> element does not have any content.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:that<br />
+					 &nbsp;&nbsp; index = (<i>single-integer-index</i> | <i>comma-separated-integer-pair</i>) /&gt;
+				</p>
+			</div>
+			<h3>
+				<a id="section-input" name="section-input">7.1.3. Input</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">input</span> element tells the AIML interpreter that it should substitute the contents of a previous user input.
+			</p>
+			<p>
+				The template-side <span class="specinlineterm">input</span> has an optional <span class="specinlineterm">index</span> attribute that may contain either a single integer or a comma-separated pair of integers. The minimum value for either of the integers in the <span class="specinlineterm">index</span> is <span class="specinlineterm">&quot;1&quot;</span>. The <span class="specinlineterm">index</span> tells the AIML interpreter <i>which</i> previous user input should be returned (first dimension), and optionally which &quot;sentence&quot; (see
+				[<a href="#section-sentence-splitting-normalizations">8.3.2.</a>])
+				of the previous user input. 
+			</p>
+			<p>
+				The AIML interpreter should raise an error if either of the specified <span class="specinlineterm">index</span> dimensions is invalid at run-time.
+			</p>
+			<p>
+				An unspecified <span class="specinlineterm">index</span> is the equivalent of <span class="specinlineterm">&quot;1,1&quot;</span>. An unspecified second dimension of the <span class="specinlineterm">index</span> is the equivalent of specifying a <span class="specinlineterm">&quot;1&quot;</span> for the second dimension.
+			</p>
+			<p>
+				The <span class="specinlineterm">input</span> element does not have any content.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:input<br />
+					 &nbsp;&nbsp; index = (<i>single-integer-index</i> | <i>comma-separated-integer-pair</i>) /&gt;
+				</p>
+			</div>
+			<h3>
+				<a id="section-thatstar" name="section-thatstar">7.1.4. Thatstar</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">thatstar</span> element tells the AIML interpreter that it should substitute the contents of a wildcard from a pattern-side <span class="specinlineterm">that</span> element.
+			</p>
+			<p>
+				The <span class="specinlineterm">thatstar</span> element has an optional integer <span class="specinlineterm">index</span> attribute that indicates which wildcard to use; the minimum acceptable value for the <span class="specinlineterm">index</span> is <span class="specinlineterm">&quot;1&quot;</span> (the first wildcard).
+			</p>
+			<p>
+				An AIML interpreter should raise an error if the <span class="specinlineterm">index</span> attribute of a <span class="specinlineterm">star</span> specifies a wildcard that does not exist in the <span class="specinlineterm">that</span> element's pattern content. Not specifying the <span class="specinlineterm">index</span> is the same as specifying an <span class="specinlineterm">index</span> of <span class="specinlineterm">&quot;1&quot;</span>.
+			</p>
+			<p>
+				The <span class="specinlineterm">thatstar</span> element does not have any content.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:thatstar<br />
+					 &nbsp;&nbsp; index = <i>single-integer-index</i> /&gt;
+				</p>
+			</div>
+			<h3>
+				<a id="section-topicstar" name="section-topicstar">7.1.5. Topicstar</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">topicstar</span> element tells the AIML interpreter that it should substitute the contents of a wildcard from the current <span class="specinlineterm">topic</span> (if the <span class="specinlineterm">topic</span> contains any wildcards).
+			</p>
+			<p>
+				The <span class="specinlineterm">topicstar</span> element has an optional integer <span class="specinlineterm">index</span> attribute that indicates which wildcard to use; the minimum acceptable value for the <span class="specinlineterm">index</span> is <span class="specinlineterm">&quot;1&quot;</span> (the first wildcard). Not specifying the <span class="specinlineterm">index</span> is the same as specifying an <span class="specinlineterm">index</span> of <span class="specinlineterm">&quot;1&quot;</span>.
+			</p>
+			<p>
+				The <span class="specinlineterm">topicstar</span> element does not have any content.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:topicstar<br />
+					 &nbsp;&nbsp; index = <i>single-integer-index</i> /&gt;
+				</p>
+			</div>
+			<h3>
+				<a id="section-get" name="section-get">7.1.6. Get</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">get</span> element tells the AIML interpreter that it should substitute the contents of a predicate, if that predicate has a value defined. If the predicate has no value defined, the AIML interpreter should substitute the empty string <span class="specinlineterm">&quot;&quot;</span>.
+			</p>
+			<p>
+				The AIML interpreter implementation may optionally provide a mechanism that allows the AIML author to designate default values for certain predicates (see
+				[<a href="#section-aiml-predicate-defaults">9.3.</a>]).
+			</p>
+			<p>
+				The <span class="specinlineterm">get</span> element must not perform any text formatting or other &quot;normalization&quot; on the predicate contents when returning them.
+			</p>
+			<p>
+				The <span class="specinlineterm">get</span> element has a required <span class="specinlineterm">name</span> attribute that identifies the predicate with an AIML predicate name.
+			</p>
+			<p>
+				The <span class="specinlineterm">get</span> element does not have any content.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:get<br />
+					 &nbsp;&nbsp; <b>name</b> = <i>aiml-predicate-name</i> /&gt;
+				</p>
+			</div>
+			<h4>
+				<a id="section-bot" name="section-bot">7.1.6.1. Bot</a>
+			</h4>
+			<p>
+				An element called <span class="specinlineterm">bot</span>, which may be considered a restricted version of <span class="specinlineterm">get</span>, is used to tell the AIML interpreter that it should substitute the contents of a &quot;bot predicate&quot;. The value of a bot predicate is set at load-time, and cannot be changed at run-time. The AIML interpreter may decide how to set the values of bot predicate at load-time. If the bot predicate has no value defined, the AIML interpreter should substitute an empty string.
+			</p>
+			<p>
+				The <span class="specinlineterm">bot</span> element has a required <span class="specinlineterm">name</span> attribute that identifies the bot predicate.
+			</p>
+			<p>
+				The <span class="specinlineterm">bot</span> element does not have any content.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:bot<br />
+					 &nbsp;&nbsp; <b>name</b> = <i>aiml-predicate-name</i> /&gt;
+				</p>
+			</div>
+			<h3>
+				<a id="section-short-cut-elements" name="section-short-cut-elements">7.1.7. Short-cut elements</a>
+			</h3>
+			<p>
+				Several atomic AIML elements are &quot;short-cuts&quot; for combinations of other AIML elements. They are listed here without further explanation; the reader should refer to the descriptions of the &quot;long form&quot; of each element for which the following elements are short-cuts.
+			</p>
+			<h4>
+				<a id="section-sr" name="section-sr">7.1.7.1. SR</a>
+			</h4>
+			<p>
+				The <span class="specinlineterm">sr</span> element is a shortcut for:
+			</p>
+			<p class="specexample">
+				&lt;<a class="specinlineterm" href="#section-srai">srai</a>&gt;&lt;<a class="specinlineterm" href="#section-star">star</a>/&gt;&lt;<a class="specinlineterm" href="#section-srai">/srai</a>&gt;
+			</p>
+			<p>
+				The atomic <span class="specinlineterm">sr</span> does not have any content.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:sr/&gt;
+				</p>
+			</div>
+			<h4>
+				7.1.7.2. Person
+			</h4>
+			<p>
+				The atomic version of the <span class="specinlineterm">person</span> element is a shortcut for:
+			</p>
+			<p class="specexample">
+				&lt;<a class="specinlineterm" href="#section-person">person</a>&gt;&lt;<a class="specinlineterm" href="#section-star">star</a>/&gt;&lt;/<a class="specinlineterm" href="#section-person">person</a>&gt;
+			</p>
+			<p>
+				The atomic <span class="specinlineterm">person</span> does not have any content.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:person/&gt;
+				</p>
+			</div>
+			<h4>
+				7.1.7.3. Person2
+			</h4>
+			<p>
+				The atomic version of the <span class="specinlineterm">person2</span> element is a shortcut for:
+			</p>
+			<p class="specexample">
+				&lt;<a class="specinlineterm" href="#section-person2">person2</a>&gt;&lt;<a class="specinlineterm" href="#section-star">star</a>/&gt;&lt;/<a class="specinlineterm" href="#section-person2">person2</a>&gt;
+			</p>
+			<p>
+				The atomic <span class="specinlineterm">person2</span> does not have any content.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:person2/&gt;
+				</p>
+			</div>
+			<h4>
+				7.1.7.4. Gender
+			</h4>
+			<p>
+				The atomic version of the <span class="specinlineterm">gender</span> element is a shortcut for:
+			</p>
+			<p class="specexample">
+				&lt;<a class="specinlineterm" href="#section-gender">gender</a>&gt;&lt;<a class="specinlineterm" href="#section-star">star</a>/&gt;&lt;/<a class="specinlineterm" href="#section-gender">gender</a>&gt;
+			</p>
+			<p>
+				The atomic <span class="specinlineterm">gender</span> does not have any content.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:gender/&gt;
+				</p>
+			</div>
+			<p>
+				<b>NB:</b> Previous versions of AIML (dubbed &quot;0.9&quot;) used &lt;aiml:gender/&gt; to indicate that the AIML interpreter should return the value of the bot predicate &quot;gender&quot;. Vendors who wish to implement an AIML interpreter that is compatible with old AIML sets written with this usage should take note.
+			</p>
+			<h3>
+				<a id="section-system-defined-predicates" name="section-system-defined-predicates">7.1.8. System-defined predicates</a>
+			</h3>
+			<p>
+				Several atomic AIML elements require the AIML interpreter to substitute a value that is determined from the system, independently of the AIML content.
+			</p>
+			<h4>
+				7.1.8.1. Date
+			</h4>
+			<p>
+				The <span class="specinlineterm">date</span> element tells the AIML interpreter that it should substitute the system local date and time. No formatting constraints on the output are specified.
+			</p>
+			<p>
+				The <span class="specinlineterm">date</span> element does not have any content.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:date/&gt;
+				</p>
+			</div>
+			<h4>
+				7.1.8.2. ID
+			</h4>
+			<p>
+				The <span class="specinlineterm">id</span> element tells the AIML interpreter that it should substitute the user ID. The determination of the user ID is not specified, since it will vary by application. A suggested default return value is <span class="specinlineterm">&quot;localhost&quot;</span>.
+			</p>
+			<p>
+				The <span class="specinlineterm">id</span> element does not have any content.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:id/&gt;
+				</p>
+			</div>
+			<h4>
+				7.1.8.3. Size
+			</h4>
+			<p>
+				The <span class="specinlineterm">size</span> element tells the AIML interpreter that it should substitute the number of categories currently loaded.
+			</p>
+			<p>
+				The <span class="specinlineterm">size</span> element does not have any content.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:size/&gt;
+				</p>
+			</div>
+			<h4>
+				7.1.8.4. Version
+			</h4>
+			<p>
+				The <span class="specinlineterm">version</span> element tells the AIML interpreter that it should substitute the version number of the AIML interpreter.
+			</p>
+			<p>
+				The <span class="specinlineterm">version</span> element does not have any content.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:version/&gt;
+				</p>
+			</div>
+			<h2>
+				<a id="section-text-formatting-elements" name="section-text-formatting-elements">7.2. Text formatting elements</a>
+			</h2>
+			<p>
+				AIML contains several text-formatting elements, which instruct an AIML interpreter to perform locale-specific post-processing of the textual results of the processing of their contents.
+			</p>
+			<h3>
+				<a id="section-uppercase" name="section-uppercase">7.2.1. Uppercase</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">uppercase</span> element tells the AIML interpreter to render the contents of the element in uppercase, as defined (if defined) by the locale indicated by the specified language (if specified).
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:uppercase&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Contents: <i>aiml-template-elements</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:uppercase&gt;
+				</p>
+			</div>
+			<p>
+				If no character in this string has a different uppercase version, based on the Unicode standard, then the original string is returned.
+			</p>
+			<p>
+				See
+				<a href="http://www.unicode.org/unicode/reports/tr21/" target="_blank">Unicode Case Mapping</a>
+				for implementation suggestions.
+			</p>
+			<h3>
+				<a id="section-lowercase" name="section-lowercase">7.2.2. Lowercase</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">lowercase</span> element tells the AIML interpreter to render the contents of the element in lowercase, as defined (if defined) by the locale indicated by the specified language (if specified).
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:lowercase&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Content: <i>aiml-template-elements</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:lowercase&gt;
+				</p>
+			</div>
+			<p>
+				If no character in this string has a different lowercase version, based on the Unicode standard, then the original string is returned.
+			</p>
+			<p>
+				See
+				<a href="http://www.unicode.org/unicode/reports/tr21/" target="_blank">Unicode Case Mapping</a>
+				for implementation suggestions.
+			</p>
+			<h3>
+				<a id="section-formal" name="section-formal">7.2.3. Formal</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">formal</span> element tells the AIML interpreter to render the contents of the element such that the first letter of each word is in uppercase, as defined (if defined) by the locale indicated by the specified language (if specified). This is similar to methods that are sometimes called &quot;Title Case&quot;.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:formal&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Content: <i>aiml-template-elements</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:formal&gt;
+				</p>
+			</div>
+			<p>
+				If no character in this string has a different uppercase version, based on the Unicode standard, then the original string is returned.
+			</p>
+			<p>
+				See
+				<a href="http://www.unicode.org/unicode/reports/tr21/" target="_blank">Unicode Case Mapping</a>
+				for implementation suggestions.
+			</p>
+			<h3>
+				<a id="section-sentence" name="section-sentence">7.2.4. Sentence</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">sentence</span> element tells the AIML interpreter to render the contents of the element such that the first letter of each sentence is in uppercase, as defined (if defined) by the locale indicated by the specified language (if specified). Sentences are interpreted as strings whose last character is the period or full-stop character <span class="specinlineterm">.</span>. If the string does not contain a <span class="specinlineterm">.</span>, then the entire string is treated as a sentence.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:sentence&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Content: <i>aiml-template-elements</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:sentence&gt;
+				</p>
+			</div>
+			<p>
+				If no character in this string has a different uppercase version, based on the Unicode standard, then the original string is returned.
+			</p>
+			<p>
+				See
+				<a href="http://www.unicode.org/unicode/reports/tr21/" target="_blank">Unicode Case Mapping</a>
+				for implementation suggestions.
+			</p>
+			<h2>
+				<a id="section-conditional-elements" name="section-conditional-elements">7.3. Conditional elements</a>
+			</h2>
+			<p>
+				AIML contains several conditional elements, which return values based on specified conditions.
+			</p>
+			<h3>
+				<a id="section-condition" name="section-condition">7.3.1. Condition</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">condition</span> element instructs the AIML interpreter to return specified contents depending upon the results of matching a predicate against a pattern.
+			</p>
+			<p>
+				<b>NB:</b> The <span class="specinlineterm">condition</span> element has three different types. The three different types specified here are distinguished by an <span class="specinlineterm">xsi:type</span> attribute, which permits a validating XML Schema processor to validate them. Two of the types may contain <span class="specinlineterm">li</span> elements, of which there are three different types, whose validity is determined by the type of enclosing <span class="specinlineterm">condition</span>. In practice, an AIML interpreter may allow the omission of the <span class="specinlineterm">xsi:type</span> attribute and may instead heuristically determine which type of <span class="specinlineterm">condition</span> (and hence <span class="specinlineterm">li</span>) is in use.
+			</p>
+			<h4>
+				7.3.1.1. Block Condition
+			</h4>
+			<p>
+				The <span class="specinlineterm">blockCondition</span> type of <span class="specinlineterm">condition</span> has a required attribute <span class="specinlineterm">name</span>, which specifies an AIML predicate, and a required attribute <span class="specinlineterm">value</span>, which contains a simple pattern expression.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:condition<br />
+					 &nbsp;&nbsp; xsi:type = &quot;blockCondition&quot;<br />
+					 &nbsp;&nbsp; <b>name</b> = <i>aiml-predicate-name</i><br />
+					 &nbsp;&nbsp; <b>value</b> = <i>aiml-simple-pattern-expression</i> &gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Contents: <i>aiml-template-elements</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:condition&gt;
+				</p>
+			</div>
+			<p>
+				If the contents of the <span class="specinlineterm">value</span> attribute match the value of the predicate specified by <span class="specinlineterm">name</span>, then the AIML interpreter should return the contents of the <span class="specinlineterm">condition</span>. If not, the empty string <span class="specinlineterm">&quot;&quot;</span> should be returned.
+			</p>
+			<h4>
+				7.3.1.2. Single-predicate Condition
+			</h4>
+			<p>
+				The <span class="specinlineterm">singlePredicateCondition</span> type of <span class="specinlineterm">condition</span> has a required attribute <span class="specinlineterm">name</span>, which specifies an AIML predicate. This form of <span class="specinlineterm">condition</span> must contain at least one <span class="specinlineterm">li</span> element. Zero or more of these <span class="specinlineterm">li</span> elements may be of the <span class="specinlineterm">valueOnlyListItem</span> type. Zero or one of these <span class="specinlineterm">li</span> elements may be of the <span class="specinlineterm">defaultListItem</span> type.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:condition<br />
+					 &nbsp;&nbsp; xsi:type = &quot;singlePredicateCondition&quot;<br />
+					 &nbsp;&nbsp; <b>name</b> = <i>aiml-predicate-name</i> &gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Contents: <i>value-only-list-item</i>*, <i>default-list-item</i>{0,1} --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:condition&gt;
+				</p>
+			</div>
+			<p>
+				The <span class="specinlineterm">singlePredicateCondition</span> type of <span class="specinlineterm">condition</span> is processed as follows:
+			</p>
+			<p>
+				Reading each contained <span class="specinlineterm">li</span> in order:
+			</p>
+			<ol start="1" type="1">
+				<li>
+					If the <span class="specinlineterm">li</span> is a <span class="specinlineterm">valueOnlyListItem</span> type, then compare the contents of the <span class="specinlineterm">value</span> attribute of the <span class="specinlineterm">li</span> with the value of the predicate specified by the <span class="specinlineterm">name</span> attribute of the enclosing <span class="specinlineterm">condition</span>.
+					<ol start="1" type="a">
+						<li>
+							If they match, then return the contents of the <span class="specinlineterm">li</span> and stop processing this <span class="specinlineterm">condition</span>.
+						</li>
+						<li>
+							If they do not match, continue processing the <span class="specinlineterm">condition</span>.
+						</li>
+					</ol>
+				</li>
+				<li>
+					If the <span class="specinlineterm">li</span> is a <span class="specinlineterm">defaultListItem</span> type, then return the contents of the <span class="specinlineterm">li</span> and stop processing this <span class="specinlineterm">condition</span>.
+				</li>
+			</ol>
+			<h4>
+				7.3.1.3. Multi-predicate Condition
+			</h4>
+			<p>
+				The <span class="specinlineterm">multiPredicateCondition</span> type of <span class="specinlineterm">condition</span> has no attributes. This form of <span class="specinlineterm">condition</span> must contain at least one <span class="specinlineterm">li</span> element. Zero or more of these <span class="specinlineterm">li</span> elements may be of the <span class="specinlineterm">nameValueListItem</span> type. Zero or one of these <span class="specinlineterm">li</span> elements may be of the <span class="specinlineterm">defaultListItem</span> type.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:condition<br />
+					 &nbsp;&nbsp; xsi:type = &quot;multiPredicateCondition&quot;&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Contents: <i>name-value-list-item</i>*, <i>default-list-item</i>{0,1} --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:condition&gt;
+				</p>
+			</div>
+			<p>
+				The <span class="specinlineterm">multiPredicateCondition</span> type of <span class="specinlineterm">condition</span> is processed as follows:
+			</p>
+			<p>
+				Reading each contained <span class="specinlineterm">li</span> in order:
+			</p>
+			<ol start="1" type="1">
+				<li>
+					If the <span class="specinlineterm">li</span> is a <span class="specinlineterm">nameValueListItem</span> type, then compare the contents of the <span class="specinlineterm">value</span> attribute of the <span class="specinlineterm">li</span> with the value of the predicate specified by the <span class="specinlineterm">name</span> attribute of the <span class="specinlineterm">li</span>.
+					<ol start="1" type="a">
+						<li>
+							If they match, then return the contents of the <span class="specinlineterm">li</span> and stop processing this <span class="specinlineterm">condition</span>.
+						</li>
+						<li>
+							If they do not match, continue processing the <span class="specinlineterm">condition</span>.
+						</li>
+					</ol>
+				</li>
+				<li>
+					If the <span class="specinlineterm">li</span> is a <span class="specinlineterm">defaultListItem</span> type, then return the contents of the <span class="specinlineterm">li</span> and stop processing this <span class="specinlineterm">condition</span>.
+				</li>
+			</ol>
+			<h4>
+				7.3.1.4. Condition List Items
+			</h4>
+			<p>
+				As described above, two types of <span class="specinlineterm">condition</span> may contain <span class="specinlineterm">li</span> elements. There are three types of <span class="specinlineterm">li</span> elements. The type of <span class="specinlineterm">li</span> element allowed in a given <span class="specinlineterm">condition</span> depends upon the type of that <span class="specinlineterm">condition</span>, as described above.
+			</p>
+			<h5>
+				7.3.1.4.1. Default List Items
+			</h5>
+			<p>
+				An <span class="specinlineterm">li</span> element of the type <span class="specinlineterm">defaultListItem</span> has no attributes. It may contain any AIML template elements.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: condition-list-item --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:li<br />
+					 &nbsp;&nbsp; xsi:type = &quot;defaultListItem&quot;&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Contents: <i>aiml-template-elements</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:li&gt;
+				</p>
+			</div>
+			<h5>
+				7.3.1.4.2. Value-only List Items
+			</h5>
+			<p>
+				An <span class="specinlineterm">li</span> element of the type <span class="specinlineterm">valueOnlyListItem</span> has a required attribute <span class="specinlineterm">value</span>, which must contain a simple pattern expression. The element may contain any AIML template elements.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: condition-list-item --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:li<br />
+					 &nbsp;&nbsp; xsi:type = &quot;valueOnlyListItem&quot;<br />
+					 &nbsp;&nbsp; <b>value</b> = <i>aiml-simple-pattern-expression</i> &gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Contents: <i>aiml-template-elements</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:li&gt;
+				</p>
+			</div>
+			<h5>
+				7.3.1.4.3. Name and Value List Items
+			</h5>
+			<p>
+				An <span class="specinlineterm">li</span> element of the type <span class="specinlineterm">nameValueListItem</span> has a required attribute <span class="specinlineterm">name</span>, which specifies an AIML predicate, and a required attribute <span class="specinlineterm">value</span>, which contains a simple pattern expression. The element may contain any AIML template elements.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: condition-list-item --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:li<br />
+					 &nbsp;&nbsp; xsi:type = &quot;nameValueListItem&quot;<br />
+					 &nbsp;&nbsp; <b>name</b> = <i>aiml-predicate-name</i><br />
+					 &nbsp;&nbsp; <b>value</b> = <i>aiml-simple-pattern-expression</i> &gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Contents: <i>aiml-template-elements</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:li&gt;
+				</p>
+			</div>
+			<h3>
+				<a id="section-random" name="section-random">7.3.2. Random</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">random</span> element instructs the AIML interpreter to return exactly one of its contained <span class="specinlineterm">li</span> elements randomly. The <span class="specinlineterm">random</span> element must contain one or more <span class="specinlineterm">li</span> elements of type <span class="specinlineterm">defaultListItem</span>, and cannot contain any other elements.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:random&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Contents: <i>default-list-item</i>+ --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:random&gt;
+				</p>
+			</div>
+			<h2>
+				<a id="section-capture-elements" name="section-capture-elements">7.4. Capture elements</a>
+			</h2>
+			<p>
+				AIML defines two content-capturing elements, which tell the AIML interpreter to capture their processed contents and perform some storage operation with them.
+			</p>
+			<h3>
+				<a id="section-set" name="section-set">7.4.1. Set</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">set</span> element instructs the AIML interpreter to set the value of a predicate to the result of processing the contents of the <span class="specinlineterm">set</span> element. The <span class="specinlineterm">set</span> element has a required attribute <span class="specinlineterm">name</span>, which must be a valid AIML predicate name. If the predicate has not yet been defined, the AIML interpreter should define it in memory.
+			</p>
+			<p>
+				The AIML interpreter should, generically, return the result of processing the contents of the <span class="specinlineterm">set</span> element. The <span class="specinlineterm">set</span> element must not perform any text formatting or other &quot;normalization&quot; on the predicate contents when returning them.
+			</p>
+			<p>
+				The AIML interpreter implementation may optionally provide a mechanism that allows the AIML author to designate certain predicates as &quot;return-name-when-set&quot;, which means that a <span class="specinlineterm">set</span> operation using such a predicate will return the name of the predicate, rather than its captured value. (See
+				[<a href="#section-aiml-predicate-behaviors">9.2</a>].)
+			</p>
+			<p>
+				A <span class="specinlineterm">set</span> element may contain any AIML template elements.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:set<br />
+					 &nbsp;&nbsp; <b>name</b> = <i>aiml-predicate-name</i> &gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Contents: <i>aiml-template-elements</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:set&gt;
+				</p>
+			</div>
+			<h3>
+				<a id="section-gossip" name="section-gossip">7.4.2. Gossip</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">gossip</span> element instructs the AIML interpreter to capture the result of processing the contents of the <span class="specinlineterm">gossip</span> elements and to store these contents in a manner left up to the implementation. Most common uses of <span class="specinlineterm">gossip</span> have been to store captured contents in a separate file.
+			</p>
+			<p>
+				The <span class="specinlineterm">gossip</span> element does not have any attributes. It may contain any AIML template elements.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:gossip&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Contents: <i>aiml-template-elements</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:gossip&gt;
+				</p>
+			</div>
+			<h2>
+				<a id="section-symbolic-reduction-elements" name="section-symbolic-reduction-elements">7.5. Symbolic Reduction elements</a>
+			</h2>
+			<p>
+				AIML defines one symbolic reduction element, called <span class="specinlineterm">srai</span>, as well as a short-cut element called <span class="specinlineterm">sr</span>. The <span class="specinlineterm">sr</span> element is described in
+				[<a href="#section-sr">7.1.7.1</a>].
+			</p>
+			<h3>
+				<a id="section-srai" name="section-srai">7.5.1. SRAI</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">srai</span> element instructs the AIML interpreter to pass the result of processing the contents of the <span class="specinlineterm">srai</span> element to the AIML matching loop, as if the input had been produced by the user (this includes stepping through the entire
+				<a href="#section-input-normalization">input normalization</a>
+				process). The <span class="specinlineterm">srai</span> element does not have any attributes. It may contain any AIML template elements.
+			</p>
+			<p>
+				As with all AIML elements, nested forms should be parsed from inside out, so embedded <span class="specinlineterm">srai</span>s are perfectly acceptable.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:srai&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Contents: <i>aiml-template-elements</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:srai&gt;
+				</p>
+			</div>
+			<h2>
+				<a id="section-transformational-elements" name="section-transformational-elements">7.6. Transformational elements</a>
+			</h2>
+			<p>
+				AIML defines several transformational elements, which instruct the AIML interpreter to transform the result of processing the contents of the transformational element into another value according to a lookup table. The implementation of transformational elements is left up to the implementation.
+			</p>
+			<h3>
+				<a id="section-person" name="section-person">7.6.1. Person</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">person</span> element instructs the AIML interpreter to:
+			</p>
+			<ol start="1" type="1">
+				<li>
+					replace words with first-person aspect in the result of processing the contents of the <span class="specinlineterm">person</span> element with words with the grammatically-corresponding third-person aspect; and
+				</li>
+				<li>
+					replace words with third-person aspect in the result of processing the contents of the <span class="specinlineterm">person</span> element with words with the grammatically-corresponding first-person aspect.
+				</li>
+			</ol>
+			<p>
+				The definition of &quot;grammatically-corresponding&quot; is left up to the implementation.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:person&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Contents: <i>aiml-template-elements</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:person&gt;
+				</p>
+			</div>
+			<p>
+				Historically, implementations of <span class="specinlineterm">person</span> have dealt with pronouns, likely due to the fact that most AIML has been written in English. However, the decision about whether to transform the person aspect of other words is left up to the implementation.
+			</p>
+			<h3>
+				<a id="section-person2" name="section-person2">7.6.2. Person2</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">person2</span> element instructs the AIML interpreter to:
+			</p>
+			<ol start="1" type="1">
+				<li>
+					replace words with first-person aspect in the result of processing the contents of the <span class="specinlineterm">person2</span> element with words with the grammatically-corresponding second-person aspect; and
+				</li>
+				<li>
+					replace words with second-person aspect in the result of processing the contents of the <span class="specinlineterm">person2</span> element with words with the grammatically-corresponding first-person aspect.
+				</li>
+			</ol>
+			<p>
+				The definition of &quot;grammatically-corresponding&quot; is left up to the implementation.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:person2&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Contents: <i>aiml-template-elements</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:person2&gt;
+				</p>
+			</div>
+			<p>
+				Historically, implementations of <span class="specinlineterm">person2</span> have dealt with pronouns, likely due to the fact that most AIML has been written in English. However, the decision about whether to transform the person aspect of other words is left up to the implementation.
+			</p>
+			<h3>
+				<a id="section-gender" name="section-gender">7.6.3. Gender</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">gender</span> element instructs the AIML interpreter to:
+			</p>
+			<ol start="1" type="1">
+				<li>
+					replace male-gendered words in the result of processing the contents of the <span class="specinlineterm">gender</span> element with the grammatically-corresponding female-gendered words; and
+				</li>
+				<li>
+					replace female-gendered words in the result of processing the contents of the <span class="specinlineterm">gender</span> element with the grammatically-corresponding male-gendered words.
+				</li>
+			</ol>
+			<p>
+				The definition of &quot;grammatically-corresponding&quot; is left up to the implementation.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:gender&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Contents: <i>aiml-template-elements</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:gender&gt;
+				</p>
+			</div>
+			<p>
+				Historically, implementations of <span class="specinlineterm">gender</span> have exclusively dealt with pronouns, likely due to the fact that most AIML has been written in English. However, the decision about whether to transform gender of other words is left up to the implementation.
+			</p>
+			<h2>
+				<a id="section-covert-elements" name="section-covert-elements">7.7. Covert elements</a>
+			</h2>
+			<p>
+				AIML defines two &quot;covert&quot; elements that instruct the AIML interpreter to perform some processing on their contents, but to not return any value.
+			</p>
+			<h3>
+				<a id="section-think" name="section-think">7.7.1. Think</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">think</span> element instructs the AIML interpreter to perform all usual processing of its contents, but to not return any value, regardless of whether the contents produce output.
+			</p>
+			<p>
+				The <span class="specinlineterm">think</span> element has no attributes. It may contain any AIML template elements.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:think&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Contents: <i>aiml-template-elements</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:think&gt;
+				</p>
+			</div>
+			<h3>
+				<a id="section-learn" name="section-learn">7.7.2. Learn</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">learn</span> element instructs the AIML interpreter to retrieve a resource specified by a URI, and to process its AIML object contents.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:learn&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Contents: <i>uri-reference</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:learn&gt;
+				</p>
+			</div>
+			<h2>
+				<a id="section-external-processor-elements" name="section-external-processor-elements">7.8. External processor elements</a>
+			</h2>
+			<p>
+				AIML defines two external processor elements, which instruct the AIML interpreter to pass the contents of the elements to an external processor. External processor elements may return a value, but are not required to do so.
+			</p>
+			<p>
+				Contents of external processor elements may consist of character data as well as AIML template elements. If AIML template elements in the contents of an external processor element are not enclosed as CDATA, then the AIML interpreter is required to substitute the results of processing those elements before passing the contents to the external processor. As a trivial example, consider:
+			</p>
+			<p class="specexample">
+				&lt;system&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp; echo &#39;&lt;get name=&quot;name&quot;/&gt;&#39;
+			</p>
+			<p class="specexample">
+				&lt;/system&gt;
+			</p>
+			<p>
+				Before passing the contents of this <span class="specinlineterm">system</span> element to the appropriate external processor, the AIML interpreter is required to substitute the results of processing the <span class="specinlineterm">get</span> element.
+			</p>
+			<p>
+				AIML 1.0.1 does not require that any contents of an external processor element are enclosed as CDATA. An AIML interpreter should assume that any unrecognized content is character data, and simply pass it to the appropriate external processor as-is, following any processing of AIML template elements not enclosed as CDATA.
+			</p>
+			<p>
+				If an external processor is not available to process the contents of an external processor element, the AIML interpreter may return an error, but this is not required.
+			</p>
+			<h3>
+				<a id="section-system" name="section-system">7.8.1. System</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">system</span> element instructs the AIML interpreter to pass its content (with any appropriate preprocessing, as noted above) to the system command interpreter of the local machine on which the AIML interpreter is running. The <span class="specinlineterm">system</span> element does not have any attributes.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:system&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Contents: <i>character data</i>, <i>aiml-template-elements</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:system&gt;
+				</p>
+			</div>
+			<p>
+				The <span class="specinlineterm">system</span> element may return a value.
+			</p>
+			<h3>
+				<a id="section-javascript" name="section-javascript">7.8.2. JavaScript</a>
+			</h3>
+			<p>
+				The <span class="specinlineterm">javascript</span> element instructs the AIML interpreter to pass its content (with any appropriate preprocessing, as noted above) to a server-side JavaScript interpreter on the local machine on which the AIML interpreter is running. The <span class="specinlineterm">javascript</span> element does not have any attributes.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specelementdefinition">
+					&lt;!-- Category: aiml-template-elements --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;aiml:javascript&gt;
+				</p>
+				<p class="specelementdefinition">
+					&nbsp;&nbsp; &lt;!-- Contents: <i>character data, aiml-template-elements</i> --&gt;
+				</p>
+				<p class="specelementdefinition">
+					&lt;/aiml:javascript&gt;
+				</p>
+			</div>
+			<p>
+				AIML 1.0.1 does not require that an AIML interpreter include a server-side JavaScript interpreter, and does not require any particular behavior from the server-side JavaScript interpreter if it exists.
+			</p>
+			<p>
+				The <span class="specinlineterm">javascript</span> element may return a value.
+			</p>
+			<h1>
+				<a id="section-aiml-pattern-matching" name="section-aiml-pattern-matching">8. AIML Pattern Matching</a>
+			</h1>
+			<h2>
+				<a id="section-pattern-expression-syntax" name="section-pattern-expression-syntax">8.1. Pattern Expression syntax</a>
+			</h2>
+			<p>
+				An AIML Pattern Expression is a restricted form of mixed character data and optional restricted element content.
+			</p>
+			<p>
+				There are two forms of AIML pattern expressions: <b>simple pattern expressions</b>, and <b>mixed pattern expressions</b>.
+			</p>
+			<h3>
+				<a id="section-simple-pattern-expressions" name="section-simple-pattern-expressions">8.1.1. Simple pattern expressions</a>
+			</h3>
+			<p>
+				[Definition: A <b>simple pattern expression</b> is composed from one or more
+				<a href="#section-simple-pattern-expression-constituent">simple pattern expression constituents</a>,
+				separated by XML spaces (<span class="specinlineterm">#x20</span>).]
+			</p>
+			<div class="specelementdefinition">
+				<p class="specdefinitionhead">
+					Simple Pattern Expression
+				</p>
+				<p class="specelementdefinition">
+					[1]&nbsp;&nbsp;SimplePattExpr&nbsp;&nbsp;&nbsp;::=<br/>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-simple-pattern-expression-constituent">SimplePattExprConst</a> (#x20 <a href="#section-simple-pattern-expression-constituent">SimplePattExprConst</a>)+
+				</p>
+			</div>
+			<p>&nbsp;</p>
+			<table width="90%" border="1" cellspacing="0" cellpadding="5" summary="Simple Pattern Expression definition">
+				<tr>
+					<th width="50%" valign="top">
+						<p class="specdefcolumnhead">
+							For all simple pattern expression constituents <i>C</i>, and for all simple pattern expressions <i>E</i>, valid simple pattern expressions <i>V</i> are:
+						</p>
+					</th>
+					<th width="50%" valign="top">
+						<p class="specdefcolumnhead">
+							Denoting the set of strings<br />
+							<i>L(V)</i> containing:
+						</p>
+					</th>
+				</tr>
+				<tr>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							C
+						</p>
+					</td>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							all strings in <i>L(C)</i>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							E
+						</p>
+					</td>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							all strings in <i>L(E)</i>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							C E
+						</p>
+					</td>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							all strings in <i>L(C)</i> and all strings in <i>L(E)</i>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							E C
+						</p>
+					</td>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							all strings in <i>L(E)</i> and all strings in <i>L(C)</i>
+						</p>
+					</td>
+				</tr>
+			</table>
+			<p>
+				<a id="section-simple-pattern-expression-constituent" name="section-simple-pattern-expression-constituent"></a>
+				[Definition: A <b>simple pattern expression constituent</b> is either a
+				<a href="#section-normal-words">normal word</a>
+				or an
+				<a href="#section-aiml-wildcards">AIML wildcard</a>.
+			</p>
+			<div class="specelementdefinition">
+				<p class="specdefinitionhead">
+					Simple Pattern Expression Constituent
+				</p>
+				<p class="specelementdefinition">
+					[2]&nbsp;&nbsp;SimplePattExprConst&nbsp;&nbsp;::=&nbsp;&nbsp;
+					<a href="#section-normal-words">NormalWord</a>
+					|
+					<a href="#section-aiml-wildcards">AIMLWildcard</a>
+				</p>
+			</div>
+			<h3>
+				<a id="section-mixed-pattern-expressions" name="section-mixed-pattern-expressions">8.1.2. Mixed pattern expressions</a>
+			</h3>
+			<p>
+				<a id="section-mixed-pattern-expression" name="section-mixed-pattern-expression"></a>
+				[Definition: A <b>mixed pattern expression</b> is composed from one or more
+				<a href="#section-mixed-pattern-expression-constituent">mixed pattern expression constituents</a>,
+				separated by XML spaces (<span class="specinlineterm">#x20</span>).]
+			</p>
+			<div class="specelementdefinition">
+				<p class="specdefinitionhead">
+					Mixed Pattern Expression
+				</p>
+				<p class="specelementdefinition">
+					[1]&nbsp;&nbsp;MixedPattExpr&nbsp;&nbsp;&nbsp;&nbsp;::=<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-mixed-pattern-expression-constituent">MixedPattExprConst</a> (#x20 <a href="#section-mixed-pattern-expression-constituent">MixedPattExprConst</a>)+
+				</p>
+			</div>
+			<p>&nbsp;</p>
+			<table width="90%" border="1" cellspacing="0" cellpadding="5" summary="Mixed Pattern Expression definition">
+				<tr>
+					<th width="50%" valign="top">
+						<p class="specdefcolumnhead">
+							For all mixed pattern expression constituents <i>C</i>, and for all mixed pattern expressions <i>E</i>, valid mixed pattern expressions <i>V</i> are:
+						</p>
+					</th>
+					<th width="50%" valign="top">
+						<p class="specdefcolumnhead">
+							Denoting the set of strings<br />
+							<i>L(V)</i> containing:
+						</p>
+					</th>
+				</tr>
+				<tr>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							C
+						</p>
+					</td>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							all strings in <i>L(C)</i>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							E
+						</p>
+					</td>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							all strings in <i>L(E)</i>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							C E
+						</p>
+					</td>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							all strings in <i>L(C)</i> and all strings in <i>L(E)</i>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							E C
+						</p>
+					</td>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							all strings in <i>L(E)</i> and all strings in <i>L(C)</i>
+						</p>
+					</td>
+				</tr>
+			</table>
+			<p>
+				<a id="section-mixed-pattern-expression-constituent" name="section-mixed-pattern-expression-constituent"></a>
+				[Definition: A <b>mixed pattern expression constituent</b> is either a
+				<a href="#section-normal-words">normal word</a>,
+				an
+				<a href="#section-aiml-wildcards">AIML wildcard</a>,
+				or a
+				<a href="#section-pattern-side-bot-elements">pattern-side bot element</a>.]
+			</p>
+			<div class="specelementdefinition">
+				<p class="specdefinitionhead">
+					Mixed Pattern Expression Constituent
+				</p>
+				<p class="specelementdefinition">
+					[2]&nbsp;&nbsp;MixedPattExprConst&nbsp;&nbsp;&nbsp;::=<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#section-normal-words">NormalWord</a>
+					|
+					<a href="#section-aiml-wildcards">AIMLWildcard</a>
+					|
+					<a href="#section-pattern-side-bot-elements">PattSideBotElem</a>
+				</p>
+			</div>
+			<h3>
+				<a id="section-normal-words" name="section-normal-words">8.1.3. Normal words</a>
+			</h3>
+			<p>
+				[Definition: A <b>normal word</b> consists of one or more
+				<a href="#section-normal-characters">normal characters</a>,
+				concatenated together.]
+			</p>
+			<div class="specelementdefinition">
+				<p class="specdefinitionhead">
+					Normal Word
+				</p>
+				<p class="specelementdefinition">
+					[3]&nbsp;&nbsp; NormalWord&nbsp; ::=&nbsp;&nbsp;
+					<a href="#section-normal-characters">NormalChar</a>+
+				</p>
+			</div>
+			<h3>
+				<a id="section-normal-characters" name="section-normal-characters">8.1.4. Normal characters</a>
+			</h3>
+			<p>
+				[Definition: A <b>normal character</b> is any &quot;uppercase letter&quot;<i>*</i>,
+				any	&quot;caseless letter&quot;<i>**</i>, or any
+				<a href="http://www.w3.org/TR/2000/REC-xml-20001006#NT-Digit" target="_blank">digit</a>.]
+			</p>
+			<p>
+				<i>* for &quot;bicameral&quot; alphabets, in which &quot;uppercase&quot; has meaning (Latin, Greek, Cyrillic, Armenian, and archaic Georgian). See
+				[<a href="http://www.unicode.org/unicode/reports/tr21/" target="_blank">Unicode Case Mapping</a>] for more information.</i>
+			</p>
+			<p>
+				<i>** for &quot;unicameral&quot; alphabets, in which &quot;case&quot; has no meaning (see
+				<a href="http://www.unicode.org/unicode/reports/tr21/" target="_blank">reference</a>
+				above).</i>
+			</p>
+			<div class="specelementdefinition">
+				<p class="specdefinitionhead">
+					Normal Character
+				</p>
+				<p class="specelementdefinition">
+					[4]&nbsp;&nbsp;normalChar&nbsp;&nbsp;::=<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.unicode.org/unicode/reports/tr21/" target="_blank">UppercaseLetter</a>
+					|
+					<a href="http://www.unicode.org/unicode/reports/tr21/" target="_blank">CaselessLetter</a>
+					|
+					<a href="http://www.w3.org/TR/2000/REC-xml-20001006#NT-Digit">Digit</a>
+				</p>
+			</div>
+			<p>
+				A normal character can be represented either as itself, or with a character reference.
+			</p>
+			<h3>
+				<a id="section-aiml-wildcards" name="section-aiml-wildcards">8.1.5. AIML wildcards</a>
+			</h3>
+			<p>
+				[Definition: An <b>AIML wildcard</b> is one of <span class="specinlineterm">*</span> or <span class="specinlineterm">_</span>, which have the meanings defined in the following table.]
+			</p>
+			<table width="90%" border="1" cellspacing="0" cellpadding="5" summary="Normal Word definition">
+				<tr>
+					<th width="50%" valign="top">
+						<p class="specdefcolumnhead">
+							For all normal words <i>L(N)</i>, valid AIML wildcards <i>W</i> are:
+						</p>
+					</th>
+					<th width="50%" valign="top">
+						<p class="specdefcolumnhead">
+							Denoting the set of strings<br />
+							<i>L(W)</i> containing:
+						</p>
+					</th>
+				</tr>
+				<tr>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							*
+						</p>
+					</td>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							any string in <i>L(N)</i>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							_
+						</p>
+					</td>
+					<td width="50%" valign="top">
+						<p class="specdefcell">
+							any string in <i>L(N)</i>
+						</p>
+					</td>
+				</tr>
+			</table>
+			<h3>
+				<a id="section-pattern-side-bot-elements" name="section-pattern-side-bot-elements">8.1.6. Pattern-side bot elements</a>
+			</h3>
+			<p>
+				[Definition: A <b>pattern-side bot element</b> consists of any AIML
+				<a class="specinlineterm" href="#section-bot">bot</a>
+				element.]
+			</p>
+			<h2>
+				<a id="section-load-time-match-path-construction" name="section-load-time-match-path-construction">8.2. Load-time match path construction</a>
+			</h2>
+			<!--incomplete-->
+			<p>
+				An AIML interpreter must construct a <b>match path</b> from each <span class="specinlineterm">category</span> at load-time. It is recommended, but not required, that all match paths be compressed into an efficient trie structure such as the Graphmaster (see
+				[<a href="#section-explanation-via-implementation-description-graphmaster">8.4.1</a>]).
+			</p>
+			<p>
+				A match path has three components, whose order is mandatory:
+			</p>
+			<ol>
+				<li>
+					<p>
+						<b>pattern</b>: the contents of the <span class="specinlineterm">category</span> element's <span class="specinlineterm">pattern</span> element
+					</p>
+				</li>
+				<li>
+					<p>
+						<b>that</b>: the contents of the <span class="specinlineterm">category</span> element's pattern-side <span class="specinlineterm">that</span> element
+					</p>
+					<p>
+						<b>NB:</b> If the <span class="specinlineterm">category</span> does not contain a pattern-side <span class="specinlineterm">that</span>, then the AIML interpreter must insert an &quot;implied&quot; <span class="specinlineterm">that</span> match path component with value <span class="specinlineterm">*</span> (single asterisk wildcard).
+					</p>
+				</li>
+				<li>
+					<p>
+						<b>topic</b>: the contents of the <span class="specinlineterm">name</span> attribute of the <span class="specinlineterm">topic</span> element parent of the <span class="specinlineterm">category</span> element.
+					</p>
+					<p>
+						<b>NB</b>: If the <span class="specinlineterm">category</span> element does not have an explicit <span class="specinlineterm">topic</span> parent, then the AIML interpreter must insert an &quot;implied&quot; <span class="specinlineterm">topic</span> match path component with value with value <span class="specinlineterm">*</span> (single asterisk wildcard).
+					</p>
+				</li>
+			</ol>
+			<p>
+				A conventional way to construct the match path is as a simple string, in which the markers <span class="specinlineterm">&lt;that&gt;</span> and <span class="specinlineterm">&lt;topic&gt;</span> are used to separate the <span class="specinlineterm">pattern</span>, <span class="specinlineterm">that</span> and <span class="specinlineterm">topic</span> components from one another. For example, given this <span class="specinlineterm">topic</span>/<span class="specinlineterm">category</span>:
+			</p>
+			<p class="specexample">
+				&lt;topic name=&quot;* A&quot;&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&lt;category&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&lt;pattern&gt;_ C *&lt;/pattern&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&lt;that&gt;B *&lt;/that&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&lt;template&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&lt;/template&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&lt;/category&gt;
+			</p>
+			<p class="specexample">
+				&lt;/topic&gt;
+			</p>
+			<p>
+				the match path string might look like:
+			</p>
+			<p class="specexample">
+				_ C * &lt;that&gt; B * &lt;topic&gt; * A
+			</p>
+			<p>
+				(The convention of using angle-bracketed markers such as &lt;that&gt; and &lt;topic&gt; is not to be confused with XML markup.)
+			</p>
+			<p>
+				Following the same convention, and by way of illustrating the requirement of inserting &quot;implied&quot; <span class="specinlineterm">that</span> and/or <span class="specinlineterm">topic</span> components where they are not explicit, here are three more examples.
+			</p>
+			<p>
+				Given this <span class="specinlineterm">topic</span>/<span class="specinlineterm">category</span>:
+			</p>
+			<p class="specexample">
+				&lt;topic name=&quot;* A&quot;&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&lt;category&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&lt;pattern&gt;_ C *&lt;/pattern&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&lt;template&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;&lt;/template&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&lt;/category&gt;
+			</p>
+			<p class="specexample">
+				&lt;/topic&gt;
+			</p>
+			<p>
+				the match path string would look like (&quot;implied&quot; <span class="specinlineterm">that</span>):
+			</p>
+			<p class="specexample">
+				_ C * &lt;that&gt; * &lt;topic&gt; * A
+			</p>
+			<p>
+				Given this <span class="specinlineterm">category</span>:
+			</p>
+			<p class="specexample">
+				&lt;category&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&lt;pattern&gt;_ C *&lt;/pattern&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&lt;that&gt;B *&lt;/that&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&lt;template&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;...
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&lt;/template&gt;
+			</p>
+			<p class="specexample">
+				&lt;/category&gt;
+			</p>
+			<p>
+				the match path string would look like (&quot;implied&quot; <span class="specinlineterm">topic</span>):
+			</p>
+			<p class="specexample">
+				_ C * &lt;that&gt; B * &lt;topic&gt; *
+			</p>
+			<p>
+				And given this <span class="specinlineterm">category</span>:
+			</p>
+			<p class="specexample">
+				&lt;category&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&lt;pattern&gt;_ C *&lt;/pattern&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&lt;template&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;...
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&lt;/template&gt;
+			</p>
+			<p class="specexample">
+				&lt;/category&gt;
+			</p>
+			<p>
+				the match path string would look like (&quot;implied&quot; <span class="specinlineterm">that</span> <i>and</i> <span class="specinlineterm">topic</span>):
+			</p>
+			<p class="specexample">
+				_ C * &lt;that&gt; * &lt;topic&gt; *
+			</p>
+			<p>
+				At run-time, an AIML interpreter must match normalized inputs against match paths that are ordered as described in
+				[<a href="#section-pattern-expression-matching-behavior">8.4</a>].
+			</p>
+			<h2>
+				<a id="section-input-normalization" name="section-input-normalization">8.3. Input normalization</a>
+			</h2>
+			<p>
+				An AIML interpreter must perform a &quot;normalization&quot; function on all inputs before attempting to match. The minimum set of normalizations is called <b>pattern-fitting normalizations</b>. Additional normalizations performed at user option are called <b>sentence-splitting normalizations</b> and <b>substitution normalizations</b> (or just &quot;substitutions&quot;).
+			</p>
+			<p>
+				If an AIML interpreter performs substitution normalizations on the input, then these must be performed first.
+			</p>
+			<p>
+				If an AIML interpreter performs sentence-splitting normalizations on the input, then these must be performed on the output of the substitution normalization process.
+			</p>
+			<p>
+				The pattern-fitting normalization process receives the output of the sentence-splitting normalization process (if any), or the output of the substitution normalization process (if any, and if no sentence-splitting normalization is performed), or the direct input (if no sentence-splitting or substitution normalization is performed).
+			</p>
+			<h3>
+				<a id="section-substitution-normalizations" name="section-substitution-normalizations">8.3.1. Substitution normalizations</a>
+			</h3>
+			<p>
+				Substitution normalizations are heuristics applied to an input that attempt to retain information in the input that would otherwise be lost during the sentence-splitting or pattern-fitting normalizations. For example:
+			</p>
+			<ul>
+				<li>
+					Abbreviations such as <span class="specinlineterm">&quot;Mr.&quot;</span> may be &quot;spelled out&quot; as <span class="specinlineterm">&quot;Mister&quot;</span> to avoid sentence-splitting at the period in the abbreviated form
+				</li>
+				<li>
+					Web addresses such as <span class="specinlineterm">&quot;http://alicebot.org&quot;</span> may be &quot;sounded out&quot; as <span class="specinlineterm">&quot;http alicebot dot org&quot;</span> to assist the AIML author in writing patterns that match Web addresses
+				</li>
+				<li>
+					Filename extensions may be separated from their file names to avoid sentence-splitting (<span class="specinlineterm">&quot;.zip&quot;</span> to <span class="specinlineterm">&quot; zip&quot;</span>)
+				</li>
+			</ul>
+			<h3>
+				<a id="section-sentence-splitting-normalizations" name="section-sentence-splitting-normalizations">8.3.2. Sentence-splitting normalizations</a>
+			</h3>
+			<p>
+				Sentence-splitting normalizations are heuristics applied to an input that attempt to break it into &quot;sentences&quot;. The notion of &quot;sentence&quot;, however, is ill-defined for many languages, so the heuristics for division into sentences are left up to the developer.
+			</p>
+			<p>
+				Commonly, sentence-splitting heuristics use simple rules like &quot;break sentences at periods&quot;, which in turn rely upon substitutions performed in the substitution normalization phase, such as those which substitute full words for their abbreviations.
+			</p>
+			<h3>
+				<a id="section-pattern-fitting-normalizations" name="section-pattern-fitting-normalizations">8.3.3. Pattern-fitting normalizations</a>
+			</h3>
+			<p>
+				[Definition: <b>Pattern-fitting normalizations</b> are normalizations that remove from the input characters that are not
+				<a href="#section-normal-characters">normal characters</a>.]
+			</p>
+			<p>
+				Pattern-fitting normalizations on an input must remove all characters that are not
+				<a href="#section-normal-characters">normal characters</a>. For each
+				non-<a href="#section-normal-characters">normal character</a>
+				in the input,
+			</p>
+			<ul>
+				<li>
+					if it is a
+					<a href="http://www.unicode.org/unicode/reports/tr21/" target="_blank">lowercase letter</a>,
+					replace it with its
+					<a href="http://www.unicode.org/unicode/reports/tr21/" target="_blank">uppercase equivalent</a>
+				</li>
+				<li>
+					if it is not a
+					<a href="http://www.unicode.org/unicode/reports/tr21/" target="_blank">lowercase letter</a>,
+					replace it with a space (<span class="specinlineterm">#x20</span>)
+				</li>
+			</ul>
+			<h3>
+				<a id="section-normalization-examples" name="section-normalization-examples">8.3.4. Normalization examples</a>
+			</h3>
+			<p>
+				Since input normalization can have any of 1, 2 or 3 stages in a given AIML interpreter, results of normalization may vary widely among different AIML interpreters. Here we show examples of input normalization in a typical English-language-oriented AIML interpreter that includes the full complement of normalizations.
+			</p>
+			<table width="100%" border="1" cellpadding="3" cellspacing="0" summary="Normalization examples">
+				<tr>
+					<th width="16%" valign="top">
+						<p class="specdefcolumnhead">
+							input
+						</p>
+					</th>
+					<th width="28%" valign="top">
+						<p class="specdefcolumnhead">
+							substitution normalized form
+						</p>
+					</th>
+					<th width="28%" valign="top">
+						<p class="specdefcolumnhead">
+							sentence-splitting normalized form
+						</p>
+					</th>
+					<th width="28%" valign="top">
+						<p class="specdefcolumnhead">
+							pattern-fitting normalized form
+						</p>
+					</th>
+				</tr>
+				<tr>
+					<td width="16%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;What time is it?&quot;
+						</p>
+					</td>
+					<td width="28%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;What time is it?&quot;
+						</p>
+					</td>
+					<td width="28%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;What time is it&quot;
+						</p>
+					</td>
+					<td width="28%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;WHAT TIME IS IT&quot;
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td width="16%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;Quickly, go to http://alicebot.org!&quot;
+						</p>
+					</td>
+					<td width="28%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;Quickly, go to http://alicebot dot org!&quot;
+						</p>
+					</td>
+					<td width="28%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;Quickly, go to http://alicebot dot org&quot;
+						</p>
+					</td>
+					<td width="28%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;QUICKLY GO TO HTTP ALICEBOT DOT ORG&quot;
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td width="16%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;:-) That's funny.&quot;
+						</p>
+					</td>
+					<td width="28%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;That is funny.&quot;
+						</p>
+					</td>
+					<td width="28%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;That is funny&quot;
+						</p>
+					</td>
+					<td width="28%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;THAT IS FUNNY&quot;
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td width="16%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;I don't know.  Do you, or will you, have a robots.txt file?&quot;
+						</p>
+					</td>
+					<td width="28%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;I do not know.  Do you, or will you, have a robots dot txt file?&quot;
+						</p>
+					</td>
+					<td width="28%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;I do not know&quot;
+						</p>
+						<p class="specsmallexampletext">
+							&quot;Do you, or will you, have a robots dot txt file&quot;
+						</p>
+					</td>
+					<td width="28%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;I DO NOT KNOW&quot;
+						</p>
+						<p class="specsmallexampletext">
+							&quot;DO YOU OR WILL YOU HAVE A ROBOTS DOT TXT FILE&quot;
+						</p>
+					</td>
+				</tr>
+			</table>
+			<h2>
+				<a id="section-pattern-expression-matching-behavior" name="section-pattern-expression-matching-behavior">8.4. Pattern Expression matching behavior</a>
+			</h2>
+			<p>
+				Each input to the AIML interpreter must pass through the
+				<a href="#section-input-normalization">input normalization</a>
+				process described above, in which (at the very minimum) the input will be processed according to the description of
+				<a href="#section-pattern-fitting-normalizations">pattern-fitting normalizations</a>.
+			</p>
+			<p>
+				In the case that
+				<a href="#section-sentence-splitting-normalizations">sentence-splitting normalization</a>
+				is used by the AIML interpreter, a single input may be subdivided into several &quot;sentences&quot;. The AIML interpreter must process each sentence of the input by producing an <b>input path</b> from it.
+			</p>
+			<p>
+				An input match path has three components, whose order is mandatory, and which correspond to the three components of a
+				<a href="#section-load-time-match-path-construction">load-time match path</a>:
+			</p>
+			<ol>
+				<li>
+					<p>
+						<b>pattern</b>: the normalized input
+					</p>
+				</li>
+				<li>
+					<p>
+						<b>that</b>: the previous bot output, normalized according to the same rules as in
+						<a href="#section-input-normalization">input normalization</a>.
+					</p>
+					<p>
+						<b>NB:</b> If there was <i>no</i> previous bot output, or the previous bot output was unavailable, the value of the input path <span class="specinlineterm">that</span> is <span class="specinlineterm">*</span>.
+					</p>
+				</li>
+				<li>
+					<p>
+						<b>topic</b>: the current value of the <span class="specinlineterm">topic</span> predicate.
+					</p>
+					<p>
+						<b>NB</b>: If the <span class="specinlineterm">topic</span> predicate has <i>no</i> value, then the value of the input path <span class="specinlineterm">topic</span> is <span class="specinlineterm">*</span>.
+					</p>
+				</li>
+			</ol>
+			<p>
+				A conventional way to construct the match path is as a simple string, in which the markers <span class="specinlineterm">&lt;that&gt;</span> and <span class="specinlineterm">&lt;topic&gt;</span> are used to separate the <span class="specinlineterm">pattern</span>, <span class="specinlineterm">that</span> and <span class="specinlineterm">topic</span> components from one another. (The convention of using angle-bracketed markers such as &lt;that&gt; and &lt;topic&gt; is not to be confused with XML markup.)
+			</p>
+			<p>
+				Here are some examples of input paths that would be constructed, according to this convention. (Paths are shown inside quotes for clarity, but actual paths do not include quotation marks.)
+			</p>
+			<table width="100%" border="1" cellpadding="3" cellspacing="0" summary="Normalization examples">
+				<tr>
+					<th width="20%" valign="top">
+						<p class="specdefcolumnhead">
+							normalized input
+						</p>
+					</th>
+					<th width="20%" valign="top">
+						<p class="specdefcolumnhead">
+							previous bot output (normalized)
+						</p>
+					</th>
+					<th width="10%" valign="top">
+						<p class="specdefcolumnhead">
+							value of <span class="specinlineterm">topic</span> predicate
+						</p>
+					</th>
+					<th width="50%" valign="top">
+						<p class="specdefcolumnhead">
+							input path
+						</p>
+					</th>
+				</tr>
+				<tr>
+					<td width="20%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;YES&quot;
+						</p>
+					</td>
+					<td width="20%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;DO YOU LIKE CHEESE&quot;
+						</p>
+					</td>
+					<td width="10%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;&quot;
+						</p>
+					</td>
+					<td width="50%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;YES &lt;that&gt; DO YOU LIKE CHEESE &lt;topic&gt; *&quot;
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td width="20%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;MY NAME IS NOEL&quot;
+						</p>
+					</td>
+					<td width="20%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;I GUESS SO&quot;
+						</p>
+					</td>
+					<td width="10%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;MUSHROOMS&quot;
+						</p>
+					</td>
+					<td width="50%" valign="top">
+						<p class="specsmallexampletext">
+							&quot;MY NAME IS NOEL &lt;that&gt; I GUESS SO &lt;topic&gt; MUSHROOMS&quot;
+						</p>
+					</td>
+				</tr>
+			</table>
+			<p>
+				Each &quot;sentence&quot; of the input is matched word by word, pattern by pattern, against the total set of loaded match patterns. The total set of loaded match patterns is at least partially ordered, so that:
+			</p>
+			<ol start="1" type="1">
+				<li>
+					Each <span class="specinlineterm">_</span> wildcard comes before words that begin with any other character (including pattern-side bot elements).
+				</li>
+				<li>
+					Each <span class="specinlineterm">*</span> wildcard comes <i>after</i> words that begin with any other character (including pattern-side bot elements).
+				</li>
+			</ol>
+			<p>
+				As soon as the first complete match is found, the process stops, and the template that belongs to the category whose pattern was matched is processed by the AIML interpreter to construct the output.
+			</p>
+			<h3>
+				<a id="section-explanation-via-implementation-description-graphmaster" name="section-explanation-via-implementation-description-graphmaster">8.4.1. Explanation via implementation description: Graphmaster</a>
+			</h3>
+			<p>
+				Matching behavior can be described in terms of the class Graphmaster, which is a common implementation of the AIML pattern expression matching behavior:
+			</p>
+			<ol start="1" type="1">
+				<li>
+					Given:
+					<ol start="1" type="a">
+						<li>
+							an input starting with word <span class="specinlineterm">X</span>, and
+						</li>
+						<li>
+							a Nodemapper of the graph:
+						</li>
+					</ol>
+				</li>
+				<li>
+					Does the Nodemapper contain the key <span class="specinlineterm">_</span>? If so, search the subgraph rooted at the child node linked by <span class="specinlineterm">_</span>. Try all remaining suffixes of the input following <span class="specinlineterm">X</span> to see if one matches. If no match was found, try:
+				</li>
+				<li>
+					Does the Nodemapper contain the key <span class="specinlineterm">X</span>? If so, search the subgraph rooted at the child node linked by <span class="specinlineterm">X</span>, using the tail of the input (the suffix of the input with <span class="specinlineterm">X</span> removed). If no match was found, try:
+				</li>
+				<li>
+					Does the Nodemapper contain the key <span class="specinlineterm">*</span>? If so, search the subgraph rooted at the child node linked by <span class="specinlineterm">*</span>. Try all remaining suffixes of the input following <span class="specinlineterm">X</span> to see if one matches. If no match was found, go back up the graph to the parent of this node, and put <span class="specinlineterm">X</span> back on the head of the input.
+				</li>
+				<li>
+					If the input is null (no more words) and the Nodemapper contains the <span class="specinlineterm">&lt;template&gt;</span> key, then a match was found. Halt the search and return the matching node.
+				</li>
+			</ol>
+			<p>
+				If the root Nodemapper contains a key &quot;*&quot; and it points to a leaf node, then the algorithm is guaranteed to find a match.
+			</p>
+			<p>
+				Note that:
+			</p>
+			<ol start="1" type="1">
+				<li>
+					The patterns need not be ordered alphabetically or according to any other complete system, only partially ordered so that <span class="specinlineterm">_</span> comes before any word and <span class="specinlineterm">*</span> after any word.
+				</li>
+				<li>
+					The matching is word-by-word, not category-by-category.
+				</li>
+				<li>
+					The algorithm combines the input pattern, the <span class="specinlineterm">&lt;that&gt;</span> pattern, and the <span class="specinlineterm">&lt;topic&gt;</span> pattern into a single &quot;path&quot; or sentence such as: <span class="specinlineterm">&quot;PATTERN &lt;that&gt; THAT &lt;topic&gt; TOPIC&quot;</span> and treats the tokens <span class="specinlineterm">&lt;that&gt;</span> and <span class="specinlineterm">&lt;topic&gt;</span> like ordinary words. The <span class="specinlineterm">PATTERN</span>, <span class="specinlineterm">THAT</span> and <span class="specinlineterm">TOPIC</span> patterns may contain multiple wildcards.
+				</li>
+				<li>
+					The matching algorithm is a highly restricted version of depth-first search, also known as backtracking.
+				</li>
+			</ol>
+			<p>
+				<img border="0" src="matching.jpg" alt="Backtracking work-flow" />
+			</p>
+			<h1>
+				<a id="section-aiml-predicates" name="section-aiml-predicates">9. AIML Predicates</a>
+			</h1>
+			<p>
+				[Definition: An AIML <b>predicate</b> is an item that can be &quot;declared&quot; at any point in an AIML object and whose value can be manipulated by the AIML object within <span class="specinlineterm">template</span> elements.]
+			</p>
+			<h2>
+				<a id="section-aiml-predicate-name-syntax" name="section-aiml-predicate-name-syntax">9.1. AIML Predicate name syntax</a>
+			</h2>
+			<p>
+				[Definition: An AIML <b>predicate name</b> is a string composed of one or more normal characters, concatenated together.]
+			</p>
+			<div class="specelementdefinition">
+				<p class="specdefinitionhead">
+					Predicate Name
+				</p>
+				<p class="specelementdefinition">
+					[1]&nbsp;&nbsp; predName&nbsp;&nbsp;&nbsp; ::=&nbsp;&nbsp;<a href="#section-normal-characters">normalChar</a>+
+				</p>
+			</div>
+			<h2>
+				<a id="section-aiml-predicate-behaviors" name="section-aiml-predicate-behaviors">9.2. AIML Predicate behaviors</a>
+			</h2>
+			<p>
+				Generically, when a
+				<a class="specinlineterm" href="#section-set">set</a>
+				element is used to set the value of a predicate, the return value of the <span class="specinlineterm">set</span> is the result of processing the contents of the <span class="specinlineterm">set</span>.
+			</p>
+			<p>
+				However, an AIML interpreter may provide a mechanism for designating predicates as &quot;return-name-when-set&quot;. This means that a <span class="specinlineterm">set</span> operation using such a predicate will return the name of the predicate, rather than its captured value.
+			</p>
+			<p>
+				This feature is meant to allow concise inline predicate-setting and &quot;natural&quot; conversation. The following two categories show a simple example of this usage:
+			</p>
+			<p class="specexample">
+				&lt;category&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&lt;pattern&gt;HE DID IT&lt;/pattern&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&lt;template&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;Who?
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&lt;/template&gt;
+			</p>
+			<p class="specexample">
+				&lt;/category&gt;
+			</p>
+			<p class="specexample">
+				&lt;category&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&lt;pattern&gt;*&lt;/pattern&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&lt;that&gt;WHO&lt;/that&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&lt;template&gt;
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&nbsp;&nbsp;Oh, why do you think &lt;set name=&quot;he&quot;&gt;&lt;star/&gt;&lt;/set&gt; did that? I wouldn't expect that kind of behavior from &lt;get name=&quot;he&quot;/&gt;.
+			</p>
+			<p class="specexample">
+				&nbsp;&nbsp;&lt;/template&gt;
+			</p>
+			<p class="specexample">
+				&lt;/category&gt;
+			</p>
+			<p>
+				If the predicate <span class="specinlineterm">&quot;he&quot;</span> has been designated as &quot;return-name-when-set&quot;, then the following dialogue could take place:
+			</p>
+			<p class="specexample">
+				user&gt; He did it.
+			</p>
+			<p class="specexample">
+				bot&gt; Who?
+			</p>
+			<p class="specexample">
+				bot&gt; Joe.
+			</p>
+			<p class="specexample">
+				bot&gt; Oh, why do you think he did that? I wouldn't expect that kind of behavior from Joe.
+			</p>
+			<p>
+				Currently, AIML does not provide a mechanism for specifying predicates as &quot;return-name-when-set&quot; from within AIML.
+			</p>
+			<h2>
+				<a id="section-aiml-predicate-defaults" name="section-aiml-predicate-defaults">9.3. AIML Predicate defaults</a>
+			</h2>
+			<p>
+				AIML interpreters may optionally provide a method for setting &quot;default&quot; values for predicates, so that if the predicates are called using a
+				<a class="specinlineterm" href="#section-get">get</a>
+				element but have not been specially defined within a category that has yet been activated, they will return a standard value.
+			</p>
+			<p>
+				AIML does not currently provide a mechanism for specifying default values of predicates from within AIML.
+			</p>
+			<!--incomplete-->
+			<h1>
+				<a id="section-aiml-schema" name="section-aiml-schema">10. AIML Schema</a>
+			</h1>
+			<p>
+				A complete version of this document will include an XML Schema for AIML.
+			</p>
+			<h1>
+				<a id="section-references" name="section-references">11. References</a>
+			</h1>
+			<p>
+				(This list is incomplete.)
+			</p>
+			<ul type="disc">
+				<li>
+					<a href="http://alicebot.org/committees/architecture/resolutions/aiml10.html" target="_blank">AIML 1.0 Tags Set</a>
+					(<a href="http://alicebot.org/committees/architecture/resolutions/aiml10.html" target="_blank">http://alicebot.org/committees/architecture/resolutions/aiml10.html</a>)
+				</li>
+				<li>
+					<a href="http://alicebot.org/committees/architecture/resolutions/aiml-specification-process.html" target="_blank">AIML Specification Release Process</a>
+					(<a href="http://alicebot.org/committees/architecture/resolutions/aiml-specification-process.html" target="_blank">http://alicebot.org/committees/architecture/resolutions/aiml-specification-process.html</a>)
+				</li>
+				<li>
+					<a href="http://www.w3.org/TR/REC-xml" target="_blank">Extensible Markup Language (XML) 1.0 (Second Edition)</a>
+					(<a href="http://www.w3.org/TR/REC-xml" target="_blank">http://www.w3.org/TR/REC-xml</a>)
+				</li>
+				<li>
+					<a href="http://www.w3.org/TR/REC-xml-names/" target="_blank">Namespaces in XML</a>
+					(<a href="http://www.w3.org/TR/REC-xml-names/" target="_blank">http://www.w3.org/TR/REC-xml-names/</a>)
+				</li>
+				<li>
+					<a href="http://www.unicode.org/unicode/reports/tr21/" target="_blank">Unicode Case Mapping</a>
+					(<a href="http://www.unicode.org/unicode/reports/tr21/" target="_blank">http://www.unicode.org/unicode/reports/tr21/</a>)
+				</li>
+				<li>
+					<a href="http://www.w3.org/TR/xslt" target="_blank">XSL Transformations (XSLT) Version 1.0</a>
+					(<a href="http://www.w3.org/TR/xslt" target="_blank">http://www.w3.org/TR/xslt</a>)
+				</li>
+			</ul>
+			<h1>
+				<a id="section-version-history" name="section-version-history">12. Version History</a>
+			</h1>
+			<ul>
+				<li>
+					WD-001: Initial version of this document (Noel Bush).
+				</li>
+				<li>
+					WD-002: Small corrections made (Noel Bush)
+					<ul type="disc">
+						<li>
+							replaced ambiguous &quot;AIML Pattern Expression&quot; with &quot;mixed pattern expression&quot; or &quot;simple pattern expression&quot; as appropriate in several places.
+						</li>
+						<li>
+							removed confusing &quot;into several different categories&quot; phrase from intro text to 7
+						</li>
+						<li>
+							changed &quot;must return a particular value&quot; to &quot;must return a value according to the functional meaning of the element&quot; in 7.1
+						</li>
+						<li>
+							appended &quot;for the second dimension&quot; in 7.1.2. Template-side That, to clarify meaning of unspecified second dimension of <span class="specinlineterm">index</span> attribute
+						</li>
+						<li>
+							changed &quot;an empty string&quot; to &quot;the empty string <span class="specinlineterm">&quot;&quot;</span> in 7.1.6
+						</li>
+						<li>
+							appended &quot;with an AIML predicate name&quot; for clarification in 7.1.6
+						</li>
+						<li>
+							inserted heading text for cross-reference to <span class="specinlineterm">sr</span> in 7.5
+						</li>
+						<li>
+							changed grammar in 8 to say &quot;simple pattern expression<u>s</u>&quot; instead of &quot;a simple pattern expression&quot;, &quot;mixed pattern expression<u>s</u>&quot; instead of &quot;a mixed pattern expression&quot;
+						</li>
+						<li>
+							inserted missing &quot;mixed&quot; qualifier for several terms in the table in 8.1.2 
+						</li>
+						<li>
+							added &quot;In practice, bot applications often strip out &#39;punctuation&#39; characters, but this is not required.&quot; to 8.1.4 
+						</li>
+						<li>
+							changed two instances of &quot;<i>L(S)</i>&quot; to &quot;<i>L(N)</i>&quot; to make sense in the table in 8.1.5
+						</li>
+					</ul>
+				</li>
+				<li>
+					WD-003: changed URI to reference to Word-generated HTML version, temporarily using this facility for quick availability on Web site
+				</li>
+				<li>
+					WD-004: Reformatting and corrections (Noel Bush)
+					<ul type="disc">
+						<li>
+							reformatted Word-generated version to good HTML
+						</li>
+						<li>
+							corrected 7.6.3 to actually use <span class="specinlineterm">gender</span> element (thanks Tom Ringate)
+						</li>
+						<li>
+							included some reference hyperlinks within the text
+						</li>
+						<li>
+							changed &quot;an AIML object may contain zero or more...&quot; to &quot;an AIML object must contain zero or more...&quot; (&quot;may&quot; to &quot;must&quot; in 3.2 (AIML Element)
+						</li>
+						<li>
+							added some links to sentence-splitting normalization description at various places in document
+						</li>
+					</ul>
+				</li>
+				<li>
+					WD-005: Corrections (Noel Bush)
+					<ul type="disc">
+						<li>
+							changed &quot;AIML 1.0.1&quot; to &quot;AIML 1.0.1&quot; to match ArchComm's spec release process requirements
+						</li>
+						<li>
+							changed language in Status section to emphasize that this document is not final
+						</li>
+						<li>
+							removed <span class="specinlineterm">if</span> per ArchComm
+							<a href="http://alicebot.org/committees/architecture/resolutions/remove-if.html">resolution</a>.
+						</li>
+						<li>
+							corrected Pattern-side <span class="specinlineterm">that</span> example (thanks Sherman Monroe)
+						</li>
+						<li>
+							added language to 7.1.6 (Get) describing optional implementation of default-value mechanism for predicates
+						</li>
+						<li>
+							added language to 7.4.1 (Set) describing optional implementation of &quot;return-name-when-set&quot; support for predicates 
+						</li>
+						<li>
+							added language to 7.5.1 (SRAI) emphasizing the validity of embedded <span class="specinlineterm">srai</span>s (thanks Sherman Monroe)
+						</li>
+						<li>
+							changed use of word &quot;entities&quot; to &quot;units&quot; or &quot;elements&quot; in a few cases to avoid misperception that we're talking about other kinds of entities (thanks Sherman Monroe)
+						</li>
+						<li>
+							removed incomplete idea of &quot;Fallback&quot; from 3.3 (Forward-Compatible Processing)
+						</li>
+					</ul>
+				</li>
+				<li>
+					WD-006: Corrections and Amendations (Noel Bush)
+					<ul type="disc">
+						<li>
+							fixed sentence in 3.2 to say &quot;an AIML interpreter must&quot; instead of &quot;an AIML must&quot; (thanks Andrew Teal)
+						</li>
+						<li>
+							touchup on some definitions in section 2
+						</li>
+						<li>
+							significant amendation of 2.10 (White Space Handling) to reflect common assumptions about behavior of AIML interpreters with respect to white space, and to include ability for AIML objects to control this behavior
+						</li>
+						<li>
+							revised namespace URI to include version number :-(
+						</li>
+						<li>
+							changed example of &quot;abbreviations...in support of historical usage&quot; in 3.1 from <span class="specinlineterm">&lt;srai&gt;</span> to <span class="specinlineterm">&lt;li&gt;</span> as a better specimen of what we mean by &quot;historical&quot;
+						</li>
+						<li>
+							various additions of hyperlinks to key references
+						</li>
+						<li>
+							changed definition of &quot;predicate&quot; in 3.5 to omit the word &quot;variable&quot; and use generic &quot;item&quot; instead (historical baggage)
+						</li>
+						<li>
+							changed &quot;bot properties&quot; to &quot;bot predicates&quot; in various places; added explicit statement in 3.5 that their values are set at load time
+						</li>
+						<li>
+							corrected definition of Pattern-side That (6.1) to omit language about attributes (has not been approved by ArchComm); also corrected explanation of how <span class="specinlineterm">that</span> contents are used, and added description of default value
+						</li>
+						<li>
+							renamed 8 (AIML Pattern Expressions) to &quot;AIML Pattern Matching&quot;
+						</li>
+						<li>
+							removed incorrect statement in 8.1.4 that removing punctuation is not required, and amended definition of &quot;normal characters&quot;
+						</li>
+						<li>
+							formatting and link cleanup in pattern expression definitions
+						</li>
+						<li>
+							renumbered 8.2 (Pattern Expression matching behavior) to 8.4 and 8.2.1 (Graphmaster implementation example) to 8.4.1, and inserted new 8.2 (Load-time match path construction) and 8.3 (Input normalization) with subsections 8.3.1 (Substitution normalizations), 8.3.2 (Sentence normalizations), 8.3.3 (Pattern-fitting normalizations) and 8.3.4 (Normalization examples) (significant new description)
+						</li>
+						<li>
+							changed name of 3 from &quot;AIML Predicate Names&quot; to &quot;AIML Predicates&quot;; moved 9 (AIML Predicate name syntax) to 9.1, and made 9 &quot;AIML Predicate handling&quot;; added 9.2 (AIML Predicate behaviors) and 9.3 (AIML Predicate defaults)
+						</li>
+						<li>
+							softened language in 7.1.6.1 (Bot) to say that <span class="specinlineterm">bot</span> <i>may be considered</i> (emphasis not in text) a restricted version of <span class="specinlineterm">get</span>, rather than that it &quot;is&quot;
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</td>
+	</tr>
+<!--End Contents-->
+
+</table>
+</div>
+<!--End Main Table-->
+
+</body>
+</html>

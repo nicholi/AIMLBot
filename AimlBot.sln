@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C# Express 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AimlBot", "AimlBot.csproj", "{70B15933-57E0-4583-8527-A507486BE34B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{2738209B-A768-4D85-B6B1-5E4E7688A00F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70B15933-57E0-4583-8527-A507486BE34B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70B15933-57E0-4583-8527-A507486BE34B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70B15933-57E0-4583-8527-A507486BE34B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70B15933-57E0-4583-8527-A507486BE34B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2738209B-A768-4D85-B6B1-5E4E7688A00F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2738209B-A768-4D85-B6B1-5E4E7688A00F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2738209B-A768-4D85-B6B1-5E4E7688A00F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2738209B-A768-4D85-B6B1-5E4E7688A00F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
