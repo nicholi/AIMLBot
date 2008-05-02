@@ -71,7 +71,7 @@ namespace AimlBot.Normalize.Std
 
             /// <summary>
             /// How "deep" into the tree this node is (so the search algorithm can backtrack the
-            /// right amount if there is no match)
+            /// right number of steps if there is no match)
             /// </summary>
             public int Depth;
 
@@ -229,7 +229,7 @@ namespace AimlBot.Normalize.Std
                     }
                     else
                     {
-                        // we must be at the end of the arra
+                        // we must be at the end of the array
                         this.counter -= node.Depth+1;
                         result.Append(input[this.counter]);
                     }
