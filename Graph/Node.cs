@@ -30,6 +30,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using System.Resources;
+using System.Reflection;
 
 namespace AimlBot.Graph
 {
@@ -39,6 +41,11 @@ namespace AimlBot.Graph
     public class Node
     {
         #region Attributes
+
+        /// <summary>
+        /// For internationalization
+        /// </summary>
+        private static ResourceManager rm = new ResourceManager("AimlBot.Graph.NodeResources", Assembly.GetExecutingAssembly());
 
         /// <summary>
         /// Contains the child nodes of this node
@@ -91,15 +98,16 @@ namespace AimlBot.Graph
             // validate what is being added to the graph
             if (path.Length == 0)
             {
-                throw new Exception("The path cannot be empty.");
+                throw new Exception(rm.GetString("PathCannotBeEmpty"));
             }
             if (template.Length == 0)
             {
-                throw new Exception("The template cannot be empty for category with pattern: " + String.Join(" ", path) + ((source.Length > 0) ? " sourced from: " + source : string.Empty));
+                string message = String.Format(rm.GetString("TemplateCannotBeEmpty"), String.Join(" ", path)) + ((source.Length > 0) ? " " + String.Format(rm.GetString("SourcedFrom"), source) : string.Empty);
+                throw new Exception(message);
             }
             if (source.Length == 0)
             {
-                throw new Exception("Source URI not supplied for category with pattern: " + String.Join(" ", path) + " and template: " + Environment.NewLine + template);
+                throw new Exception(String.Format("UriNotSupplied", String.Join(" ", path), (Environment.NewLine + template)));
             }
 
             // good to go...

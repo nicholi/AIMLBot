@@ -33,45 +33,46 @@ using System.Text;
 namespace AimlBot.Normalize.Std
 {
     /// <summary>
-    /// This class encapsulates how to split an input string into its constituent sentences.
+    /// This class encapsulates how to split a sentence string into its component words.
     /// 
-    /// From section 8.3.2 of the AIML Standard
-    /// 
-    /// Sentence-splitting normalizations are heuristics applied to an input that attempt to break it 
-    /// into "sentences". The notion of "sentence", however, is ill-defined for many languages, so the 
-    /// heuristics for division into sentences are left up to the developer. 
-    /// 
-    /// Commonly, sentence-splitting heuristics use simple rules like "break sentences at periods", 
-    /// which in turn rely upon substitutions performed in the substitution normalization phase, such 
-    /// as those which substitute full words for their abbreviations.
+    /// Whilst the AIML specification doesn't state how this is to be done it is tacetly assumed in the
+    /// examples that a word is surrounded by whitespace. This causes problems for languages such as Thai
+    /// (for example) where there is no whitespace between words.
     /// </summary>
-    public class Split : INormalizer
+    public class WordSplit : INormalizer
     {
         #region INormalizer Members
 
         /// <summary>
-        /// Splits the input into its constituent sentences according to the sentence splitting tokens 
-        /// specified in the bot argument. Any resulting empty sentences will not be returned.
+        /// Splits the input into its constituent words according to the word splitting tokens 
+        /// specified in the bot argument. Any resulting empty words will not be returned.
+        /// 
+        /// If the bot doesn't have any tokens then just return the input string split into its 
+        /// constituent characters as this is the safest possible option for languages 
+        /// where there is no means of specifying word borders
         /// </summary>
         /// <param name="input">The input to split</param>
-        /// <param name="bot">The bot that defines the sentence splitting tokens</param>
-        /// <returns>The constituent sentences split from the input</returns>
+        /// <param name="bot">The bot that defines the word splitting tokens</param>
+        /// <returns>The constituent words split from the input</returns>
         public string[] Normalize(string input, Bot bot)
         {
-            if (bot.SentenceSplittingTokens.Length == 0)
+            // result will hold those words that are not just whitespace
+            List<string> result = new List<string>();
+            if (bot.WordSplittingTokens.Length == 0)
             {
-                // if we don't have any tokens then just return the input string
-                // (C#'s string.Split method defaults to " " as the split token if none is supplied - not
-                // the sort of behaviour we want)
-                return new string[1] { input };
+                // if the bot doesn't have any tokens then just return the input string split 
+                // into its constituent characters as this is the safest possible option for 
+                // languages where there is no means of specifying word borders
+                foreach (char c in input.ToCharArray())
+                {
+                    result.Add(c.ToString());
+                }
             }
             else
             {
-                // result will hold those sentences that are not just whitespace
-                List<string> result = new List<string>();
                 // get the candidates by doing a regular split
-                string[] candidates = input.Split(bot.SentenceSplittingTokens, StringSplitOptions.RemoveEmptyEntries);
-                // get rid of sentences just containing white space
+                string[] candidates = input.Split(bot.WordSplittingTokens, StringSplitOptions.RemoveEmptyEntries);
+                // get rid of "words" just containing white space
                 foreach (string c in candidates)
                 {
                     string t = c.Trim();
@@ -80,8 +81,8 @@ namespace AimlBot.Normalize.Std
                         result.Add(t);
                     }
                 }
-                return result.ToArray();
             }
+            return result.ToArray();
         }
 
         #endregion

@@ -333,7 +333,9 @@ namespace AimlBot.UnitTests.Graph
                 AimlBot.Graph.Query.TimeOutAfter = 2000;
             }
             Assert.AreEqual(true, msg.Length > 0);
-            Assert.AreEqual("Query timed out with path: " + path, msg);
+            rm = new System.Resources.ResourceManager("AimlBot.Graph.QueryResources", System.Reflection.Assembly.GetAssembly(q.GetType()));
+            
+            Assert.AreEqual(String.Format(rm.GetString("QueryTimedOut"), path), msg);
         }
 
         [Test]

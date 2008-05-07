@@ -70,11 +70,27 @@
     <Compile Include="Generate\Aiml\Elements\Version.cs" />
     <Compile Include="Generate\Template.cs" />
     <Compile Include="Graph\Node.cs" />
+    <Compile Include="Graph\NodeResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NodeResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Graph\Query.cs" />
+    <Compile Include="Graph\QueryResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QueryResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Normalize\INormalizer.cs" />
     <Compile Include="Normalize\Std\PatternFit.cs" />
-    <Compile Include="Normalize\Std\Split.cs" />
+    <Compile Include="Normalize\Std\SentenceSplit.cs" />
     <Compile Include="Normalize\Std\Substitute.cs" />
+    <Compile Include="Normalize\Std\SubstituteResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SubstituteResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Normalize\Std\WordSplit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="Response.cs" />
@@ -83,6 +99,23 @@
   <ItemGroup>
     <Content Include="Docs\AIMLSpecification.html" />
     <Content Include="Docs\License.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graph\NodeResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>NodeResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graph\QueryResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>QueryResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Normalize\Std\SubstituteResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SubstituteResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

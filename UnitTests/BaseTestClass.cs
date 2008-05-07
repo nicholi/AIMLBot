@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using AimlBot;
+using System.Resources;
+using System.Reflection;
 
 namespace AimlBot.UnitTests
 {
@@ -43,6 +45,15 @@ namespace AimlBot.UnitTests
         {
             return new List<string>(this.GetPathAsArray(path));
         }
+
+        #endregion
+
+        #region Attributes
+
+        /// <summary>
+        /// For testing internationalization etc...
+        /// </summary>
+        protected ResourceManager rm;
 
         #endregion
     }

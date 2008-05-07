@@ -30,6 +30,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Resources;
+using System.Reflection;
 
 namespace AimlBot.Graph
 {
@@ -39,6 +41,11 @@ namespace AimlBot.Graph
     public class Query
     {
         #region Attributes
+
+        /// <summary>
+        /// For internationalization
+        /// </summary>
+        private static ResourceManager rm = new ResourceManager("AimlBot.Graph.QueryResources", Assembly.GetExecutingAssembly());
 
         /// <summary>
         /// The number of milliseconds queries are allowed to take before being stopped and
@@ -130,7 +137,7 @@ namespace AimlBot.Graph
             if (this.startedOn.AddMilliseconds(Query.TimeOutAfter) < DateTime.Now)
             {
                 this.hasTimedOut = true;
-                throw new Exception("Query timed out with path: " + String.Join(" ", this.Path));
+                throw new Exception(String.Format(rm.GetString("QueryTimedOut"), String.Join(" ", this.Path)));
             }
 
             // Check if the query has found a leaf node
@@ -176,14 +183,7 @@ namespace AimlBot.Graph
                 Match m = Regex.Match(this.Path[position], "(<.[^(><.)]+>)");
                 if (m.Success)
                 {
-                    if (m.Value.Length > 2)
-                    {
-                        matchState = m.Value.Substring(1, m.Value.Length - 2) + "star";
-                    }
-                    else
-                    {
-                        throw new Exception("Matchstate for " + this.Path[position] + " is not valid in query path " + this.Path);
-                    }
+                    matchState = m.Value.Substring(1, m.Value.Length - 2) + "star";
                 }
 
                 // search in the children of the current node

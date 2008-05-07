@@ -77,8 +77,9 @@
     <Compile Include="Graph\Node.cs" />
     <Compile Include="Graph\Query.cs" />
     <Compile Include="Normalize\Std\PatternFit.cs" />
-    <Compile Include="Normalize\Std\Split.cs" />
+    <Compile Include="Normalize\Std\SentenceSplit.cs" />
     <Compile Include="Normalize\Std\Substitute.cs" />
+    <Compile Include="Normalize\Std\WordSplit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="Response.cs" />

@@ -29,6 +29,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Resources;
+using System.Reflection;
 
 namespace AimlBot.Normalize.Std
 {
@@ -58,6 +60,11 @@ namespace AimlBot.Normalize.Std
         /// </summary>
         public class FSANode
         {
+            /// <summary>
+            /// For internationalization
+            /// </summary>
+            private static ResourceManager rm = new ResourceManager("AimlBot.Normalize.Std.SubstituteResources", Assembly.GetExecutingAssembly());
+
             /// <summary>
             /// Holds the child nodes - key is the matching character
             /// </summary>
@@ -99,7 +106,7 @@ namespace AimlBot.Normalize.Std
                 }
                 else
                 {
-                    throw new Exception("You can only add search/replace pairs to a root node. This node has a depth of: " + this.Depth.ToString() + " (root nodes have a depth of 0).");
+                    throw new Exception(String.Format(rm.GetString("NotRootNode"), this.Depth.ToString()));
                 }
             }
 
@@ -131,22 +138,17 @@ namespace AimlBot.Normalize.Std
                             // * a path that starts with an existing match
                             //
                             // throw helpful exception so the user knows what they need to change.
-                            StringBuilder ErrorMessage = new StringBuilder();
-                            ErrorMessage.Append("The substitution with the search pattern: ");
+                            StringBuilder duplicatePath = new StringBuilder();
                             for (int i = 0; i < path.Length; i++)
                             {
-                                ErrorMessage.Append(path[i]);
+                                duplicatePath.Append(path[i]);
                             }
-                            ErrorMessage.Append(" and replacement: " + Replace + " will never be matched." + Environment.NewLine);
-                            ErrorMessage.Append("The following substitution will always be matched first:" + Environment.NewLine);
-                            ErrorMessage.Append("Search item: ");
+                            StringBuilder existingPath = new StringBuilder();
                             for (int i = 0; i < position + 1; i++)
                             {
-                                ErrorMessage.Append(path[i]);
+                                existingPath.Append(path[i]);
                             }
-                            ErrorMessage.Append(Environment.NewLine + "Replacement: " + ((FSANode)this.Children[path[position]]).Replace + Environment.NewLine);
-                            ErrorMessage.Append("Please check / change your substitutions definition.");
-                            throw new Exception(ErrorMessage.ToString());
+                            throw new Exception(String.Format(rm.GetString("DuplicateSubstitution"), duplicatePath.ToString(), Replace, existingPath.ToString(), ((FSANode)this.Children[path[position]]).Replace));
                         }
                     }
                     else

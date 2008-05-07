@@ -6,14 +6,14 @@ using AimlBot;
 namespace AimlBot.UnitTests.Normalize.Std
 {
     [TestFixture]
-    public class Split : BaseTestClass
+    public class SentenceSplit : BaseTestClass
     {
         [Test]
         public void TestBasicSplit()
         {
             AimlBot.Bot bot = new AimlBot.Bot();
             bot.SentenceSplittingTokens = new char[] { '.', '!', '?', ':' };
-            AimlBot.Normalize.Std.Split s = new AimlBot.Normalize.Std.Split();
+            AimlBot.Normalize.Std.SentenceSplit s = new AimlBot.Normalize.Std.SentenceSplit();
             string[] result = s.Normalize("Sentence 1. Sentence 2! Sentence 3? Sentence 4: Sentence 5.", bot);
             Assert.AreEqual(5, result.Length);
             Assert.AreEqual("Sentence 1", result[0]);
@@ -28,7 +28,7 @@ namespace AimlBot.UnitTests.Normalize.Std
         {
             AimlBot.Bot bot = new AimlBot.Bot();
             bot.SentenceSplittingTokens = new char[] { '.', '!', '?', ':' };
-            AimlBot.Normalize.Std.Split s = new AimlBot.Normalize.Std.Split();
+            AimlBot.Normalize.Std.SentenceSplit s = new AimlBot.Normalize.Std.SentenceSplit();
             string[] result = s.Normalize("Sentence 1... Sentence 2!! Sentence 3???? Sentence 4: : : Sentence 5...", bot);
             Assert.AreEqual(5, result.Length);
             Assert.AreEqual("Sentence 1", result[0]);
@@ -43,7 +43,7 @@ namespace AimlBot.UnitTests.Normalize.Std
         {
             AimlBot.Bot bot = new AimlBot.Bot();
             bot.SentenceSplittingTokens = new char[0];
-            AimlBot.Normalize.Std.Split s = new AimlBot.Normalize.Std.Split();
+            AimlBot.Normalize.Std.SentenceSplit s = new AimlBot.Normalize.Std.SentenceSplit();
             string[] result = s.Normalize("Sentence 1... Sentence 2!! Sentence 3???? Sentence 4: : : Sentence 5...", bot);
             Assert.AreEqual(1, result.Length);
             Assert.AreEqual("Sentence 1... Sentence 2!! Sentence 3???? Sentence 4: : : Sentence 5...", result[0]);
@@ -54,7 +54,7 @@ namespace AimlBot.UnitTests.Normalize.Std
         {
             AimlBot.Bot bot = new AimlBot.Bot();
             bot.SentenceSplittingTokens = new char[] { '.', '!', '?', ':' };
-            AimlBot.Normalize.Std.Split s = new AimlBot.Normalize.Std.Split();
+            AimlBot.Normalize.Std.SentenceSplit s = new AimlBot.Normalize.Std.SentenceSplit();
             string[] result = s.Normalize(@"...      !!  ????          : : : 
 ...", bot);
             Assert.AreEqual(0, result.Length);

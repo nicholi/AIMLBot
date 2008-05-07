@@ -50,6 +50,11 @@ namespace AimlBot
         public char[] SentenceSplittingTokens = null;
 
         /// <summary>
+        /// The tokens (if any) used by this bot to define the border between words
+        /// </summary>
+        public char[] WordSplittingTokens = null;
+
+        /// <summary>
         /// This regex defines what characters to replace with " " when doing a pattern fit normalization
         /// </summary>
         public Regex PatternFitExclusions = null;

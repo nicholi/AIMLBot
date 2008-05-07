@@ -8,15 +8,6 @@ namespace AimlBot.UnitTests.Normalize.Std
     [TestFixture]
     public class Substitute : BaseTestClass
     {
-        #region Utility methods
-
-        private string GetNotMatchedExceptionMessage(string s1, string r1, string s2, string r2)
-        {
-            return "The substitution with the search pattern: " + s2 + " and replacement: " + r2 + " will never be matched." + Environment.NewLine + "The following substitution will always be matched first:" + Environment.NewLine + "Search item: " + s1 + Environment.NewLine + "Replacement: " + r1 + Environment.NewLine + "Please check / change your substitutions definition.";
-        }
-
-        #endregion
-
         #region FSANode tests
 
         [Test]
@@ -63,8 +54,8 @@ namespace AimlBot.UnitTests.Normalize.Std
             {
                 msg = ex.Message;
             }
-            Console.Out.WriteLine(msg);
-            Assert.AreEqual(this.GetNotMatchedExceptionMessage("abc","xyz","abc","XYZ"), msg);
+            rm = new System.Resources.ResourceManager("AimlBot.Normalize.Std.SubstituteResources", System.Reflection.Assembly.GetAssembly(leaf1.GetType()));
+            Assert.AreEqual(String.Format(rm.GetString("DuplicateSubstitution"), "abc", "XYZ", "abc", "xyz"), msg);
         }
 
         [Test]
@@ -82,11 +73,12 @@ namespace AimlBot.UnitTests.Normalize.Std
                 msg = ex.Message;
             }
             Console.Out.WriteLine(msg);
-            Assert.AreEqual(this.GetNotMatchedExceptionMessage("abc", "xyz", "abcdefg", "tuvwxyz"), msg);
+            rm = new System.Resources.ResourceManager("AimlBot.Normalize.Std.SubstituteResources", System.Reflection.Assembly.GetAssembly(leaf1.GetType()));
+            Assert.AreEqual(String.Format(rm.GetString("DuplicateSubstitution"), "abcdefg", "tuvwxyz", "abc", "xyz"), msg);
         }
 
         [Test]
-        public void TestFSANodeAddChileNotRootNode()
+        public void TestFSANodeAddChildNotRootNode()
         {
             AimlBot.Normalize.Std.Substitute.FSANode fsagraph = new AimlBot.Normalize.Std.Substitute.FSANode(0);
             AimlBot.Normalize.Std.Substitute.FSANode leaf1 = fsagraph.Add("abc", "xyz");
@@ -100,7 +92,10 @@ namespace AimlBot.UnitTests.Normalize.Std
             {
                 msg = ex.Message;
             }
-            Assert.AreEqual("You can only add search/replace pairs to a root node. This node has a depth of: 3 (root nodes have a depth of 0).", msg);
+            Assert.AreEqual(true, msg.Length > 0);
+            rm = new System.Resources.ResourceManager("AimlBot.Normalize.Std.SubstituteResources", System.Reflection.Assembly.GetAssembly(leaf1.GetType()));
+
+            Assert.AreEqual(String.Format(rm.GetString("NotRootNode"), "3"), msg);
         }
 
         #endregion
