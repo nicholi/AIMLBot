@@ -29,6 +29,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Globalization;
 
 namespace AimlBot.Normalize.Std
 {
@@ -61,7 +62,7 @@ namespace AimlBot.Normalize.Std
         /// <returns>The normalized result in position 0</returns>
         public string[] Normalize(string input, Bot bot)
         {
-            return new string[1] { bot.PatternFitExclusions.Replace(input, " ").ToUpper() };
+            return new string[1] { bot.PatternFitExclusions.Replace(input, " ").ToUpper(CultureInfo.CurrentCulture) };
         }
 
         #endregion

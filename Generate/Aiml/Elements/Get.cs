@@ -48,6 +48,7 @@ namespace AimlBot.Generate.Aiml.Elements
     /// 
     /// The get element does not have any content.
     /// </summary>
+    [CLSCompliant(false)]
     public class Get
     {
     }

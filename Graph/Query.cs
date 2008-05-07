@@ -32,6 +32,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Resources;
 using System.Reflection;
+using System.Globalization;
 
 namespace AimlBot.Graph
 {
@@ -137,7 +138,7 @@ namespace AimlBot.Graph
             if (this.startedOn.AddMilliseconds(Query.TimeOutAfter) < DateTime.Now)
             {
                 this.hasTimedOut = true;
-                throw new Exception(String.Format(rm.GetString("QueryTimedOut"), String.Join(" ", this.Path)));
+                throw new Exception(String.Format(CultureInfo.CurrentCulture, rm.GetString("QueryTimedOut"), String.Join(" ", this.Path)));
             }
 
             // Check if the query has found a leaf node
@@ -199,7 +200,7 @@ namespace AimlBot.Graph
                         return true;
                     }
                 }
-                string key = this.Path[position].ToUpper();
+                string key = this.Path[position].ToUpper(CultureInfo.InvariantCulture);
                 if (node.Children.ContainsKey(key))
                 {
                     // second option - the node may have contained a "_" child, but led to no match

@@ -63,6 +63,7 @@ namespace AimlBot.Generate.Aiml.Elements
     /// element, the AIML interpreter may return an error, but this is not required. 
     ///
     /// </summary>
+    [CLSCompliant(false)]
     public class System
     {
     }

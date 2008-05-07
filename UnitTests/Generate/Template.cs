@@ -46,23 +46,23 @@ namespace AimlBot.UnitTests.Generate
 
         #region Event Handler Methods
 
-        void t_OnUnload(AimlBot.Generate.Template sender, EventArgs e)
+        void t_OnUnload(object sender, EventArgs e)
         {
             this.OnUnloadCalled = true;
         }
 
-        private void t_OnLoad(AimlBot.Generate.Template sender, EventArgs e)
+        private void t_OnLoad(object sender, EventArgs e)
         {
             this.OnLoadCalled = true;
         }
 
-        void mt_OnUnload(AimlBot.Generate.Template sender, EventArgs e)
+        void mt_OnUnload(object sender, EventArgs e)
         {
             this.OnUnloadCalled = true;
             ((MockTemplate)sender).Name = string.Empty;
         }
 
-        void mt_OnLoad(AimlBot.Generate.Template sender, EventArgs e)
+        void mt_OnLoad(object sender, EventArgs e)
         {
             this.OnLoadCalled = true;
             ((MockTemplate)sender).Name = "World";
@@ -91,8 +91,8 @@ namespace AimlBot.UnitTests.Generate
             this.OnUnloadCalled = false;
             AimlBot.Request r = new AimlBot.Request();
             AimlBot.Generate.Template t = new AimlBot.Generate.Template();
-            t.OnLoad += new AimlBot.Generate.Template.TemplateEvent(t_OnLoad);
-            t.OnUnload += new AimlBot.Generate.Template.TemplateEvent(t_OnUnload);
+            t.OnLoad += new EventHandler<EventArgs>(t_OnLoad);
+            t.OnUnload += new EventHandler<EventArgs>(t_OnUnload);
 
             // lets run through the whole life cycle
             t.Init("this is a template");
@@ -127,8 +127,8 @@ namespace AimlBot.UnitTests.Generate
             this.OnUnloadCalled = false;
             AimlBot.Request r = new AimlBot.Request();
             MockTemplate mt = new MockTemplate();
-            mt.OnLoad += new AimlBot.Generate.Template.TemplateEvent(mt_OnLoad);
-            mt.OnUnload += new AimlBot.Generate.Template.TemplateEvent(mt_OnUnload);
+            mt.OnLoad += new EventHandler<EventArgs>(mt_OnLoad);
+            mt.OnUnload += new EventHandler<EventArgs>(mt_OnUnload);
 
             // lets run through the whole life cycle
             mt.Init("Hello, $NAME$!");

@@ -49,6 +49,7 @@ namespace AimlBot.Generate.Aiml.Elements
     /// 
     /// A set element may contain any AIML template elements.
     /// </summary>
+    [CLSCompliant(false)]
     public class Set
     {
     }

@@ -132,26 +132,19 @@ namespace AimlBot.Generate
         }
         #endregion
 
-        #region Life-cycle events / delegates
-
-        /// <summary>
-        /// Handles an instance of an event in a template's life
-        /// </summary>
-        /// <param name="sender">The Template object that originated this event</param>
-        /// <param name="e">The event args passed via the originating AIMLElement class</param>
-        public delegate void TemplateEvent(Template sender, EventArgs e);
+        #region Life-cycle events
 
         /// <summary>
         /// Use the OnLoad event method to set template specific properties and establish 
         /// database connections.
         /// </summary>
-        public event TemplateEvent OnLoad;
+        public event EventHandler<EventArgs> OnLoad;
 
         /// <summary>
         /// Use the Unload event to do final cleanup work, such as closing open files and database
         /// connections, or finishing logging or other template-specific tasks.
         /// </summary>
-        public event TemplateEvent OnUnload;
+        public event EventHandler<EventArgs> OnUnload;
 
         #endregion
     }

@@ -32,6 +32,7 @@ using System.Text;
 using System.Xml;
 using System.Resources;
 using System.Reflection;
+using System.Globalization;
 
 namespace AimlBot.Graph
 {
@@ -68,7 +69,7 @@ namespace AimlBot.Graph
         /// <summary>
         /// The template (if any) associated with this node
         /// </summary>
-        public object Template = null;
+        public object Template;
 
         /// <summary>
         /// The source URI for the category that points to the template (usually
@@ -102,12 +103,12 @@ namespace AimlBot.Graph
             }
             if (template.Length == 0)
             {
-                string message = String.Format(rm.GetString("TemplateCannotBeEmpty"), String.Join(" ", path)) + ((source.Length > 0) ? " " + String.Format(rm.GetString("SourcedFrom"), source) : string.Empty);
+                string message = String.Format(CultureInfo.CurrentCulture, rm.GetString("TemplateCannotBeEmpty"), String.Join(" ", path)) + ((source.Length > 0) ? " " + String.Format(CultureInfo.CurrentCulture, rm.GetString("SourcedFrom"), source) : string.Empty);
                 throw new Exception(message);
             }
             if (source.Length == 0)
             {
-                throw new Exception(String.Format("UriNotSupplied", String.Join(" ", path), (Environment.NewLine + template)));
+                throw new Exception(String.Format(CultureInfo.CurrentCulture, rm.GetString("UriNotSupplied"), String.Join(" ", path), (Environment.NewLine + template)));
             }
 
             // good to go...
@@ -133,7 +134,7 @@ namespace AimlBot.Graph
             else
             {
                 // requires further child nodes for this category to be fully mapped into the graphmaster
-                string firstWord = path[position].ToUpper();
+                string firstWord = path[position].ToUpper(CultureInfo.InvariantCulture);
                 position++;
 
                 // pass the handling of this sentence down the branch to a child node

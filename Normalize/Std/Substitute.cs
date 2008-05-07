@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Resources;
 using System.Reflection;
+using System.Globalization;
 
 namespace AimlBot.Normalize.Std
 {
@@ -106,7 +107,7 @@ namespace AimlBot.Normalize.Std
                 }
                 else
                 {
-                    throw new Exception(String.Format(rm.GetString("NotRootNode"), this.Depth.ToString()));
+                    throw new Exception(String.Format(CultureInfo.CurrentCulture, rm.GetString("NotRootNode"), this.Depth.ToString()));
                 }
             }
 
@@ -148,7 +149,7 @@ namespace AimlBot.Normalize.Std
                             {
                                 existingPath.Append(path[i]);
                             }
-                            throw new Exception(String.Format(rm.GetString("DuplicateSubstitution"), duplicatePath.ToString(), Replace, existingPath.ToString(), ((FSANode)this.Children[path[position]]).Replace));
+                            throw new Exception(String.Format(CultureInfo.CurrentCulture, rm.GetString("DuplicateSubstitution"), duplicatePath.ToString(), Replace, existingPath.ToString(), ((FSANode)this.Children[path[position]]).Replace));
                         }
                     }
                     else
@@ -175,7 +176,7 @@ namespace AimlBot.Normalize.Std
         /// <summary>
         /// Used to determine position in the input string during normalization
         /// </summary>
-        private int counter = 0;
+        private int counter;
 
         #endregion
 

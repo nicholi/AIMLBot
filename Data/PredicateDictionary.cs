@@ -36,7 +36,7 @@ namespace AimlBot.Data
 {
     public class PredicateDictionary
     {
-        protected Dictionary<string, string> Predicates = new Dictionary<string, string>();
+        /*protected Dictionary<string, string> Predicates = new Dictionary<string, string>();
 
         string ID = string.Empty;
 
@@ -59,6 +59,6 @@ namespace AimlBot.Data
 
         public void ToXml(XmlDocument xmlDocument)
         {
-        }
+        }*/
     }
 }

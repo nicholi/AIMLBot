@@ -38,6 +38,7 @@ namespace AimlBot.Generate.Aiml.Elements
     /// 
     /// The date element does not have any content. 
     /// </summary>
+    [CLSCompliant(false)]
     public class Date
     {
     }
