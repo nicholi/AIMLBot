@@ -1,6 +1,6 @@
 ﻿/****************************************************************************
     AimlBot - a library for building all manner of AIML based chat bots for 
-    the .NET platform.
+    (chat bots) on the .NET platform.
     
     Copyright (C) 2008  Nicholas H.Tollervey (http://ntoll.org)
 
@@ -29,27 +29,27 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Xml;
-using System.IO;
-using System.Security.Permissions;
-using System.Runtime.Serialization;
 
-namespace AimlBot.Data
+namespace AimlBot.Generate.Aiml.Elements
 {
-    [Serializable]
-    public class PredicateDictionary : Dictionary<string, object>
+    /// <summary>
+    /// The set element instructs the AIML interpreter to set the value of a predicate to the result 
+    /// of processing the contents of the set element. The set element has a required attribute name, 
+    /// which must be a valid AIML predicate name. If the predicate has not yet been defined, the AIML 
+    /// interpreter should define it in memory. 
+    /// 
+    /// The AIML interpreter should, generically, return the result of processing the contents of the 
+    /// set element. The set element must not perform any text formatting or other "normalization" on 
+    /// the predicate contents when returning them. 
+    /// 
+    /// The AIML interpreter implementation may optionally provide a mechanism that allows the AIML 
+    /// author to designate certain predicates as "return-name-when-set", which means that a set 
+    /// operation using such a predicate will return the name of the predicate, rather than its 
+    /// captured value. (See [9.2].) 
+    /// 
+    /// A set element may contain any AIML template elements.
+    /// </summary>
+    public class SetElement
     {
-        string ID = string.Empty;
-
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-        }
-
-        protected PredicateDictionary(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
     }
 }

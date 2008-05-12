@@ -1,6 +1,6 @@
 ﻿/****************************************************************************
     AimlBot - a library for building all manner of AIML based chat bots for 
-    the .NET platform.
+    (chat bots) on the .NET platform.
     
     Copyright (C) 2008  Nicholas H.Tollervey (http://ntoll.org)
 
@@ -30,26 +30,30 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
-using System.IO;
-using System.Security.Permissions;
-using System.Runtime.Serialization;
 
-namespace AimlBot.Data
+namespace AimlBot.Generate.Aiml.Elements
 {
-    [Serializable]
-    public class PredicateDictionary : Dictionary<string, object>
+    /// <summary>
+    /// An element called bot, which may be considered a restricted version of get, is used to 
+    /// tell the AIML interpreter that it should substitute the contents of a "bot predicate". The 
+    /// value of a bot predicate is set at load-time, and cannot be changed at run-time. The AIML 
+    /// interpreter may decide how to set the values of bot predicate at load-time. If the bot 
+    /// predicate has no value defined, the AIML interpreter should substitute an empty string.
+    /// 
+    /// The bot element has a required name attribute that identifies the bot predicate. 
+    /// 
+    /// The bot element does not have any content. 
+    /// </summary>
+    public class BotElement : AimlElement
     {
-        string ID = string.Empty;
-
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        public BotElement(XmlElement element, AimlTemplate template)
+            : base(element, template)
         {
-            base.GetObjectData(info, context);
         }
 
-        protected PredicateDictionary(SerializationInfo info, StreamingContext context)
-            : base(info, context)
+        public override string Render()
         {
+            throw new NotImplementedException();
         }
     }
 }

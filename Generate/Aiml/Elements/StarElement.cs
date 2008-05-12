@@ -1,6 +1,6 @@
 ﻿/****************************************************************************
     AimlBot - a library for building all manner of AIML based chat bots for 
-    the .NET platform.
+    (chat bots) on the .NET platform.
     
     Copyright (C) 2008  Nicholas H.Tollervey (http://ntoll.org)
 
@@ -29,27 +29,25 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Xml;
-using System.IO;
-using System.Security.Permissions;
-using System.Runtime.Serialization;
 
-namespace AimlBot.Data
+namespace AimlBot.Generate.Aiml.Elements
 {
-    [Serializable]
-    public class PredicateDictionary : Dictionary<string, object>
+    /// <summary>
+    /// The star element indicates that an AIML interpreter should substitute the value "captured" 
+    /// by a particular wildcard from the pattern-specified portion of the match path when returning 
+    /// the template. 
+    /// 
+    /// The star element has an optional integer index attribute that indicates which wildcard to use. 
+    /// The minimum acceptable value for the index is "1" (the first wildcard), and the maximum 
+    /// acceptable value is equal to the number of wildcards in the pattern. 
+    /// 
+    /// An AIML interpreter should raise an error if the index attribute of a star specifies a wildcard 
+    /// that does not exist in the category element's pattern. Not specifying the index is the same as 
+    /// specifying an index of "1". 
+    /// 
+    /// The star element does not have any content. 
+    /// </summary>
+    public class StarElement
     {
-        string ID = string.Empty;
-
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-        }
-
-        protected PredicateDictionary(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
     }
 }

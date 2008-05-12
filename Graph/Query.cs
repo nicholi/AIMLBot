@@ -49,20 +49,19 @@ namespace AimlBot.Graph
         private static ResourceManager rm = new ResourceManager("AimlBot.Graph.QueryResources", Assembly.GetExecutingAssembly());
 
         /// <summary>
-        /// The number of milliseconds queries are allowed to take before being stopped and
-        /// marked as timed out
+        /// The point in time after which a query is stopped and marked as timed out
         /// </summary>
-        static public double TimeOutAfter = 2000;
+        protected DateTime TimeoutAfter;
 
         /// <summary>
         /// The query path obtained from the normalized user input
         /// </summary>
-        public readonly string[] Path;
+        private string[] path;
 
         /// <summary>
         /// Denotes if the query has been stopped due to it timing out
         /// </summary>
-        private bool hasTimedOut = false;
+        private bool hasTimedOut;
 
         /// <summary>
         /// Denotes if the query has been stopped due to it timing out
@@ -80,13 +79,22 @@ namespace AimlBot.Graph
         /// <summary>
         /// The leaf node returned by this query
         /// </summary>
-        public Node Node = null;
+        public Node Node;
 
         /// <summary>
         /// Dictionary of arrays of wildcard matches (star, thatstar and topicstar for example) used
         /// to match the resulting node.
         /// </summary>
-        public Dictionary<string, List<string>> Wildcards = new Dictionary<string, List<string>>();
+        private Dictionary<string, List<string>> wildcards = new Dictionary<string, List<string>>();
+
+        /// <summary>
+        /// Dictionary of arrays of wildcard matches (star, thatstar and topicstar for example) used
+        /// to match the resulting node.
+        /// </summary>
+        public Dictionary<string, List<string>> Wildcards
+        {
+            get { return this.wildcards; }
+        }
         
         #endregion
 
@@ -94,9 +102,10 @@ namespace AimlBot.Graph
         /// Ctor
         /// </summary>
         /// <param name="path">The query path obtained from the normalized user input</param>
-        public Query(string[] path)
+        public Query(string[] path, DateTime TimeoutAfter)
         {
-            this.Path = path;
+            this.TimeoutAfter = TimeoutAfter;
+            this.path = path;
         }
 
         /// <summary>
@@ -116,9 +125,9 @@ namespace AimlBot.Graph
         /// </summary>
         /// <param name="node">The node from which the query is to start</param>
         /// <param name="StartedOn">When the query is started from</param>
-        public bool Evaluate(Node node, DateTime StartedOn)
+        public bool Evaluate(Node node, DateTime startedOn)
         {
-            this.startedOn = StartedOn;
+            this.startedOn = startedOn;
             return this.BackTrack(0, "star", new StringBuilder(), node);
         }
 
@@ -135,10 +144,10 @@ namespace AimlBot.Graph
         private bool BackTrack(int position, string matchState, StringBuilder wildcardMatches, Node node)
         {
             // Check for timeout (and check of last resort should there be circular AIML references)
-            if (this.startedOn.AddMilliseconds(Query.TimeOutAfter) < DateTime.Now)
+            if (this.TimeoutAfter < DateTime.Now)
             {
                 this.hasTimedOut = true;
-                throw new Exception(String.Format(CultureInfo.CurrentCulture, rm.GetString("QueryTimedOut"), String.Join(" ", this.Path)));
+                throw new LearnException(String.Format(CultureInfo.CurrentCulture, rm.GetString("QueryTimedOut"), String.Join(" ", this.path)));
             }
 
             // Check if the query has found a leaf node
@@ -146,11 +155,11 @@ namespace AimlBot.Graph
             {
             	// if there are still words in the path then add them to the wildcard match
             	// (should they be required)
-                if (position < this.Path.Length)
+                if (position < this.path.Length)
                 {
-                    for (int i = position; i < this.Path.Length; i++)
+                    for (int i = position; i < this.path.Length; i++)
                     {
-                        wildcardMatches.Append(this.Path[i] + " ");
+                        wildcardMatches.Append(this.path[i] + " ");
                     }
                 }
                 if (node.Template != null)
@@ -163,7 +172,7 @@ namespace AimlBot.Graph
                     return false;
                 }
             }
-            else if (position == this.Path.Length)
+            else if (position == this.path.Length)
             {
                 // as there is no more path to process then the result is the current node
                 // (whose template *might* be null - but that needs to be dealt with in the 
@@ -181,7 +190,7 @@ namespace AimlBot.Graph
             else
             {
                 // check for update to the matchstate
-                Match m = Regex.Match(this.Path[position], "(<.[^(><.)]+>)");
+                Match m = Regex.Match(this.path[position], "(<.[^(><.)]+>)");
                 if (m.Success)
                 {
                     matchState = m.Value.Substring(1, m.Value.Length - 2) + "star";
@@ -193,14 +202,14 @@ namespace AimlBot.Graph
                     // first option is to see if the node has a child denoted by the "_" wildcard.
                     // "_" comes first in precedence in the AIML alphabet
                     StringBuilder newWildcardMatch = new StringBuilder();
-                    newWildcardMatch.Append(this.Path[position]+" ");
+                    newWildcardMatch.Append(this.path[position]+" ");
                     if (this.BackTrack((position + 1),matchState, newWildcardMatch, node.Children["_"]))
                     {
-                        this.StoreWildCard(matchState, newWildcardMatch.ToString().Trim());
+                        this.StoreWildcard(matchState, newWildcardMatch.ToString().Trim());
                         return true;
                     }
                 }
-                string key = this.Path[position].ToUpper(CultureInfo.InvariantCulture);
+                string key = this.path[position].ToUpper(CultureInfo.InvariantCulture);
                 if (node.Children.ContainsKey(key))
                 {
                     // second option - the node may have contained a "_" child, but led to no match
@@ -211,7 +220,7 @@ namespace AimlBot.Graph
                     {
                         if (newWildcardMatch.Length > 0)
                         {
-                            this.StoreWildCard(matchState, newWildcardMatch.ToString().Trim());
+                            this.StoreWildcard(matchState, newWildcardMatch.ToString().Trim());
                         }
                         return true;
                     }
@@ -221,10 +230,10 @@ namespace AimlBot.Graph
                     // third option - check to see if the node has a child representing the "*" wildcard. 
                     // "*" comes last in precedence in the AIML alphabet.
                     StringBuilder newWildcardMatch = new StringBuilder();
-                    newWildcardMatch.Append(this.Path[position] + " ");
+                    newWildcardMatch.Append(this.path[position] + " ");
                     if (this.BackTrack((position + 1), matchState, newWildcardMatch, node.Children["*"]))
                     {
-                        this.StoreWildCard(matchState, newWildcardMatch.ToString().Trim());
+                        this.StoreWildcard(matchState, newWildcardMatch.ToString().Trim());
                         return true;
                     }
                 }
@@ -234,7 +243,7 @@ namespace AimlBot.Graph
                     // a "_", the word at this.Path[position], or "*" as a means of denoting a child node. However, 
                     // if this node itself represents a wildcard then the search continues to be
                     // valid if we proceed with the tail.
-                    wildcardMatches.Append(this.Path[position] + " ");
+                    wildcardMatches.Append(this.path[position] + " ");
                     return this.BackTrack((position + 1), matchState, wildcardMatches, node);
                 }
                 // If we get here then we're at a dead end so return false. Hopefully, if the
@@ -255,18 +264,18 @@ namespace AimlBot.Graph
         /// </summary>
         /// <param name="match">The wildcard match</param>
         /// <param name="matchstate">The match state the match is to be stored against (thatstar, topicstar etc)</param>
-        public void StoreWildCard(string matchState, string wildcardMatch)
+        public void StoreWildcard(string matchState, string wildcardMatch)
         {
-            if (this.Wildcards.ContainsKey(matchState))
+            if (this.wildcards.ContainsKey(matchState))
             {
-                List<string> matches = this.Wildcards[matchState];
+                List<string> matches = this.wildcards[matchState];
                 matches.Insert(0, wildcardMatch);
             }
             else
             {
                 List<string> matches = new List<string>();
                 matches.Add(wildcardMatch);
-                this.Wildcards.Add(matchState, matches);
+                this.wildcards.Add(matchState, matches);
             }
         }
     }

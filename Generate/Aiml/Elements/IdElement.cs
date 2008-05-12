@@ -1,6 +1,6 @@
 ﻿/****************************************************************************
     AimlBot - a library for building all manner of AIML based chat bots for 
-    the .NET platform.
+    (chat bots) on the .NET platform.
     
     Copyright (C) 2008  Nicholas H.Tollervey (http://ntoll.org)
 
@@ -29,27 +29,17 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Xml;
-using System.IO;
-using System.Security.Permissions;
-using System.Runtime.Serialization;
 
-namespace AimlBot.Data
+namespace AimlBot.Generate.Aiml.Elements
 {
-    [Serializable]
-    public class PredicateDictionary : Dictionary<string, object>
+    /// <summary>
+    /// The id element tells the AIML interpreter that it should substitute the user ID. 
+    /// The determination of the user ID is not specified, since it will vary by application. 
+    /// A suggested default return value is "localhost". 
+    /// 
+    /// The id element does not have any content.
+    /// </summary>
+    public class IdElement
     {
-        string ID = string.Empty;
-
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-        }
-
-        protected PredicateDictionary(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
     }
 }

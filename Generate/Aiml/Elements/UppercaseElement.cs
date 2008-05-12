@@ -1,6 +1,6 @@
 ﻿/****************************************************************************
     AimlBot - a library for building all manner of AIML based chat bots for 
-    the .NET platform.
+    (chat bots) on the .NET platform.
     
     Copyright (C) 2008  Nicholas H.Tollervey (http://ntoll.org)
 
@@ -29,27 +29,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Xml;
-using System.IO;
-using System.Security.Permissions;
-using System.Runtime.Serialization;
 
-namespace AimlBot.Data
+namespace AimlBot.Generate.Aiml.Elements
 {
-    [Serializable]
-    public class PredicateDictionary : Dictionary<string, object>
+    /// <summary>
+    /// The uppercase element tells the AIML interpreter to render the contents of the element
+    /// in uppercase, as defined (if defined) by the locale indicated by the specified language
+    /// if specified).
+    /// 
+    /// If no character in this string has a different uppercase version, based on the Unicode 
+    /// standard, then the original string is returned. 
+    /// </summary>
+    public class UppercaseElement
     {
-        string ID = string.Empty;
-
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-        }
-
-        protected PredicateDictionary(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
     }
 }

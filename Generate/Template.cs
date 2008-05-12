@@ -64,7 +64,7 @@ namespace AimlBot.Generate
     /// </summary>
     public class Template
     {
-        #region Attributes
+        #region Member variables
         /// <summary>
         /// The request for which this template is a to provide a response
         /// </summary>

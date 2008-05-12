@@ -44,9 +44,9 @@ namespace AimlBot.Generate.Aiml
         protected XmlElement Element;
 
         /// <summary>
-        /// This element's parent template
+        /// This element's parent AimlTemplate
         /// </summary>
-        protected Template Template;
+        protected AimlTemplate Template;
 
         /// <summary>
         /// The request being processed
@@ -64,7 +64,7 @@ namespace AimlBot.Generate.Aiml
         /// </summary>
         /// <param name="element">The XmlElement object that this AimlElement is derived from</param>
         /// <param name="template">The parent template for this new element</param>
-        public AimlElement(XmlElement element, Template template)
+        protected AimlElement(XmlElement element, AimlTemplate template)
         {
             this.Element = element;
             this.Template = template;

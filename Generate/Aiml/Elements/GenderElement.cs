@@ -1,6 +1,6 @@
 ﻿/****************************************************************************
     AimlBot - a library for building all manner of AIML based chat bots for 
-    the .NET platform.
+    (chat bots) on the .NET platform.
     
     Copyright (C) 2008  Nicholas H.Tollervey (http://ntoll.org)
 
@@ -29,27 +29,31 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Xml;
-using System.IO;
-using System.Security.Permissions;
-using System.Runtime.Serialization;
 
-namespace AimlBot.Data
+namespace AimlBot.Generate.Aiml.Elements
 {
-    [Serializable]
-    public class PredicateDictionary : Dictionary<string, object>
+    /// <summary>
+    /// The atomic version of the gender element is a shortcut for:
+    /// 
+    /// <gender><star/></gender> 
+    ///
+    /// The atomic gender does not have any content. 
+    /// 
+    /// The non-atomic gender element instructs the AIML interpreter to: 
+    /// 
+    /// 1. replace male-gendered words in the result of processing the contents of the gender element 
+    /// with the grammatically-corresponding female-gendered words; and 
+    /// 
+    /// 2. replace female-gendered words in the result of processing the contents of the gender element 
+    /// with the grammatically-corresponding male-gendered words. 
+    /// 
+    /// The definition of "grammatically-corresponding" is left up to the implementation.
+    /// 
+    /// Historically, implementations of gender have exclusively dealt with pronouns, likely due to the 
+    /// fact that most AIML has been written in English. However, the decision about whether to 
+    /// transform gender of other words is left up to the implementation.
+    /// </summary>
+    public class GenderElement
     {
-        string ID = string.Empty;
-
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-        }
-
-        protected PredicateDictionary(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
     }
 }

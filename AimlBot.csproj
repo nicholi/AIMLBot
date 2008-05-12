@@ -42,35 +42,37 @@
     <Compile Include="Conversation.cs" />
     <Compile Include="Data\PredicateDictionary.cs" />
     <Compile Include="Generate\Aiml\AimlElement.cs" />
-    <Compile Include="Generate\Aiml\Elements\Bot.cs" />
-    <Compile Include="Generate\Aiml\Elements\Condition.cs" />
-    <Compile Include="Generate\Aiml\Elements\Date.cs" />
-    <Compile Include="Generate\Aiml\Elements\Formal.cs" />
-    <Compile Include="Generate\Aiml\Elements\Gender.cs" />
-    <Compile Include="Generate\Aiml\Elements\Get.cs" />
-    <Compile Include="Generate\Aiml\Elements\Gossip.cs" />
-    <Compile Include="Generate\Aiml\Elements\Id.cs" />
-    <Compile Include="Generate\Aiml\Elements\Input.cs" />
-    <Compile Include="Generate\Aiml\Elements\Javascript.cs" />
-    <Compile Include="Generate\Aiml\Elements\Learn.cs" />
-    <Compile Include="Generate\Aiml\Elements\Lowercase.cs" />
-    <Compile Include="Generate\Aiml\Elements\Person.cs" />
-    <Compile Include="Generate\Aiml\Elements\Person2.cs" />
-    <Compile Include="Generate\Aiml\Elements\Random.cs" />
-    <Compile Include="Generate\Aiml\Elements\Sentence.cs" />
-    <Compile Include="Generate\Aiml\Elements\Set.cs" />
-    <Compile Include="Generate\Aiml\Elements\Size.cs" />
-    <Compile Include="Generate\Aiml\Elements\Sr.cs" />
-    <Compile Include="Generate\Aiml\Elements\Srai.cs" />
-    <Compile Include="Generate\Aiml\Elements\Star.cs" />
-    <Compile Include="Generate\Aiml\Elements\System.cs" />
-    <Compile Include="Generate\Aiml\Elements\That.cs" />
-    <Compile Include="Generate\Aiml\Elements\ThatStar.cs" />
-    <Compile Include="Generate\Aiml\Elements\Think.cs" />
-    <Compile Include="Generate\Aiml\Elements\TopicStar.cs" />
-    <Compile Include="Generate\Aiml\Elements\Uppercase.cs" />
-    <Compile Include="Generate\Aiml\Elements\Version.cs" />
+    <Compile Include="Generate\Aiml\AimlTemplate.cs" />
+    <Compile Include="Generate\Aiml\Elements\BotElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\ConditionElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\DateElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\FormalElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\GenderElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\GetElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\GossipElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\IdElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\InputElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\JavascriptElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\LearnElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\LowercaseElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\Person2Element.cs" />
+    <Compile Include="Generate\Aiml\Elements\PersonElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\RandomElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\SentenceElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\SetElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\SizeElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\SraiElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\SRElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\StarElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\SystemElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\ThatElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\ThatStarElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\ThinkElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\TopicStarElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\UppercaseElement.cs" />
+    <Compile Include="Generate\Aiml\Elements\VersionElement.cs" />
     <Compile Include="Generate\Template.cs" />
+    <Compile Include="Graph\LearnException.cs" />
     <Compile Include="Graph\Node.cs" />
     <Compile Include="Graph\NodeResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -78,21 +80,24 @@
       <DependentUpon>NodeResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Graph\Query.cs" />
+    <Compile Include="Graph\QueryException.cs" />
     <Compile Include="Graph\QueryResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>QueryResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Normalize\INormalizer.cs" />
+    <Compile Include="Normalize\NormalizationException.cs" />
     <Compile Include="Normalize\Std\PatternFit.cs" />
     <Compile Include="Normalize\Std\SentenceSplit.cs" />
     <Compile Include="Normalize\Std\Substitute.cs" />
-    <Compile Include="Normalize\Std\SubstituteResources.Designer.cs">
+    <Compile Include="Normalize\Std\WordSplit.cs" />
+    <Compile Include="Normalize\Utils\FsaNode.cs" />
+    <Compile Include="Normalize\Utils\FsaNodeResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SubstituteResources.resx</DependentUpon>
+      <DependentUpon>FsaNodeResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Normalize\Std\WordSplit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="Response.cs" />
@@ -113,9 +118,9 @@
       <LastGenOutput>QueryResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Normalize\Std\SubstituteResources.resx">
+    <EmbeddedResource Include="Normalize\Utils\FsaNodeResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>SubstituteResources.Designer.cs</LastGenOutput>
+      <LastGenOutput>FsaNodeResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

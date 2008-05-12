@@ -29,9 +29,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Resources;
-using System.Reflection;
-using System.Globalization;
+using AimlBot.Normalize.Utils;
 
 namespace AimlBot.Normalize.Std
 {
@@ -54,124 +52,7 @@ namespace AimlBot.Normalize.Std
     /// </summary>
     public class Substitute : INormalizer
     {
-        #region FSANode inner class
-
-        /// <summary>
-        /// A simple finite state automata node class used to match substitutions
-        /// </summary>
-        public class FSANode
-        {
-            /// <summary>
-            /// For internationalization
-            /// </summary>
-            private static ResourceManager rm = new ResourceManager("AimlBot.Normalize.Std.SubstituteResources", Assembly.GetExecutingAssembly());
-
-            /// <summary>
-            /// Holds the child nodes - key is the matching character
-            /// </summary>
-            public Dictionary<char, FSANode> Children = new Dictionary<char, FSANode>();
-
-            /// <summary>
-            /// If this is a leaf node - then Replace contains what the matched characters should be
-            /// replaced with.
-            /// </summary>
-            public string Replace = string.Empty;
-
-            /// <summary>
-            /// How "deep" into the tree this node is (so the search algorithm can backtrack the
-            /// right number of steps if there is no match)
-            /// </summary>
-            public int Depth;
-
-            /// <summary>
-            /// Ctor
-            /// </summary>
-            /// <param name="depth">How "deep" into the tree this node is</param>
-            public FSANode(int depth)
-            {
-                this.Depth = depth;
-            }
-
-            /// <summary>
-            /// Adds a new search/replace pair to the graph
-            /// </summary>
-            /// <param name="searchFor">The search item to match</param>
-            /// <param name="replaceWith">In the case of a match, what to replace the search item with</param>
-            /// <returns></returns>
-            public FSANode Add(string searchFor, string replaceWith)
-            {
-                // Guard to make sure we're only adding to a root node (depth 0)
-                if (this.Depth == 0)
-                {
-                    return this.AddChild(searchFor.ToCharArray(), 0, replaceWith);
-                }
-                else
-                {
-                    throw new Exception(String.Format(CultureInfo.CurrentCulture, rm.GetString("NotRootNode"), this.Depth.ToString()));
-                }
-            }
-
-            /// <summary>
-            /// Adds a new path to the graph of child nodes
-            /// </summary>
-            /// <param name="path">The path to add this node</param>
-            /// <param name="position">The position within the path array identifying the key to add</param>
-            /// <param name="Replace">The string to be used as the replacement if the node is matched
-            /// by the search algorithm.</param>
-            /// <returns>The newly added node</returns>
-            private FSANode AddChild(char[] path, int position, string Replace)
-            {
-                if (position < path.Length)
-                {
-                    if (this.Children.ContainsKey(path[position]))
-                    {
-                        // check we've not arrived at an existing leaf node
-                        if (((FSANode)this.Children[path[position]]).Replace.Length == 0)
-                        {
-                            // nope... so carry on
-                            return this.Children[path[position]].AddChild(path, (position + 1), Replace);
-                        }
-                        else
-                        {
-                            // must have been passed either:
-                            // 
-                            // * a duplicate path
-                            // * a path that starts with an existing match
-                            //
-                            // throw helpful exception so the user knows what they need to change.
-                            StringBuilder duplicatePath = new StringBuilder();
-                            for (int i = 0; i < path.Length; i++)
-                            {
-                                duplicatePath.Append(path[i]);
-                            }
-                            StringBuilder existingPath = new StringBuilder();
-                            for (int i = 0; i < position + 1; i++)
-                            {
-                                existingPath.Append(path[i]);
-                            }
-                            throw new Exception(String.Format(CultureInfo.CurrentCulture, rm.GetString("DuplicateSubstitution"), duplicatePath.ToString(), Replace, existingPath.ToString(), ((FSANode)this.Children[path[position]]).Replace));
-                        }
-                    }
-                    else
-                    {
-                        // no matching child node so create one and continue
-                        FSANode child = new FSANode(position + 1);
-                        this.Children.Add(path[position], child);
-                        return child.AddChild(path, (position + 1), Replace);
-                    }
-                }
-                else
-                {
-                    // we've arrived at a leaf node so set the replacement and return this node
-                    this.Replace = Replace;
-                    return this;
-                }
-            }
-        }
-
-        #endregion
-
-        #region Attributes
+        #region Member variables
 
         /// <summary>
         /// Used to determine position in the input string during normalization
@@ -194,7 +75,7 @@ namespace AimlBot.Normalize.Std
             char[] inputAsArray = input.ToCharArray();
             for (this.counter = 0; this.counter < inputAsArray.Length; this.counter++)
             {
-                this.Sub(inputAsArray, bot.FSAGraph, result);
+                this.Sub(inputAsArray, bot.FsaGraph, result);
             }
             return new string[] { result.ToString() };
         }
@@ -204,18 +85,18 @@ namespace AimlBot.Normalize.Std
         #region Utility methods
         /// <summary>
         /// A recursive function that processes the input array and compares it with the contents of the 
-        /// FSANode graph. If a match is found then a replacement is made and added to the result, otherwise 
+        /// FsaNode graph. If a match is found then a replacement is made and added to the result, otherwise 
         /// the unmatched input is added to the result instead.
         /// </summary>
         /// <param name="input">Array of chars to have substitutions</param>
         /// <param name="node">The root node of the FSANode graph containing the substitution definitions</param>
         /// <param name="result">To hold the string resulting from the substitutions</param>
-        private void Sub(char[] input, FSANode node, StringBuilder result)
+        private void Sub(char[] input, FsaNode node, StringBuilder result)
         {
             if (node.Children.ContainsKey(input[this.counter]))
             {
                 // we have a match
-                FSANode child = node.Children[input[this.counter]];
+                FsaNode child = node.Children[input[this.counter]];
                 if (child.Replace.Length > 0)
                 {
                     // we have a replacement so add it to the result

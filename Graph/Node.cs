@@ -99,16 +99,16 @@ namespace AimlBot.Graph
             // validate what is being added to the graph
             if (path.Length == 0)
             {
-                throw new Exception(rm.GetString("PathCannotBeEmpty"));
+                throw new LearnException(rm.GetString("PathCannotBeEmpty"));
             }
             if (template.Length == 0)
             {
                 string message = String.Format(CultureInfo.CurrentCulture, rm.GetString("TemplateCannotBeEmpty"), String.Join(" ", path)) + ((source.Length > 0) ? " " + String.Format(CultureInfo.CurrentCulture, rm.GetString("SourcedFrom"), source) : string.Empty);
-                throw new Exception(message);
+                throw new LearnException(message);
             }
             if (source.Length == 0)
             {
-                throw new Exception(String.Format(CultureInfo.CurrentCulture, rm.GetString("UriNotSupplied"), String.Join(" ", path), (Environment.NewLine + template)));
+                throw new LearnException(String.Format(CultureInfo.CurrentCulture, rm.GetString("UriNotSupplied"), String.Join(" ", path), (Environment.NewLine + template)));
             }
 
             // good to go...

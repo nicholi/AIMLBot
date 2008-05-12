@@ -52,7 +52,7 @@ namespace AimlBot.UnitTests.Graph
         }
 
         [Test]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(AimlBot.Graph.LearnException))]
         public void TestLearnWithEmptyPath()
         {
             AimlBot.Graph.Node n = new AimlBot.Graph.Node("test");
@@ -60,7 +60,7 @@ namespace AimlBot.UnitTests.Graph
         }
 
         [Test]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(AimlBot.Graph.LearnException))]
         public void TestLearnWithNoTemplate()
         {
             AimlBot.Graph.Node n = new AimlBot.Graph.Node("test");
@@ -68,7 +68,7 @@ namespace AimlBot.UnitTests.Graph
         }
 
         [Test]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(AimlBot.Graph.LearnException))]
         public void TestLearnWithNoSourceURI()
         {
             AimlBot.Graph.Node n = new AimlBot.Graph.Node("test");

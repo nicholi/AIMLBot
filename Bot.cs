@@ -38,27 +38,27 @@ namespace AimlBot
     /// </summary>
     public class Bot
     {
-        #region Attributes
+        #region Member variables
 
         /// <summary>
         /// A graph of nodes for the finite state automata used when pattern matching for substitutions.
         /// </summary>
-        public Normalize.Std.Substitute.FSANode FSAGraph = null;
+        public Normalize.Utils.FsaNode FsaGraph;
 
         /// <summary>
         /// The tokens used by this bot to define the end of a sentence.
         /// </summary>
-        public char[] SentenceSplittingTokens = null;
+        public char[] SentenceSplittingTokens;
 
         /// <summary>
         /// The tokens (if any) used by this bot to define the border between words
         /// </summary>
-        public char[] WordSplittingTokens = null;
+        public char[] WordSplittingTokens;
 
         /// <summary>
         /// This regex defines what characters to replace with " " when doing a pattern fit normalization
         /// </summary>
-        public Regex PatternFitExclusions = null;
+        public Regex PatternFitExclusions;
 
         #endregion
 
@@ -71,10 +71,10 @@ namespace AimlBot
         /// <param name="substitutions">The dictionary of substitutions where the key is the search item and the value is what to replace it with.</param>
         public void CreateSubstitutionGraph(Dictionary<string, string> substitutions)
         {
-            this.FSAGraph = new AimlBot.Normalize.Std.Substitute.FSANode(0);
+            this.FsaGraph = new AimlBot.Normalize.Utils.FsaNode(0);
             foreach (string key in substitutions.Keys)
             {
-                this.FSAGraph.Add(key, substitutions[key]);
+                this.FsaGraph.Add(key, substitutions[key]);
             }
         }
 

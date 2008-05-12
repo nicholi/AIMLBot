@@ -1,6 +1,6 @@
 ﻿/****************************************************************************
     AimlBot - a library for building all manner of AIML based chat bots for 
-    the .NET platform.
+    (chat bots) on the .NET platform.
     
     Copyright (C) 2008  Nicholas H.Tollervey (http://ntoll.org)
 
@@ -29,27 +29,31 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Xml;
-using System.IO;
-using System.Security.Permissions;
-using System.Runtime.Serialization;
 
-namespace AimlBot.Data
+namespace AimlBot.Generate.Aiml.Elements
 {
-    [Serializable]
-    public class PredicateDictionary : Dictionary<string, object>
+    /// <summary>
+    /// The atomic version of the person element is a shortcut for: 
+    /// 
+    /// <person><star/></person> 
+    ///
+    /// The atomic person does not have any content. 
+    /// 
+    /// The non-atomic person element instructs the AIML interpreter to: 
+    /// 
+    /// 1. replace words with first-person aspect in the result of processing the contents of the 
+    /// person element with words with the grammatically-corresponding third-person aspect; and 
+    /// 
+    /// 2. replace words with third-person aspect in the result of processing the contents of the 
+    /// person element with words with the grammatically-corresponding first-person aspect.
+    /// 
+    /// The definition of "grammatically-corresponding" is left up to the implementation. 
+    /// 
+    /// Historically, implementations of person have dealt with pronouns, likely due to the fact that 
+    /// most AIML has been written in English. However, the decision about whether to transform the 
+    /// person aspect of other words is left up to the implementation.
+    /// </summary>
+    public class PersonElement
     {
-        string ID = string.Empty;
-
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-        }
-
-        protected PredicateDictionary(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿/****************************************************************************
     AimlBot - a library for building all manner of AIML based chat bots for 
-    the .NET platform.
+    (chat bots) on the .NET platform.
     
     Copyright (C) 2008  Nicholas H.Tollervey (http://ntoll.org)
 
@@ -29,27 +29,28 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Xml;
-using System.IO;
-using System.Security.Permissions;
-using System.Runtime.Serialization;
 
-namespace AimlBot.Data
+namespace AimlBot.Generate.Aiml.Elements
 {
-    [Serializable]
-    public class PredicateDictionary : Dictionary<string, object>
+    /// <summary>
+    /// The template-side that element indicates that an AIML interpreter should substitute the 
+    /// contents of a previous bot output. 
+    /// 
+    /// The template-side that has an optional index attribute that may contain either a single 
+    /// integer or a comma-separated pair of integers. The minimum value for either of the integers 
+    /// in the index is "1". The index tells the AIML interpreter which previous bot output should be 
+    /// returned (first dimension), and optionally which "sentence" (see [8.3.2.]) of the previous bot
+    /// output (second dimension). 
+    /// 
+    /// The AIML interpreter should raise an error if either of the specified index dimensions is 
+    /// invalid at run-time. 
+    /// 
+    /// An unspecified index is the equivalent of "1,1". An unspecified second dimension of the index 
+    /// is the equivalent of specifying a "1" for the second dimension. 
+    /// 
+    /// The template-side that element does not have any content. 
+    /// </summary>
+    public class ThatElement
     {
-        string ID = string.Empty;
-
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-        }
-
-        protected PredicateDictionary(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
     }
 }
