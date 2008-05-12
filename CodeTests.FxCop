@@ -95,6 +95,34 @@
      </Message>
     </Messages>
    </Namespace>
+   <Namespace Name="AimlBot.Normalize">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-05-12 11:49:51Z">
+      <Issue>
+       <Item>AimlBot.Normalize</Item>
+      </Issue>
+      <Notes>
+       <User Name="ntoll">
+        <Note Id="3" />
+       </User>
+      </Notes>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="AimlBot.Normalize.Std">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2008-05-12 11:49:51Z">
+      <Issue>
+       <Item>AimlBot.Normalize.Std</Item>
+      </Issue>
+      <Notes>
+       <User Name="ntoll">
+        <Note Id="4" />
+       </User>
+      </Notes>
+     </Message>
+    </Messages>
+   </Namespace>
   </Namespaces>
   <Targets>
    <Target Name="$(ProjectDir)/bin/Debug/AimlBot.dll">
@@ -105,41 +133,11 @@
         <Types>
          <Type Name="Bot">
           <Members>
-           <Member Name="#.ctor()">
+           <Member Name="#FsaGraph">
             <Messages>
-             <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2008-05-07 13:34:25Z">
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-05-12 11:49:51Z">
               <Issue>
-               <Item>'Bot.Bot()'</Item>
-               <Item>'Bot.FSAGraph'</Item>
-               <Item>'Substitute.FSANode'</Item>
-               <Item>null</Item>
-              </Issue>
-              <Issue>
-               <Item>'Bot.Bot()'</Item>
-               <Item>'Bot.PatternFitExclusions'</Item>
-               <Item>'Regex'</Item>
-               <Item>null</Item>
-              </Issue>
-              <Issue>
-               <Item>'Bot.Bot()'</Item>
-               <Item>'Bot.SentenceSplittingTokens'</Item>
-               <Item>'char[]'</Item>
-               <Item>null</Item>
-              </Issue>
-              <Issue>
-               <Item>'Bot.Bot()'</Item>
-               <Item>'Bot.WordSplittingTokens'</Item>
-               <Item>'char[]'</Item>
-               <Item>null</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#FSAGraph">
-            <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-05-07 13:34:25Z">
-              <Issue>
-               <Item>'Bot.FSAGraph'</Item>
+               <Item>'Bot.FsaGraph'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -178,14 +176,17 @@
        <Namespace Name="AimlBot.Data">
         <Types>
          <Type Name="PredicateDictionary">
-          <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2008-05-07 13:34:25Z">
-            <Issue Name="TypeNoAlternate">
-             <Item>'PredicateDictionary'</Item>
-             <Item>Dictionary</Item>
-            </Issue>
-           </Message>
-          </Messages>
+          <Members>
+           <Member Name="#ID">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-05-12 10:42:54Z">
+              <Issue>
+               <Item>'PredicateDictionary.ID'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
         </Types>
        </Namespace>
@@ -218,21 +219,19 @@
        <Namespace Name="AimlBot.Generate.Aiml">
         <Types>
          <Type Name="AimlElement">
-          <Messages>
-           <Message TypeName="AbstractTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1012" Created="2008-05-07 13:34:25Z">
-            <Issue>
-             <Item>'AimlElement'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
-           <Member Name="#.ctor(System.Xml.XmlElement,AimlBot.Generate.Template)">
+           <Member Name="#.ctor(System.Xml.XmlElement,AimlBot.Generate.Aiml.AimlTemplate)">
             <Messages>
-             <Message Id="System.Xml.XmlNode" TypeName="MembersShouldNotExposeCertainConcreteTypes" Category="Microsoft.Design" CheckId="CA1059" Created="2008-05-07 13:34:25Z">
+             <Message Id="System.Xml.XmlNode" TypeName="MembersShouldNotExposeCertainConcreteTypes" Category="Microsoft.Design" CheckId="CA1059" Status="Excluded" Created="2008-05-12 11:08:15Z">
               <Issue Name="Xml">
-               <Item>'AimlElement.AimlElement(XmlElement, Template)'</Item>
+               <Item>'AimlElement.AimlElement(XmlElement, AimlTemplate)'</Item>
                <Item>'XmlElement'</Item>
               </Issue>
+              <Notes>
+               <User Name="ntoll">
+                <Note Id="9" />
+               </User>
+              </Notes>
              </Message>
             </Messages>
            </Member>
@@ -284,75 +283,38 @@
        </Namespace>
        <Namespace Name="AimlBot.Generate.Aiml.Elements">
         <Types>
-         <Type Name="Date">
-          <Messages>
-           <Message Id="Date" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Created="2008-05-07 13:34:25Z">
-            <Issue Name="Type">
-             <Item>'Date'</Item>
-             <Item>Date</Item>
-            </Issue>
-           </Message>
-          </Messages>
+         <Type Name="BotElement">
+          <Members>
+           <Member Name="#.ctor(System.Xml.XmlElement,AimlBot.Generate.Aiml.AimlTemplate)">
+            <Messages>
+             <Message Id="System.Xml.XmlNode" TypeName="MembersShouldNotExposeCertainConcreteTypes" Category="Microsoft.Design" CheckId="CA1059" Status="Excluded" Created="2008-05-12 12:18:44Z">
+              <Issue Name="Xml">
+               <Item>'BotElement.BotElement(XmlElement, AimlTemplate)'</Item>
+               <Item>'XmlElement'</Item>
+              </Issue>
+              <Notes>
+               <User Name="ntoll">
+                <Note Id="8" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
-         <Type Name="Get">
+         <Type Name="JavascriptElement">
           <Messages>
-           <Message Id="Get" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Created="2008-05-07 13:34:25Z">
-            <Issue Name="Type">
-             <Item>'Get'</Item>
-             <Item>Get</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="Javascript">
-          <Messages>
-           <Message Id="Javascript" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-07 13:34:25Z">
+           <Message Id="Javascript" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2008-05-12 12:18:44Z">
             <Issue Name="TypeShouldBeCompoundWord">
              <Item>Javascript</Item>
-             <Item>'Javascript'</Item>
+             <Item>'JavascriptElement'</Item>
              <Item>JavaScript</Item>
             </Issue>
             <Notes>
              <User Name="ntoll">
-              <Note Id="0" />
+              <Note Id="5" />
              </User>
             </Notes>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="Set">
-          <Messages>
-           <Message Id="Set" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Created="2008-05-07 13:34:25Z">
-            <Issue Name="Type">
-             <Item>'Set'</Item>
-             <Item>Set</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="Sr">
-          <Messages>
-           <Message Id="Sr" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-05-07 13:34:25Z">
-            <Issue Name="Type">
-             <Item>Sr</Item>
-             <Item>'Sr'</Item>
-             <Item>SR</Item>
-            </Issue>
-            <Notes>
-             <User Name="ntoll">
-              <Note Id="1" />
-             </User>
-            </Notes>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="System">
-          <Messages>
-           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Created="2008-05-07 13:34:25Z">
-            <Issue Name="System">
-             <Item>'System'</Item>
-             <Item>System</Item>
-            </Issue>
            </Message>
           </Messages>
          </Type>
@@ -411,42 +373,14 @@
          </Type>
          <Type Name="Query">
           <Members>
-           <Member Name="#.ctor(System.String[])">
+           <Member Name="#.ctor(System.String[],System.DateTime)">
             <Messages>
-             <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Created="2008-05-07 13:34:25Z">
-              <Issue>
-               <Item>'Query.Query(string[])'</Item>
-               <Item>'Query.Node'</Item>
-               <Item>'Node'</Item>
-               <Item>null</Item>
-              </Issue>
-              <Issue>
-               <Item>'Query.Query(string[])'</Item>
-               <Item>'Query.hasTimedOut'</Item>
-               <Item>'bool'</Item>
-               <Item>false</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#BackTrack(System.Int32,System.String,System.Text.StringBuilder,AimlBot.Graph.Node)">
-            <Messages>
-             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Created="2008-05-07 13:34:25Z">
-              <Issue Name="TooGeneric">
-               <Item>'Query.BackTrack(int, string, StringBuilder, Node)'</Item>
-               <Item>'Exception'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Evaluate(AimlBot.Graph.Node,System.DateTime)">
-            <Messages>
-             <Message Id="Started" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-07 13:34:25Z">
+             <Message Id="Timeout" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-12 12:59:37Z">
               <Issue Name="MemberParameter">
-               <Item>'Query.Evaluate(Node, DateTime)'</Item>
-               <Item>Started</Item>
-               <Item>'StartedOn'</Item>
-               <Item>started</Item>
+               <Item>'Query.Query(string[], DateTime)'</Item>
+               <Item>Timeout</Item>
+               <Item>'TimeoutAfter'</Item>
+               <Item>timeout</Item>
               </Issue>
              </Message>
             </Messages>
@@ -460,59 +394,36 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#Path">
+           <Member Name="#startedOn">
             <Messages>
-             <Message TypeName="ArrayFieldsShouldNotBeReadOnly" Category="Microsoft.Security" CheckId="CA2105" Created="2008-05-07 13:34:25Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2008-05-12 12:59:37Z">
               <Issue>
-               <Item>'Query.Path'</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-05-07 13:34:25Z">
-              <Issue>
-               <Item>'Query.Path'</Item>
+               <Item>'Query.startedOn'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#StoreWildCard(System.String,System.String)">
+           <Member Name="#TimeoutAfter">
             <Messages>
-             <Message Id="WildCard" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-05-07 13:34:25Z">
-              <Issue Name="MemberShouldBeDiscreteTerm">
-               <Item>WildCard</Item>
-               <Item>'Query.StoreWildCard(string, string)'</Item>
-               <Item>Wildcard</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TimeOutAfter">
-            <Messages>
-             <Message Id="TimeOut" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2008-05-07 13:34:25Z">
-              <Issue Name="MemberShouldBeDiscreteTerm">
-               <Item>TimeOut</Item>
-               <Item>'Query.TimeOutAfter'</Item>
-               <Item>Timeout</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211" Created="2008-05-07 13:34:25Z">
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-05-12 12:59:37Z">
               <Issue>
-               <Item>'Query.TimeOutAfter'</Item>
+               <Item>'Query.TimeoutAfter'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
            <Member Name="#Wildcards">
             <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-05-07 13:34:25Z">
-              <Issue>
-               <Item>'Query.Wildcards'</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006" Created="2008-05-07 13:34:25Z">
+             <Message TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006" Status="Excluded" Created="2008-05-12 13:03:49Z">
               <Issue>
                <Item>'Query.Wildcards'</Item>
                <Item>'Dictionary&lt;string, List&lt;string&gt;&gt;'</Item>
               </Issue>
+              <Notes>
+               <User Name="ntoll">
+                <Note Id="7" />
+               </User>
+              </Notes>
              </Message>
             </Messages>
            </Member>
@@ -520,74 +431,33 @@
          </Type>
         </Types>
        </Namespace>
-       <Namespace Name="AimlBot.Normalize.Std">
+       <Namespace Name="AimlBot.Normalize.Utils">
         <Types>
-         <Type Name="Substitute+FSANode">
-          <Messages>
-           <Message Id="FSA" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-05-07 13:34:25Z">
-            <Issue Name="Type">
-             <Item>FSA</Item>
-             <Item>'Substitute.FSANode'</Item>
-             <Item>Fsa</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Created="2008-05-07 13:34:25Z">
-            <Issue>
-             <Item>'Substitute.FSANode'</Item>
-            </Issue>
-           </Message>
-          </Messages>
+         <Type Name="FsaNode">
           <Members>
-           <Member Name="#Add(System.String,System.String)">
-            <Messages>
-             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Created="2008-05-07 13:34:25Z">
-              <Issue Name="TooGeneric">
-               <Item>'Substitute.FSANode.Add(string, string)'</Item>
-               <Item>'Exception'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-05-07 13:34:25Z">
-              <Issue>
-               <Item>'int.ToString()'</Item>
-               <Item>'Substitute.FSANode.Add(string, string)'</Item>
-               <Item>'int.ToString(IFormatProvider)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#AddChild(System.Char[],System.Int32,System.String)">
-            <Messages>
-             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Created="2008-05-07 13:34:25Z">
-              <Issue Name="TooGeneric">
-               <Item>'Substitute.FSANode.AddChild(char[], int, string)'</Item>
-               <Item>'Exception'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Children">
             <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-05-07 13:34:25Z">
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-05-12 11:49:51Z">
               <Issue>
-               <Item>'Substitute.FSANode.Children'</Item>
+               <Item>'FsaNode.Children'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
            <Member Name="#Depth">
             <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-05-07 13:34:25Z">
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-05-12 11:49:51Z">
               <Issue>
-               <Item>'Substitute.FSANode.Depth'</Item>
+               <Item>'FsaNode.Depth'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
            <Member Name="#Replace">
             <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-05-07 13:34:25Z">
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-05-12 11:49:51Z">
               <Issue>
-               <Item>'Substitute.FSANode.Replace'</Item>
+               <Item>'FsaNode.Replace'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -603,20 +473,21 @@
   </Targets>
   <Notes>
    <User Name="ntoll">
-    <Note Id="0" Modified="2008-05-07 15:16:22Z">Javascript refers to the AIML version of this word not a compound of Java and Script</Note>
-    <Note Id="1" Modified="2008-05-07 15:17:22Z">NA</Note>
     <Note Id="2" Modified="2008-05-07 15:18:15Z">In this case we don't want any more types</Note>
+    <Note Id="3" Modified="2008-05-12 11:55:17Z">Arbitrary number five is quite pointless... especially as the namespaces std and utils aid understanding of the child classes. In addition, these namespaces are likely to grow in future versions.</Note>
+    <Note Id="4" Modified="2008-05-12 11:56:26Z">Number five is pointless arbitrary value. Std namespace is expressive of function of child classes and this namespace is likely to grow in later versions.</Note>
+    <Note Id="5" Modified="2008-05-12 12:28:20Z">JavaScript would break the element name -&gt; class name convention so we need to have Javascript</Note>
+    <Note Id="7" Modified="2008-05-12 13:04:27Z">Not applicable in this situation</Note>
+    <Note Id="8" Modified="2008-05-12 13:09:07Z">This class is used to interpret an XmlElement so the specific argument type is appropriate.</Note>
+    <Note Id="9" Modified="2008-05-12 13:15:11Z">AimlElements are always used to interpret XmlElement types so the specific argument type is justified.</Note>
    </User>
   </Notes>
   <Rules>
-   <Rule TypeName="AbstractTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1012">
-    <Resolution Name="Default">Change the accessibility of all public constructors in {0} to protected.</Resolution>
-   </Rule>
-   <Rule TypeName="ArrayFieldsShouldNotBeReadOnly" Category="Microsoft.Security" CheckId="CA2105">
-    <Resolution Name="Default">Either replace {0} with a strongly typed collection that cannot be changed, or replace the public field with a method that returns a clone of a private array.</Resolution>
-   </Rule>
    <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
     <Resolution Name="Default">Consider merging the types defined in '{0}' with another namespace.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
+    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
    </Rule>
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
@@ -624,9 +495,6 @@
    </Rule>
    <Rule TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051">
     <Resolution Name="Default">Because field {0} is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Resolution>
-   </Rule>
-   <Rule TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805">
-    <Resolution Name="Default">{0} initializes field {1} of type {2} to {3}. Remove this initialization because it will be done automatically by the runtime.</Resolution>
    </Rule>
    <Rule TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006">
     <Resolution Name="Default">Consider a design where {0} doesn't nest generic type {1}.</Resolution>
@@ -636,28 +504,9 @@
    </Rule>
    <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
     <Resolution Name="MemberParameter">In member {0}, correct the casing of '{1}' in parameter name {2} by changing it to '{3}'.</Resolution>
-    <Resolution Name="Type">Correct the casing of '{0}' in type name {1} by changing it to '{2}'.</Resolution>
-   </Rule>
-   <Rule TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711">
-    <Resolution Name="TypeNoAlternate">Rename type name {0} so that it does not end in '{1}'.</Resolution>
-   </Rule>
-   <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
-    <Resolution Name="Type">Rename type {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a type makes it harder for consumers in other languages to use the type.</Resolution>
    </Rule>
    <Rule TypeName="MembersShouldNotExposeCertainConcreteTypes" Category="Microsoft.Design" CheckId="CA1059">
     <Resolution Name="Xml">Modify member {0} so that it no longer exposes the concrete type {1}. Use IXPathNavigable to represent XML data sources.</Resolution>
-   </Rule>
-   <Rule TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034">
-    <Resolution Name="Default">Do not nest type {0}. Alternatively, change its accessibility so that it is not externally visible.</Resolution>
-   </Rule>
-   <Rule TypeName="NonConstantFieldsShouldNotBeVisible" Category="Microsoft.Usage" CheckId="CA2211">
-    <Resolution Name="Default">Consider making {0} non-public or a constant.</Resolution>
-   </Rule>
-   <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
-    <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
-   </Rule>
-   <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
-    <Resolution Name="System">The type name {0} conflicts in whole or in part with the namespace name '{1}' defined in the .NET Framework. Rename the type to eliminate the conflict.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>
