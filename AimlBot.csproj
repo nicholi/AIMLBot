@@ -42,6 +42,7 @@
     <Compile Include="Conversation.cs" />
     <Compile Include="Data\PredicateDictionary.cs" />
     <Compile Include="Generate\Aiml\AimlElement.cs" />
+    <Compile Include="Generate\Aiml\AimlElementAttribute.cs" />
     <Compile Include="Generate\Aiml\AimlTemplate.cs" />
     <Compile Include="Generate\Aiml\Elements\BotElement.cs" />
     <Compile Include="Generate\Aiml\Elements\ConditionElement.cs" />

@@ -39,7 +39,10 @@ namespace AimlBot.Data
     [Serializable]
     public class PredicateDictionary : Dictionary<string, object>
     {
-        string ID = string.Empty;
+        /// <summary>
+        /// A globally unique ID to identify this instance
+        /// </summary>
+        public string ID = string.Empty;
 
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -49,6 +52,11 @@ namespace AimlBot.Data
 
         protected PredicateDictionary(SerializationInfo info, StreamingContext context)
             : base(info, context)
+        {
+        }
+
+        public PredicateDictionary()
+            : base()
         {
         }
     }
