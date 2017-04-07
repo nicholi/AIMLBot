@@ -59,12 +59,20 @@ namespace AIMLbot.AIMLTagHandlers
                         {
                             if (doChange)
                             {
-                                result.Append(letterAsString.ToUpper(this.bot.Locale));
+                                result.Append(letterAsString.ToUpper(
+#if !NETSTANDARD
+                                    this.bot.Locale
+#endif
+                                    ));
                                 doChange = false;
                             }
                             else
                             {
-                                result.Append(letterAsString.ToLower(this.bot.Locale));
+                                result.Append(letterAsString.ToLower(
+#if !NETSTANDARD
+                                    this.bot.Locale
+#endif
+                                    ));
                             }
                         }
                         else

@@ -1,0 +1,62 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.5</TargetFramework>
+    <RootNamespace>AIMLbot</RootNamespace>
+    <AssemblyName>AIMLbot</AssemblyName>
+    <Version>2.5.1.0</Version>
+	<PackageVersion>$(Version)</PackageVersion>
+	<InformationalVersion>$(Version)</InformationalVersion>
+    <FileVersion>$(Version)</FileVersion>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <Description>An implementation of an AIML interpreting chatter bot</Description>
+    <Authors>Nicholas H. Tollervey</Authors>
+    <Company>ntoll.org</Company>
+    <Copyright>Copyright ©  2006 Nicholas H.Tollervey (ntoll@ntoll.org)</Copyright>	
+    <PackageProjectUrl>https://github.com/Nicholi/AIMLBot</PackageProjectUrl>
+    <PackageTags>aiml chatbot program#</PackageTags>
+	<ContentTargetFolders>contentFiles</ContentTargetFolders>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;RELEASE;NETSTANDARD;NETSTANDARD1_5</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="About.txt" />
+    <None Remove="License.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ConfigurationFiles\DefaultPredicates.xml" />
+    <Content Include="ConfigurationFiles\GenderSubstitutions.xml" />
+    <Content Include="ConfigurationFiles\Person2Substitutions.xml" />
+    <Content Include="ConfigurationFiles\PersonSubstitutions.xml" />
+    <Content Include="ConfigurationFiles\Settings.xml" />
+    <Content Include="ConfigurationFiles\Splitters.xml" />
+    <Content Include="ConfigurationFiles\Substitutions.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AIMLTagHandlers\" />
+    <Folder Include="Utils\" />
+    <Folder Include="Normalize\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="1.12.0" />
+    <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
+    <PackageReference Include="System.Xml.XmlDocument" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>

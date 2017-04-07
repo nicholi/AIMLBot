@@ -100,7 +100,10 @@ namespace AIMLbot.Utils
                 if (fi.Exists)
                 {
                     XmlDocument xmlDoc = new XmlDocument();
-                    xmlDoc.Load(pathToSettings);
+                    using (var fs = new FileStream(fi.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    {
+                        xmlDoc.Load(fs);
+                    }
                     this.loadSettings(xmlDoc);
                 }
                 else

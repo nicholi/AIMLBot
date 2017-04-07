@@ -37,7 +37,11 @@ namespace AIMLbot.AIMLTagHandlers
         {
             if (this.templateNode.Name.ToLower() == "lowercase")
             {
-                return this.templateNode.InnerText.ToLower(this.bot.Locale);
+                return this.templateNode.InnerText.ToLower(
+#if !NETSTANDARD
+                    this.bot.Locale
+#endif
+                    );
             }
             return string.Empty;
         }

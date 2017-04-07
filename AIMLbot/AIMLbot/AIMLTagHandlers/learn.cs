@@ -45,7 +45,10 @@ namespace AIMLbot.AIMLTagHandlers
                         XmlDocument doc = new XmlDocument();
                         try
                         {
-                            doc.Load(path);
+                            using (var fs = new FileStream(fi.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                            {
+                                doc.Load(fs);
+                            }
                             this.bot.loadAIMLFromXML(doc, path);
                         }
                         catch

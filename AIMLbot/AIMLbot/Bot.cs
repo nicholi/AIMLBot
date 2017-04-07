@@ -5,9 +5,14 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Xml;
 using System.Text;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Reflection;
+#if NETSTANDARD
+using MailKit.Net.Smtp;
+using MimeKit;
+#else
 using System.Net.Mail;
+using System.Runtime.Serialization.Formatters.Binary;
+#endif
 
 using AIMLbot.Utils;
 
@@ -19,7 +24,7 @@ namespace AIMLbot
     /// </summary>
     public class Bot
     {
-        #region Attributes
+#region Attributes
 
         /// <summary>
         /// A dictionary object that looks after all the settings associated with this bot
@@ -262,7 +267,13 @@ namespace AIMLbot
         {
             get
             {
-                return Path.Combine(Environment.CurrentDirectory, this.GlobalSettings.grabSetting("aimldirectory"));
+                return Path.Combine(
+#if NETSTANDARD
+                    Directory.GetCurrentDirectory(),
+#else
+                    Environment.CurrentDirectory,
+#endif
+                    this.GlobalSettings.grabSetting("aimldirectory"));
             }
         }
 
@@ -273,7 +284,13 @@ namespace AIMLbot
         {
             get
             {
-                return Path.Combine(Environment.CurrentDirectory, this.GlobalSettings.grabSetting("configdirectory"));
+                return Path.Combine(
+#if NETSTANDARD
+                    Directory.GetCurrentDirectory(),
+#else
+                    Environment.CurrentDirectory,
+#endif
+                    this.GlobalSettings.grabSetting("configdirectory"));
             }
         }
 
@@ -284,7 +301,13 @@ namespace AIMLbot
         {
             get
             {
-                return Path.Combine(Environment.CurrentDirectory, this.GlobalSettings.grabSetting("logdirectory"));
+                return Path.Combine(
+#if NETSTANDARD
+                    Directory.GetCurrentDirectory(),
+#else
+                    Environment.CurrentDirectory,
+#endif
+                    this.GlobalSettings.grabSetting("logdirectory"));
             }
         }
 
@@ -312,19 +335,19 @@ namespace AIMLbot
         /// </summary>
         public int MaxThatSize = 256;
 
-        #endregion
+#endregion
 
-        #region Delegates
+#region Delegates
 
         public delegate void LogMessageDelegate();
 
-        #endregion
+#endregion
 
-        #region Events
+#region Events
 
         public event LogMessageDelegate WrittenToLog;
 
-        #endregion
+#endregion
 
         /// <summary>
         /// Ctor
@@ -334,7 +357,7 @@ namespace AIMLbot
             this.setup();  
         }
 
-        #region Settings methods
+#region Settings methods
 
         /// <summary>
         /// Loads AIML from .aiml files into the graphmaster "brain" of the bot
@@ -377,7 +400,13 @@ namespace AIMLbot
         public void loadSettings()
         {
             // try a safe default setting for the settings xml file
-            string path = Path.Combine(Environment.CurrentDirectory, Path.Combine("config", "Settings.xml"));
+            string path = Path.Combine(
+#if NETSTANDARD
+                Directory.GetCurrentDirectory(),
+#else
+                Environment.CurrentDirectory,
+#endif
+                Path.Combine("config", "Settings.xml"));
             this.loadSettings(path);          
         }
 
@@ -393,7 +422,13 @@ namespace AIMLbot
             // Checks for some important default settings
             if (!this.GlobalSettings.containsSettingCalled("version"))
             {
-                this.GlobalSettings.addSetting("version", Environment.Version.ToString());
+                this.GlobalSettings.addSetting("version",
+#if NETSTANDARD
+                    Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.RuntimeFramework.Version.ToString()
+#else
+                    Environment.Version.ToString()
+#endif
+                    );
             }
             if (!this.GlobalSettings.containsSettingCalled("name"))
             {
@@ -530,7 +565,10 @@ namespace AIMLbot
             if (splittersFile.Exists)
             {
                 XmlDocument splittersXmlDoc = new XmlDocument();
-                splittersXmlDoc.Load(pathToSplitters);
+                using (var fs = new FileStream(splittersFile.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    splittersXmlDoc.Load(fs);
+                }
                 // the XML should have an XML declaration like this:
                 // <?xml version="1.0" encoding="utf-8" ?> 
                 // followed by a <root> tag with children of the form:
@@ -559,9 +597,9 @@ namespace AIMLbot
                 this.Splitters.Add(";");
             }
         }
-        #endregion
+#endregion
 
-        #region Logging methods
+#region Logging methods
 
         /// <summary>
         /// The last message to be entered into the log (for testing purposes)
@@ -605,7 +643,12 @@ namespace AIMLbot
                     {
                         writer.WriteLine(msg);
                     }
+#if NETSTANDARD
+                    writer.Flush();
+                    writer.Dispose();
+#else
                     writer.Close();
+#endif
                     this.LogBuffer.Clear();
                 }
             }
@@ -615,9 +658,9 @@ namespace AIMLbot
             }
         }
 
-        #endregion
+#endregion
 
-        #region Conversation methods
+#region Conversation methods
 
         /// <summary>
         /// Given some raw input and a unique ID creates a response for a new user
@@ -910,9 +953,10 @@ namespace AIMLbot
             }
         }
 
-        #endregion
+#endregion
 
-        #region Serialization
+#region Serialization
+#if !NETSTANDARD
 
         /// <summary>
         /// Saves the graphmaster node (and children) to a binary file to avoid processing the AIML each time the 
@@ -946,9 +990,10 @@ namespace AIMLbot
             loadFile.Close();
         }
 
-        #endregion
+#endif
+#endregion
 
-        #region Latebinding custom-tag dll handlers
+#region Latebinding custom-tag dll handlers
 
         /// <summary>
         /// Loads any custom tag handlers found in the dll referenced in the argument
@@ -956,14 +1001,22 @@ namespace AIMLbot
         /// <param name="pathToDLL">the path to the dll containing the custom tag handling code</param>
         public void loadCustomTagHandlers(string pathToDLL)
         {
+#if NETSTANDARD
+            Assembly tagDLL = System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromAssemblyPath(pathToDLL);
+#else
             Assembly tagDLL = Assembly.LoadFrom(pathToDLL);
+#endif
             Type[] tagDLLTypes = tagDLL.GetTypes();
             for (int i = 0; i < tagDLLTypes.Length; i++)
             {
-                object[] typeCustomAttributes = tagDLLTypes[i].GetCustomAttributes(false);
-                for (int j = 0; j < typeCustomAttributes.Length; j++)
+                var typeCustomAttributes = tagDLLTypes[i]
+#if NETSTANDARD
+                    .GetTypeInfo()
+#endif
+                    .GetCustomAttributes(false);
+                foreach (var typeCustomAttribute in typeCustomAttributes)
                 {
-                    if (typeCustomAttributes[j] is CustomTagAttribute)
+                    if (typeCustomAttribute is CustomTagAttribute)
                     {
                         // We've found a custom tag handling class
                         // so store the assembly and store it away in the Dictionary<,> as a TagHandler class for 
@@ -992,9 +1045,9 @@ namespace AIMLbot
                 }
             }
         }
-        #endregion
+#endregion
 
-        #region Phone Home
+#region Phone Home
         /// <summary>
         /// Attempts to send an email to the botmaster at the AdminEmail address setting with error messages
         /// resulting from a query to the bot
@@ -1003,6 +1056,64 @@ namespace AIMLbot
         /// <param name="request">the request object that encapsulates all sorts of useful information</param>
         public void phoneHome(string errorMessage, Request request)
         {
+#if NETSTANDARD
+            var msg = new MimeMessage();
+            msg.From.Add(new MailboxAddress("donotreply@aimlbot.com"));
+            msg.To.Add(new MailboxAddress(this.AdminEmail));
+            msg.Subject = "WARNING! AIMLBot has encountered a problem...";
+            string message = @"Dear Botmaster,
+
+This is an automatically generated email to report errors with your bot.
+
+At *TIME* the bot encountered the following error:
+
+""*MESSAGE*""
+
+whilst processing the following input:
+
+""*RAWINPUT*""
+
+from the user with an id of: *USER*
+
+The normalized paths generated by the raw input were as follows:
+
+*PATHS*
+
+Please check your AIML!
+
+Regards,
+
+The AIMLbot program.
+";
+            message = message.Replace("*TIME*", DateTime.Now.ToString());
+            message = message.Replace("*MESSAGE*", errorMessage);
+            message = message.Replace("*RAWINPUT*", request.rawInput);
+            message = message.Replace("*USER*", request.user.UserID);
+            StringBuilder paths = new StringBuilder();
+            foreach(string path in request.result.NormalizedPaths)
+            {
+                paths.Append(path+Environment.NewLine);
+            }
+            message = message.Replace("*PATHS*", paths.ToString());
+            msg.Body = new TextPart("plain")
+                {
+                    Text = message
+                };
+            try
+            {
+                if (msg.To.Count > 0)
+                {
+                    using (var client = new SmtpClient())
+                    {
+                        client.Send(msg);
+                    }
+                }
+            }
+            catch
+            {
+                // if we get here then we can't really do much more
+            }
+#else
             MailMessage msg = new MailMessage("donotreply@aimlbot.com",this.AdminEmail);
             msg.Subject = "WARNING! AIMLBot has encountered a problem...";
             string message = @"Dear Botmaster,
@@ -1053,7 +1164,8 @@ The AIMLbot program.
             {
                 // if we get here then we can't really do much more
             }
+#endif
         }
-        #endregion
+#endregion
     }
 }

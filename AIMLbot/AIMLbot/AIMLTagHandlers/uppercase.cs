@@ -37,7 +37,11 @@ namespace AIMLbot.AIMLTagHandlers
         {
             if (this.templateNode.Name.ToLower() == "uppercase")
             {
-                return this.templateNode.InnerText.ToUpper(this.bot.Locale);
+                return this.templateNode.InnerText.ToUpper(
+#if !NETSTANDARD
+                    this.bot.Locale
+#endif
+                    );
             }
             return string.Empty;
         }
