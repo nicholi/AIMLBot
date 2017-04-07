@@ -33,7 +33,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-	<OutputPath>bin\$(Configuration)\netframework\</OutputPath>
+    <OutputPath>bin\$(Configuration)\netframework\</OutputPath>
     <BaseIntermediateOutputPath>obj\\$(Configuration)\netframework\</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -107,13 +107,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ConfigurationFiles\DefaultPredicates.xml" />
-    <Content Include="ConfigurationFiles\GenderSubstitutions.xml" />
-    <Content Include="ConfigurationFiles\Person2Substitutions.xml" />
-    <Content Include="ConfigurationFiles\PersonSubstitutions.xml" />
-    <Content Include="ConfigurationFiles\Settings.xml" />
-    <Content Include="ConfigurationFiles\Splitters.xml" />
-    <Content Include="ConfigurationFiles\Substitutions.xml" />
+    <None Include="ConfigurationFiles\DefaultPredicates.xml" />
+    <None Include="ConfigurationFiles\GenderSubstitutions.xml" />
+    <None Include="ConfigurationFiles\Person2Substitutions.xml" />
+    <None Include="ConfigurationFiles\PersonSubstitutions.xml" />
+    <None Include="ConfigurationFiles\Settings.xml" />
+    <None Include="ConfigurationFiles\Splitters.xml" />
+    <None Include="ConfigurationFiles\Substitutions.xml" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -121,6 +121,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AIMLbot-NetFramework.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

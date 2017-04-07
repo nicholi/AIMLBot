@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>AIMLbot</id>
+    <version>2.5.1</version>
+    <authors>Nicholas H. Tollervey</authors>
+    <owners>Nicholas H. Tollervey</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/Nicholi/AIMLBot</projectUrl>
+    <description>An implementation of an AIML interpreting chatter bot</description>
+    <copyright>Copyright © 2006 Nicholas H.Tollervey (ntoll@ntoll.org)</copyright>
+    <tags>aiml chatbot program#</tags>
+    <dependencies>
+    </dependencies>
+    <contentFiles>
+      <files include="any/any/ConfigurationFiles/DefaultPredicates.xml" buildAction="Content" />
+      <files include="any/any/ConfigurationFiles/GenderSubstitutions.xml" buildAction="Content" />
+      <files include="any/any/ConfigurationFiles/Person2Substitutions.xml" buildAction="Content" />
+      <files include="any/any/ConfigurationFiles/PersonSubstitutions.xml" buildAction="Content" />
+      <files include="any/any/ConfigurationFiles/Settings.xml" buildAction="Content" />
+      <files include="any/any/ConfigurationFiles/Splitters.xml" buildAction="Content" />
+      <files include="any/any/ConfigurationFiles/Substitutions.xml" buildAction="Content" />
+    </contentFiles>
+  </metadata>
+  <files>
+    <file src="ConfigurationFiles\DefaultPredicates.xml" target="contentFiles\any\any\ConfigurationFiles\DefaultPredicates.xml" />
+    <file src="ConfigurationFiles\GenderSubstitutions.xml" target="contentFiles\any\any\ConfigurationFiles\GenderSubstitutions.xml" />
+    <file src="ConfigurationFiles\Person2Substitutions.xml" target="contentFiles\any\any\ConfigurationFiles\Person2Substitutions.xml" />
+    <file src="ConfigurationFiles\PersonSubstitutions.xml" target="contentFiles\any\any\ConfigurationFiles\PersonSubstitutions.xml" />
+    <file src="ConfigurationFiles\Settings.xml" target="contentFiles\any\any\ConfigurationFiles\Settings.xml" />
+    <file src="ConfigurationFiles\Splitters.xml" target="contentFiles\any\any\ConfigurationFiles\Splitters.xml" />
+    <file src="ConfigurationFiles\Substitutions.xml" target="contentFiles\any\any\ConfigurationFiles\Substitutions.xml" />
+  </files>
+</package>

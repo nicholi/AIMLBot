@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <None Remove="About.txt" />
+    <None Remove="AIMLbot-NetFramework.nuspec" />
     <None Remove="License.txt" />
   </ItemGroup>
 
