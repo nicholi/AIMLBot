@@ -15,11 +15,10 @@
     <Copyright>Copyright ©  2006 Nicholas H.Tollervey (ntoll@ntoll.org)</Copyright>	
     <PackageProjectUrl>https://github.com/Nicholi/AIMLBot</PackageProjectUrl>
     <PackageTags>aiml chatbot program#</PackageTags>
-	<ContentTargetFolders>contentFiles</ContentTargetFolders>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>TRACE;DEBUG;NETSTANDARD</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD1_5</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
