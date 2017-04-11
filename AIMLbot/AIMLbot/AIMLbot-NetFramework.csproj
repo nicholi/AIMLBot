@@ -34,7 +34,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <OutputPath>bin\$(Configuration)\netframework\</OutputPath>
-    <BaseIntermediateOutputPath>obj\\$(Configuration)\netframework\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj\$(Configuration)\netframework\</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
